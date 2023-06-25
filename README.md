@@ -1,2 +1,2 @@
 # sakancom
-Aydi --first push
+Aydi --first pushs
