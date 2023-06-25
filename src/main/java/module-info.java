@@ -4,6 +4,8 @@ module com.example.sakankom {
 
     requires org.controlsfx.controls;
     requires MaterialFX;
+    requires java.sql;
+    requires com.oracle.database.jdbc;
 
     opens com.example.sakankom to javafx.fxml;
     exports com.example.sakankom;

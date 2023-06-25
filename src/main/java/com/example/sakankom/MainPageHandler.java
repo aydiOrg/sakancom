@@ -3,12 +3,22 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class MainPageHandler implements Initializable {
+        //data from the sign in
+        User user;
+        void setUser(User u) {
+                this.user = u;
+                userLabel.setText(user.getUsername());
+        }
+
+        @FXML
+        private Label userLabel;
         @FXML
         private Button btn1;
 

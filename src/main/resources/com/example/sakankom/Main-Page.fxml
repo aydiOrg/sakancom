@@ -19,6 +19,17 @@
                   <Insets top="30.0" />
                </VBox.margin>
             </Label>
+            <Label fx:id="userLabel" layoutX="10.0" layoutY="131.0" prefHeight="38.0" prefWidth="241.0" text="aydi1G">
+               <font>
+                  <Font size="16.0" />
+               </font>
+               <padding>
+                  <Insets left="28.0" />
+               </padding>
+               <VBox.margin>
+                  <Insets top="15.0" />
+               </VBox.margin>
+            </Label>
             <VBox prefHeight="520.0" prefWidth="241.0">
                <VBox.margin>
                   <Insets top="120.0" />
@@ -53,6 +64,6 @@
             </VBox>
          </children>
       </VBox>
-      <AnchorPane fx:id="mainPane" layoutX="248.0" layoutY="-3.0" prefHeight="720.0" prefWidth="1040.0" style="-fx-background-color: #f2f2f2;" />
+      <AnchorPane fx:id="mainPane" layoutX="241.0" layoutY="1.0" prefHeight="720.0" prefWidth="1039.0" style="-fx-background-color: #f2f2f2;" />
    </children>
 </AnchorPane>
