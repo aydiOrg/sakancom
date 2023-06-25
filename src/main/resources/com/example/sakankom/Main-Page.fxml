@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: #f2f2f2;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.sakankom.MainPageHandler">
+   <children>
+      <VBox fx:id="vbox" prefHeight="721.0" prefWidth="241.0" style="-fx-background-radius: 0px 20px 20px 0px; -fx-background-color: white;" stylesheets="@../../../mainPageButtonsUnselected.css">
+         <children>
+            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="53.0" prefWidth="245.0" stylesheets="@../../../fontstyle.css" text="Sakancom" textAlignment="CENTER" textFill="#300e80">
+               <font>
+                  <Font size="36.0" />
+               </font>
+               <VBox.margin>
+                  <Insets top="30.0" />
+               </VBox.margin>
+            </Label>
+            <VBox prefHeight="520.0" prefWidth="241.0">
+               <VBox.margin>
+                  <Insets top="120.0" />
+               </VBox.margin>
+               <children>
+                  <Button fx:id="btn1" mnemonicParsing="false" onAction="#showPage1" prefHeight="60.0" prefWidth="244.0" style="-fx-cursor: hand;" stylesheets="@../../../mainPageButtons.css" text="Page1">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="btn2" mnemonicParsing="false" onAction="#showPage2" prefHeight="60.0" prefWidth="241.0" style="-fx-cursor: hand;" stylesheets="@../../../mainPageButtonsUnselected.css" text="Page2">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="btn3" mnemonicParsing="false" onAction="#showPage3" prefHeight="60.0" prefWidth="245.0" style="-fx-cursor: hand;" stylesheets="@../../../mainPageButtonsUnselected.css" text="Page3">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="btn4" mnemonicParsing="false" onAction="#showPage4" prefHeight="60.0" prefWidth="243.0" style="-fx-cursor: hand;" stylesheets="@../../../mainPageButtonsUnselected.css" text="Page4">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="btn5" mnemonicParsing="false" onAction="#showPage5" prefHeight="60.0" prefWidth="251.0" style="-fx-cursor: hand;" stylesheets="@../../../mainPageButtonsUnselected.css" text="Page5">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Button>
+               </children>
+            </VBox>
+         </children>
+      </VBox>
+      <AnchorPane fx:id="mainPane" layoutX="248.0" layoutY="-3.0" prefHeight="720.0" prefWidth="1040.0" style="-fx-background-color: #f2f2f2;" />
+   </children>
+</AnchorPane>
