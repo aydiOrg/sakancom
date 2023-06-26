@@ -1,4 +1,7 @@
 package com.example.sakankom;
+import com.example.sakankom.dataStructures.Tenant;
+import com.example.sakankom.dataStructures.User;
+import io.github.palexdev.materialfx.controls.MFXTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -7,15 +10,85 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 
 import java.net.URL;
+import java.sql.*;
 import java.util.ResourceBundle;
 
 public class MainPageHandler implements Initializable {
         //data from the sign in
         User user;
+        Tenant tenant;
         void setUser(User u) {
                 this.user = u;
                 userLabel.setText(user.getUsername());
         }
+        public void setTenantData(User user){
+                ResultSet rst;
+                try {
+                        DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
+                        Connection con = DriverManager.getConnection("jdbc:oracle:thin:@//localhost:1521/xepdb1", "sakankom", "12345678");
+                        //jdbc:oracle:thin:@//localhost:1521/xepdb1
+                        Statement st = con.createStatement();
+                        rst = st.executeQuery("select * from tenant where username = '" + user.getUsername() + "'");
+
+                        tenant = new Tenant();
+                        while (rst.next()){
+                                tenant.setTenantID(rst.getInt("tenant_id"));
+                                tenant.setFname(rst.getString("fname"));
+                                tenant.setLname(rst.getString("lname"));
+                                tenant.setbDate(rst.getString("birthdate"));
+                                tenant.setpNumber(rst.getString("phone_number"));
+                                tenant.setEmail(rst.getString("email"));
+                                tenant.setJob(rst.getString("job"));
+                                tenant.setGender(rst.getString("gender"));
+                                tenant.setUsername(user.getUsername());
+                                tenant.setPassword(user.getPassword());
+                        }
+                        con.close();
+                }
+                catch (SQLException e) {
+                        e.printStackTrace();
+                }
+
+                //set the labels
+                uName.setText(tenant.getFname() + tenant.getLname());
+                uBdate.setText(tenant.getbDate().substring(0,10));
+                uJob.setText(tenant.getJob());
+                uPhone.setText(tenant.getpNumber());
+                uEmail.setText(tenant.getEmail());
+                uGender.setText(tenant.getGender());
+                uUsername.setText(tenant.getUsername());
+                String s ="";
+                for(int i =0;i<tenant.getPassword().length();i++) {
+                        s += "*";
+                }
+                uPassword.setText(s);
+        }
+        @FXML
+        private MFXTextField uBdate;
+
+        @FXML
+        private MFXTextField uEmail;
+        @FXML
+        private AnchorPane page1;
+
+        @FXML
+        private MFXTextField uGender;
+
+        @FXML
+        private MFXTextField uJob;
+
+        @FXML
+        private MFXTextField uName;
+
+        @FXML
+        private MFXTextField uPassword;
+
+        @FXML
+        private MFXTextField uPhone;
+
+        @FXML
+        private MFXTextField uUsername;
+
 
         @FXML
         private Label userLabel;
@@ -37,7 +110,7 @@ public class MainPageHandler implements Initializable {
         @FXML
         private AnchorPane mainPane;
 
-        AnchorPane page1;
+
         AnchorPane page2;
         AnchorPane page3;
         AnchorPane page4;

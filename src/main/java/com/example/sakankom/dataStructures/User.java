@@ -1,4 +1,4 @@
-package com.example.sakankom;
+package com.example.sakankom.dataStructures;
 
 public class User {
     private String username;

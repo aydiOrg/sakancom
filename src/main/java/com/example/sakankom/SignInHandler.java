@@ -1,4 +1,5 @@
 package com.example.sakankom;
+import com.example.sakankom.dataStructures.User;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -115,7 +116,7 @@ public class SignInHandler implements Initializable {
 
                         MainPageHandler mainPageHandler = loader.getController();
                         mainPageHandler.setUser(user);
-
+                        mainPageHandler.setTenantData(user);
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
