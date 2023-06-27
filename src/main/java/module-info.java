@@ -9,4 +9,6 @@ module com.example.sakankom {
 
     opens com.example.sakankom to javafx.fxml;
     exports com.example.sakankom;
+    exports com.example.sakankom.dataStructures;
+    opens com.example.sakankom.dataStructures to javafx.fxml;
 }

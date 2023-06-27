@@ -34,7 +34,11 @@ public class SignInHandler implements Initializable {
 
     Stage newStage = new Stage();
     Stage currentStage = new Stage();
+
     ArrayList<User> users ;
+
+
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         users = new ArrayList<User>();
@@ -52,7 +56,7 @@ public class SignInHandler implements Initializable {
             int i = 0;
             while (rst.next()) {
                 System.out.println(rst.getString("username"));
-                users.add(new User(rst.getString("username"), rst.getString("pass"), "tenant"));
+                users.add(new User(rst.getString("username"), rst.getString("pass"), "tenant",false));
                 i++;
 //                unq_id = Integer.toString(rst.getInt("employee_id"));
 //                id = rst.getString("id");
@@ -63,7 +67,7 @@ public class SignInHandler implements Initializable {
             int j = 0;
             while (rst2.next()) {
                 System.out.println(rst2.getString("username"));
-                users.add(new User(rst2.getString("username"), rst2.getString("pass"), "owner"));
+                users.add(new User(rst2.getString("username"), rst2.getString("pass"), "owner",false));
                 i++;
 //                unq_id = Integer.toString(rst.getInt("employee_id"));
 //                id = rst.getString("id");
@@ -74,7 +78,7 @@ public class SignInHandler implements Initializable {
             int k = 0;
             while (rst3.next()) {
                 System.out.println(rst3.getString("username"));
-                users.add(new User(rst3.getString("username"), rst3.getString("pass"), "admin"));
+                users.add(new User(rst3.getString("username"), rst3.getString("pass"), "admin",false));
                 i++;
 //                unq_id = Integer.toString(rst.getInt("employee_id"));
 //                id = rst.getString("id");
@@ -85,11 +89,7 @@ public class SignInHandler implements Initializable {
                 System.out.println("connection successful");
 
         }catch (SQLException e){
-            try {
-                throw new IOException(e);
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            }
+            e.printStackTrace();
         }
 
 
@@ -106,6 +106,7 @@ public class SignInHandler implements Initializable {
         for (int i=0 ; i< users.size();i++) {
             User user = users.get(i);
             if(user.getPassword().equals(p) && user.getUsername().equalsIgnoreCase(u)) {
+                user.setFlag(true);
                 if (user.getUserType().equals("tenant")) {
                     try {
                         FXMLLoader loader = new FXMLLoader(getClass().getResource("Main-Page.fxml"));

@@ -4,11 +4,23 @@ public class User {
     private String username;
     private String password;
     private String userType;
+    private boolean flag;
 
-    public User(String username, String password, String userType) {
+    public boolean getFlag() {
+        return flag;
+    }
+
+    public void setFlag(boolean flag) {
+        this.flag = flag;
+    }
+    public User() {
+    }
+
+    public User(String username, String password, String userType, boolean flag) {
         this.username = username;
         this.password = password;
         this.userType = userType;
+        this.flag = false;
     }
 
     // Getters -------------------------------------------------------------
