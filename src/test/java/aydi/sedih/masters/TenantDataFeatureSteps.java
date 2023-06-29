@@ -1,20 +1,27 @@
 package aydi.sedih.masters;
 
+import com.example.sakankom.dataStructures.Tenant;
 import com.example.sakankom.dataStructures.User;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
+
+import java.sql.*;
 
 import static junit.framework.TestCase.assertTrue;
 
 public class TenantDataFeatureSteps {
 
     User user;
-    public TenantDataFeatureSteps(User user) {
+    Tenant tenant;
+    public TenantDataFeatureSteps(User user,Tenant tenant) {
         this.user = user;
         user.setUserType("tenant");
         user.setFlag(true);
         user.setUsername("aydi");
         user.setPassword("123");
+        
+        this.tenant = tenant;
+
     }
 
     //The first scenario
@@ -23,15 +30,38 @@ public class TenantDataFeatureSteps {
         // Write code here that turns the phrase above into concrete actions
         assertTrue(user.getFlag() && user.getUserType().equalsIgnoreCase("tenant"));
     }
-    @Given("the user selects the profile from the menu")
-    public void theUserSelectsTheProfileFromTheMenu() {
-        // Write code here that turns the phrase above into concrete actions
-        
-    }
     @Then("his personal data should be shown")
     public void hisPersonalDataShouldBeShown() {
         // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
+        boolean check = false;
+        ResultSet rst;
+        try {
+            DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
+            Connection con = DriverManager.getConnection("jdbc:oracle:thin:@//localhost:1521/xepdb1", "sakankom", "12345678");
+            //jdbc:oracle:thin:@//localhost:1521/xepdb1
+            Statement st = con.createStatement();
+            rst = st.executeQuery("select * from tenant where username = '" + user.getUsername() + "'");
+
+            while (rst.next()){
+                check = true;
+                tenant.setTenantID(rst.getInt("tenant_id"));
+                tenant.setFname(rst.getString("fname"));
+                tenant.setLname(rst.getString("lname"));
+                tenant.setbDate(rst.getString("birthdate"));
+                tenant.setpNumber(rst.getString("phone_number"));
+                tenant.setEmail(rst.getString("email"));
+                tenant.setJob(rst.getString("job"));
+                tenant.setGender(rst.getString("gender"));
+                tenant.setUsername(user.getUsername());
+                tenant.setPassword(user.getPassword());
+            }
+            con.close();
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        assertTrue(check);
     }
 
 
@@ -39,17 +69,15 @@ public class TenantDataFeatureSteps {
     @Given("the user who is tenant in the profile and presses edit")
     public void theUserWhoIsTenantInTheProfileAndPressesEdit() {
         // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
+        assertTrue(user.getFlag() && user.getUserType().equalsIgnoreCase("tenant"));
     }
     @Given("user presses save after editing the data")
     public void userPressesSaveAfterEditingTheData() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
+
     }
     @Then("his data should be updated")
     public void hisDataShouldBeUpdated() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
+
     }
 
 }
