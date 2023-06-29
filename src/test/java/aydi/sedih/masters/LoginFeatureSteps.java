@@ -11,6 +11,8 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+import static junit.framework.TestCase.assertFalse;
 import static junit.framework.TestCase.assertTrue;
 
 public class LoginFeatureSteps {
@@ -117,6 +119,29 @@ public class LoginFeatureSteps {
     public void aPageOpensWhichIsRelatedToTheUserType() {
         // Write code here that turns the phrase above into concrete actions
         assertTrue(user.getFlag());
+    }
+
+    //second scenario
+    @Given("user not logged in")
+    public void userNotLoggedIn() {
+        // Write code here that turns the phrase above into concrete actions
+        user.setFlag(false);
+    }
+    @Given("the password is not equal to <username> or the username is not equal to <password>")
+    public void thePasswordIsNotEqualToUsernameOrTheUsernameIsNotEqualToPassword() {
+        boolean flag = false;
+        for(int i=0;i<users.size();i++) {
+            if(users.get(i).getUsername().equalsIgnoreCase(user.getUsername()) && users.get(i).getPassword().equals(user.getPassword())){
+                flag = true;
+            }
+        }
+
+        assertFalse("The username and password are valid",flag);
+    }
+    @Then("show a message indicating that the entered data is false")
+    public void showAMessageIndicatingThatTheEnteredDataIsFalse() {
+        // Write code here that turns the phrase above into concrete actions
+        user.setFlag(false);
     }
 
 
