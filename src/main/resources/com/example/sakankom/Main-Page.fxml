@@ -75,41 +75,6 @@
                         <Font name="System Bold" size="24.0" />
                      </font>
                   </Label>
-                  <MFXTextField allowEdit="false" floatMode="DISABLED" floatingTextGap="1.0" layoutX="51.0" layoutY="123.0" prefHeight="49.0" prefWidth="315.0" text="mohammed aydi">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                     <padding>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                     </padding>
-                  </MFXTextField>
-                  <Label layoutX="58.0" layoutY="93.0" prefHeight="17.0" prefWidth="64.0" text="Name">
-                     <font>
-                        <Font size="16.0" />
-                     </font>
-                  </Label>
-                  <MFXTextField allowEdit="false" floatMode="DISABLED" floatingTextGap="1.0" layoutX="424.0" layoutY="123.0" prefHeight="49.0" prefWidth="315.0" text="mohammed aydi">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                     <padding>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                     </padding>
-                  </MFXTextField>
-                  <Label layoutX="430.0" layoutY="93.0" prefHeight="25.0" prefWidth="120.0" text="Birthdate">
-                     <font>
-                        <Font size="16.0" />
-                     </font>
-                  </Label>
-               </children>
-            </AnchorPane>
-            <AnchorPane prefHeight="720.0" prefWidth="1039.0" style="-fx-background-color: #f2f2f2;">
-               <children>
-                  <Label layoutX="53.0" layoutY="25.0" prefHeight="52.0" prefWidth="277.0" style="-fx-font-size: 24px;" stylesheets="@../../../fontstyle.css" text="Personal Information" textFill="#300e80">
-                     <font>
-                        <Font name="System Bold" size="24.0" />
-                     </font>
-                  </Label>
                   <MFXTextField fx:id="uName" floatMode="DISABLED" floatingTextGap="1.0" layoutX="51.0" layoutY="123.0" prefHeight="49.0" prefWidth="248.0" styleClass="ufields">
                      <font>
                         <Font size="16.0" />
