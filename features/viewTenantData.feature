@@ -4,8 +4,6 @@ Feature: tenant's data
 
 Scenario:
   Given user is logged in and the user is a tenant
-  And the user selects the profile from the menu
-
   Then his personal data should be shown
 
 Scenario:

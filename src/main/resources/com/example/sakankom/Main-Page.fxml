@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import io.github.palexdev.materialfx.controls.MFXButton?>
 <?import io.github.palexdev.materialfx.controls.MFXTextField?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
@@ -109,7 +110,7 @@
                         <Font name="System Bold" size="24.0" />
                      </font>
                   </Label>
-                  <MFXTextField fx:id="uName" allowEdit="false" floatMode="DISABLED" floatingTextGap="1.0" layoutX="51.0" layoutY="123.0" prefHeight="49.0" prefWidth="248.0">
+                  <MFXTextField fx:id="uName" floatMode="DISABLED" floatingTextGap="1.0" layoutX="51.0" layoutY="123.0" prefHeight="49.0" prefWidth="248.0" styleClass="ufields">
                      <font>
                         <Font size="16.0" />
                      </font>
@@ -122,7 +123,7 @@
                         <Font size="16.0" />
                      </font>
                   </Label>
-                  <MFXTextField fx:id="uBdate" allowEdit="false" floatMode="DISABLED" floatingTextGap="1.0" layoutX="347.0" layoutY="123.0" prefHeight="49.0" prefWidth="248.0">
+                  <MFXTextField fx:id="uBdate" floatMode="DISABLED" floatingTextGap="1.0" layoutX="347.0" layoutY="123.0" prefHeight="49.0" prefWidth="248.0" styleClass="ufields">
                      <font>
                         <Font size="16.0" />
                      </font>
@@ -135,7 +136,7 @@
                         <Font size="16.0" />
                      </font>
                   </Label>
-                  <MFXTextField fx:id="uGender" allowEdit="false" floatMode="DISABLED" floatingTextGap="1.0" layoutX="648.0" layoutY="123.0" prefHeight="49.0" prefWidth="248.0">
+                  <MFXTextField fx:id="uGender" floatMode="DISABLED" floatingTextGap="1.0" layoutX="648.0" layoutY="123.0" prefHeight="49.0" prefWidth="248.0" styleClass="ufields">
                      <font>
                         <Font size="16.0" />
                      </font>
@@ -148,7 +149,7 @@
                         <Font size="16.0" />
                      </font>
                   </Label>
-                  <MFXTextField fx:id="uPhone" allowEdit="false" floatMode="DISABLED" floatingTextGap="1.0" layoutX="52.0" layoutY="254.0" prefHeight="49.0" prefWidth="248.0">
+                  <MFXTextField fx:id="uPhone" floatMode="DISABLED" floatingTextGap="1.0" layoutX="52.0" layoutY="254.0" prefHeight="49.0" prefWidth="248.0" styleClass="ufields">
                      <font>
                         <Font size="16.0" />
                      </font>
@@ -161,7 +162,7 @@
                         <Font size="16.0" />
                      </font>
                   </Label>
-                  <MFXTextField fx:id="uEmail" allowEdit="false" floatMode="DISABLED" floatingTextGap="1.0" layoutX="347.0" layoutY="254.0" prefHeight="49.0" prefWidth="248.0">
+                  <MFXTextField fx:id="uEmail" floatMode="DISABLED" floatingTextGap="1.0" layoutX="347.0" layoutY="254.0" prefHeight="49.0" prefWidth="248.0" styleClass="ufields">
                      <font>
                         <Font size="16.0" />
                      </font>
@@ -174,7 +175,7 @@
                         <Font size="16.0" />
                      </font>
                   </Label>
-                  <MFXTextField fx:id="uJob" allowEdit="false" floatMode="DISABLED" floatingTextGap="1.0" layoutX="648.0" layoutY="254.0" prefHeight="49.0" prefWidth="248.0">
+                  <MFXTextField fx:id="uJob" floatMode="DISABLED" floatingTextGap="1.0" layoutX="648.0" layoutY="254.0" prefHeight="49.0" prefWidth="248.0" styleClass="ufields">
                      <font>
                         <Font size="16.0" />
                      </font>
@@ -187,7 +188,7 @@
                         <Font size="16.0" />
                      </font>
                   </Label>
-                  <MFXTextField fx:id="uUsername" allowEdit="false" floatMode="DISABLED" floatingTextGap="1.0" layoutX="52.0" layoutY="388.0" prefHeight="49.0" prefWidth="248.0">
+                  <MFXTextField fx:id="uUsername" floatMode="DISABLED" floatingTextGap="1.0" layoutX="52.0" layoutY="388.0" prefHeight="49.0" prefWidth="248.0" styleClass="ufields">
                      <font>
                         <Font size="16.0" />
                      </font>
@@ -200,7 +201,7 @@
                         <Font size="16.0" />
                      </font>
                   </Label>
-                  <MFXTextField fx:id="uPassword" allowEdit="false" floatMode="DISABLED" floatingTextGap="1.0" layoutX="347.0" layoutY="388.0" prefHeight="49.0" prefWidth="248.0">
+                  <MFXTextField fx:id="uPassword" floatMode="DISABLED" floatingTextGap="1.0" layoutX="347.0" layoutY="388.0" prefHeight="49.0" prefWidth="248.0" styleClass="ufields">
                      <font>
                         <Font size="16.0" />
                      </font>
@@ -213,6 +214,11 @@
                         <Font size="16.0" />
                      </font>
                   </Label>
+                  <MFXButton fx:id="editBtn" buttonType="RAISED" depthLevel="LEVEL4" layoutX="334.0" layoutY="39.0" onAction="#editData" prefHeight="25.0" prefWidth="62.0" style="-fx-background-color: #300e80; -fx-cursor: hand;" text="Edit" textFill="WHITE">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </MFXButton>
                </children>
             </AnchorPane>
          </children></AnchorPane>

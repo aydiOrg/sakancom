@@ -1,6 +1,7 @@
 package com.example.sakankom;
 import com.example.sakankom.dataStructures.Tenant;
 import com.example.sakankom.dataStructures.User;
+import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -32,6 +33,7 @@ public class MainPageHandler implements Initializable {
 
                         tenant = new Tenant();
                         while (rst.next()){
+                                tenant.setUpdated(false);
                                 tenant.setTenantID(rst.getInt("tenant_id"));
                                 tenant.setFname(rst.getString("fname"));
                                 tenant.setLname(rst.getString("lname"));
@@ -50,7 +52,7 @@ public class MainPageHandler implements Initializable {
                 }
 
                 //set the labels
-                uName.setText(tenant.getFname() + tenant.getLname());
+                uName.setText(tenant.getFname() + " " + tenant.getLname());
                 uBdate.setText(tenant.getbDate().substring(0,10));
                 uJob.setText(tenant.getJob());
                 uPhone.setText(tenant.getpNumber());
@@ -109,7 +111,8 @@ public class MainPageHandler implements Initializable {
 
         @FXML
         private AnchorPane mainPane;
-
+        @FXML
+        private MFXButton editBtn;
 
         AnchorPane page2;
         AnchorPane page3;
@@ -122,6 +125,52 @@ public class MainPageHandler implements Initializable {
         @Override
         public void initialize(URL url, ResourceBundle resourceBundle) {
                 buttons[0] = btn1;buttons[1] = btn2;buttons[2] = btn3;buttons[3] = btn4;buttons[4] = btn5;
+                uEmail.setEditable(false); uUsername.setEditable(false); uPassword.setEditable(false); uGender.setEditable(false); uJob.setEditable(false); uPhone.setEditable(false);uBdate.setEditable(false);uName.setEditable(false);
+        }
+
+        @FXML
+        public void editData(ActionEvent event) {
+               if(editBtn.getText().equalsIgnoreCase("edit")){
+                       tenant.setUpdated(true);
+                       //setting the fields to be editable
+                       uEmail.setEditable(true); uUsername.setEditable(true); uPassword.setEditable(true); uGender.setEditable(true); uJob.setEditable(true); uPhone.setEditable(true);uBdate.setEditable(true);uName.setEditable(true);
+                       editBtn.setText("Save");
+                }
+                else if(editBtn.getText().equalsIgnoreCase("save")){
+                        tenant.setUpdated(false);
+                        //setting the fields to be editable
+                        uEmail.setEditable(false); uUsername.setEditable(false); uPassword.setEditable(false); uGender.setEditable(false); uJob.setEditable(false); uPhone.setEditable(false);uBdate.setEditable(false);uName.setEditable(false);
+                        editBtn.setText("edit");
+                        //insert the data to the database
+
+                        String []name = uName.getText().split(" ");
+                        String bdate = uBdate.getText();
+                        String pnumber = uPhone.getText();
+                        String email = uEmail.getText();
+                        String job = uJob.getText();
+                        String gender = uGender.getText();
+                        String username = uUsername.getText();
+                        String password = uPassword.getText();
+
+
+
+                        try{
+                                DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
+                                Connection con = DriverManager.getConnection("jdbc:oracle:thin:@//localhost:1521/xepdb1", "sakankom", "12345678");
+                                //jdbc:oracle:thin:@//localhost:1521/xepdb1
+                                Statement st = con.createStatement();
+                                st.executeUpdate("update tenant set fname= '" + name[0] + "' , lname = '" + name[1] + "' , birthdate = to_date('" + bdate + "','yyyy-mm-dd') , phone_number = '" + pnumber + "' , email = '" + email + "', job = '" + job+ "' , gender = '" + gender + "', username = '" +username+ "', pass = '" +password + "' where username = '" + tenant.getUsername() + "'" );
+
+                                con.setAutoCommit(false);
+                                con.commit();
+                                con.close();
+                        } catch (Exception e)
+                        {
+                                e.printStackTrace();
+                        }
+
+                }
+
         }
 
         @FXML
