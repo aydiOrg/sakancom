@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import io.github.palexdev.materialfx.controls.MFXScrollPane?>
 <?import io.github.palexdev.materialfx.controls.MFXTextField?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
@@ -42,12 +44,12 @@
                         <Font size="20.0" />
                      </font>
                   </Button>
-                  <Button fx:id="btn2" mnemonicParsing="false" onAction="#showPage2" prefHeight="60.0" prefWidth="241.0" style="-fx-cursor: hand;" stylesheets="@../../../mainPageButtonsUnselected.css" text="Page2">
+                  <Button fx:id="btn2" mnemonicParsing="false" onAction="#showPage2" prefHeight="60.0" prefWidth="241.0" style="-fx-cursor: hand;" stylesheets="@../../../mainPageButtonsUnselected.css" text="Reservations">
                      <font>
                         <Font size="20.0" />
                      </font>
                   </Button>
-                  <Button fx:id="btn3" mnemonicParsing="false" onAction="#showPage3" prefHeight="60.0" prefWidth="245.0" style="-fx-cursor: hand;" stylesheets="@../../../mainPageButtonsUnselected.css" text="Page3">
+                  <Button fx:id="btn3" mnemonicParsing="false" onAction="#showPage3" prefHeight="60.0" prefWidth="245.0" style="-fx-cursor: hand;" stylesheets="@../../../mainPageButtonsUnselected.css" text="Apartments">
                      <font>
                         <Font size="20.0" />
                      </font>
@@ -114,7 +116,7 @@
                         <Font size="16.0" />
                      </font>
                   </Label>
-                  <MFXTextField fx:id="uPhone" floatMode="DISABLED" floatingTextGap="1.0" layoutX="52.0" layoutY="254.0" prefHeight="49.0" prefWidth="248.0" styleClass="ufields">
+                  <MFXTextField fx:id="uPhone" floatMode="DISABLED" floatingTextGap="1.0" layoutX="52.0" layoutY="228.0" prefHeight="49.0" prefWidth="248.0" styleClass="ufields">
                      <font>
                         <Font size="16.0" />
                      </font>
@@ -122,12 +124,12 @@
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                      </padding>
                   </MFXTextField>
-                  <Label layoutX="58.0" layoutY="224.0" prefHeight="25.0" prefWidth="120.0" text="Phone">
+                  <Label layoutX="58.0" layoutY="198.0" prefHeight="25.0" prefWidth="120.0" text="Phone">
                      <font>
                         <Font size="16.0" />
                      </font>
                   </Label>
-                  <MFXTextField fx:id="uEmail" floatMode="DISABLED" floatingTextGap="1.0" layoutX="347.0" layoutY="254.0" prefHeight="49.0" prefWidth="248.0" styleClass="ufields">
+                  <MFXTextField fx:id="uEmail" floatMode="DISABLED" floatingTextGap="1.0" layoutX="347.0" layoutY="228.0" prefHeight="49.0" prefWidth="248.0" styleClass="ufields">
                      <font>
                         <Font size="16.0" />
                      </font>
@@ -135,12 +137,12 @@
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                      </padding>
                   </MFXTextField>
-                  <Label layoutX="353.0" layoutY="223.0" prefHeight="25.0" prefWidth="120.0" text="Email">
+                  <Label layoutX="353.0" layoutY="197.0" prefHeight="25.0" prefWidth="120.0" text="Email">
                      <font>
                         <Font size="16.0" />
                      </font>
                   </Label>
-                  <MFXTextField fx:id="uJob" floatMode="DISABLED" floatingTextGap="1.0" layoutX="648.0" layoutY="254.0" prefHeight="49.0" prefWidth="248.0" styleClass="ufields">
+                  <MFXTextField fx:id="uJob" floatMode="DISABLED" floatingTextGap="1.0" layoutX="648.0" layoutY="228.0" prefHeight="49.0" prefWidth="248.0" styleClass="ufields">
                      <font>
                         <Font size="16.0" />
                      </font>
@@ -148,12 +150,12 @@
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                      </padding>
                   </MFXTextField>
-                  <Label layoutX="654.0" layoutY="223.0" prefHeight="25.0" prefWidth="120.0" text="Job/major">
+                  <Label layoutX="654.0" layoutY="197.0" prefHeight="25.0" prefWidth="120.0" text="Job/major">
                      <font>
                         <Font size="16.0" />
                      </font>
                   </Label>
-                  <MFXTextField fx:id="uUsername" floatMode="DISABLED" floatingTextGap="1.0" layoutX="52.0" layoutY="388.0" prefHeight="49.0" prefWidth="248.0" styleClass="ufields">
+                  <MFXTextField fx:id="uUsername" floatMode="DISABLED" floatingTextGap="1.0" layoutX="52.0" layoutY="336.0" prefHeight="49.0" prefWidth="248.0" styleClass="ufields">
                      <font>
                         <Font size="16.0" />
                      </font>
@@ -161,12 +163,12 @@
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                      </padding>
                   </MFXTextField>
-                  <Label layoutX="61.0" layoutY="358.0" prefHeight="25.0" prefWidth="120.0" text="Username">
+                  <Label layoutX="61.0" layoutY="306.0" prefHeight="25.0" prefWidth="120.0" text="Username">
                      <font>
                         <Font size="16.0" />
                      </font>
                   </Label>
-                  <MFXTextField fx:id="uPassword" floatMode="DISABLED" floatingTextGap="1.0" layoutX="347.0" layoutY="388.0" prefHeight="49.0" prefWidth="248.0" styleClass="ufields">
+                  <MFXTextField fx:id="uPassword" floatMode="DISABLED" floatingTextGap="1.0" layoutX="347.0" layoutY="336.0" prefHeight="49.0" prefWidth="248.0" styleClass="ufields">
                      <font>
                         <Font size="16.0" />
                      </font>
@@ -174,7 +176,7 @@
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                      </padding>
                   </MFXTextField>
-                  <Label layoutX="353.0" layoutY="358.0" prefHeight="25.0" prefWidth="120.0" text="Password">
+                  <Label layoutX="353.0" layoutY="306.0" prefHeight="25.0" prefWidth="120.0" text="Password">
                      <font>
                         <Font size="16.0" />
                      </font>
@@ -184,6 +186,16 @@
                         <Font size="14.0" />
                      </font>
                   </MFXButton>
+                  <MFXScrollPane layoutX="37.0" layoutY="451.0" prefHeight="259.0" prefWidth="960.0" style="-fx-background-color: #f2f2f2;">
+                     <content>
+                        <HBox fx:id="container" prefHeight="240.0" prefWidth="957.0" />
+                     </content>
+                  </MFXScrollPane>
+                  <Label layoutX="53.0" layoutY="392.0" prefHeight="52.0" prefWidth="277.0" style="-fx-font-size: 24px;" stylesheets="@../../../fontstyle.css" text="My Reservations" textFill="#300e80">
+                     <font>
+                        <Font name="System Bold" size="24.0" />
+                     </font>
+                  </Label>
                </children>
             </AnchorPane>
          </children></AnchorPane>

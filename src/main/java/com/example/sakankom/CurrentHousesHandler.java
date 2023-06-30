@@ -1,6 +1,7 @@
 package com.example.sakankom;
 import com.example.sakankom.dataStructures.Apartment;
 import io.github.palexdev.materialfx.controls.MFXButton;
+import io.github.palexdev.materialfx.controls.MFXScrollPane;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
@@ -24,8 +25,18 @@ import java.util.ResourceBundle;
 public class CurrentHousesHandler implements Initializable {
     @FXML
     private VBox container;
+    @FXML
+    private MFXScrollPane mainPane;
+
+    public ArrayList<Apartment> getApartments() {
+        return apartments;
+    }
+
     ArrayList<Apartment> apartments;
 
+    public MFXScrollPane getMainPane() {
+        return mainPane;
+    }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         apartments = new ArrayList<Apartment>();
@@ -37,11 +48,13 @@ public class CurrentHousesHandler implements Initializable {
             Connection con = DriverManager.getConnection("jdbc:oracle:thin:@//localhost:1521/xepdb1", "sakankom", "12345678");
             //jdbc:oracle:thin:@//localhost:1521/xepdb1
             Statement st = con.createStatement();
-            rst = st.executeQuery("select * from house,owner,residence where house.residence_id = residence.residence_id and residence.owner_id = owner.owner_id");
+            rst = st.executeQuery("select * from house,owner,residence where house.residence_id = residence.residence_id and residence.owner_id = owner.owner_id and isreserved = '0'");
 
             Apartment apt;
             while(rst.next()) {
                 apt = new Apartment();
+                apt.setOwnerEmail(rst.getString("email"));
+                apt.setOwnerPhone(rst.getString("phone_number"));
                 apt.setAddress(rst.getString("location"));
                 apt.setOwnerName(rst.getString("fname") + " " + rst.getString("lname"));
                 apt.setAptName(rst.getString("residence_name"));

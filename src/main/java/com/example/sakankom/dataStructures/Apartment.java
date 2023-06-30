@@ -9,6 +9,9 @@ public class Apartment {
     private String services;
     private String aptName;
     private String ownerName;
+    private String ownerEmail;
+    private String ownerPhone;
+
     private double price;
     private int floor;
     private int aptNumber;
@@ -17,7 +20,6 @@ public class Apartment {
     private String gender;
     private String isValid;
     private String isAccepted;
-
     private String balcony;
     private String address;
 
@@ -41,6 +43,14 @@ public class Apartment {
 
     public void setHouseId(int houseId) {
         this.houseId = houseId;
+    }
+
+    public void setOwnerEmail(String ownerEmail) {
+        this.ownerEmail = ownerEmail;
+    }
+
+    public void setOwnerPhone(String ownerPhone) {
+        this.ownerPhone = ownerPhone;
     }
 
     public void setResidenceId(int residenceId) {
@@ -166,5 +176,13 @@ public class Apartment {
 
     public String getIsAccepted() {
         return isAccepted;
+    }
+
+    public String getOwnerEmail() {
+        return ownerEmail;
+    }
+
+    public String getOwnerPhone() {
+        return ownerPhone;
     }
 }
