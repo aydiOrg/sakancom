@@ -79,5 +79,15 @@ public class TenantDataFeatureSteps {
     public void hisDataShouldBeUpdated() {
 
     }
+    //3rd Scenario
+    @Given("the tenant has reservations")
+    public void theTenantHasReservations() {
+        // Write code here that turns the phrase above into concrete actions
+    }
+    @Then("all of them should be displayed")
+    public void allOfThemShouldBeDisplayed() {
+        // Write code here that turns the phrase above into concrete actions
+    }
+
 
 }

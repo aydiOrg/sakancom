@@ -11,3 +11,7 @@ Scenario:
   And user presses save after editing the data
 
   Then his data should be updated
+
+Scenario:
+  Given the tenant has reservations
+  Then all of them should be displayed
