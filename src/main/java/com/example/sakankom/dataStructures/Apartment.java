@@ -22,7 +22,15 @@ public class Apartment {
     private String isAccepted;
     private String balcony;
     private String address;
+    private  String isReserved;
 
+    public void setIsReserved(String isReserved) {
+        this.isReserved = isReserved;
+    }
+
+    public String getIsReserved() {
+        return isReserved;
+    }
 
     //setters
     public void setAddress(String address) {

@@ -33,6 +33,7 @@ public class MainPageHandler implements Initializable {
         User user;
         ArrayList<Apartment> apartments;
         ArrayList<Reservation> reservations;
+        CurrentHousesHandler currentHousesHandler;
         Tenant tenant;
         void setUser(User u) {
                 this.user = u;
@@ -66,6 +67,9 @@ public class MainPageHandler implements Initializable {
                 catch (SQLException e) {
                         e.printStackTrace();
                 }
+
+                //send the tenant data to currentHousesHandler
+                currentHousesHandler.setTenant(tenant);
 
                 //set the labels
                 uName.setText(tenant.getFname() + " " + tenant.getLname());
@@ -269,7 +273,7 @@ public class MainPageHandler implements Initializable {
                 } catch (IOException e) {
                         throw new RuntimeException(e);
                 }
-                 CurrentHousesHandler currentHousesHandler = loader1.getController();
+                currentHousesHandler = loader1.getController();
                 page3 = currentHousesHandler.getMainPane();
                 apartments = currentHousesHandler.getApartments();
 
