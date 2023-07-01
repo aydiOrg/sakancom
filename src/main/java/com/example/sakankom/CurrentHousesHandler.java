@@ -5,8 +5,13 @@ import io.github.palexdev.materialfx.controls.MFXScrollPane;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -15,8 +20,10 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
+import javafx.stage.Stage;
 
 import javax.swing.*;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
 import java.util.ArrayList;
@@ -34,11 +41,13 @@ public class CurrentHousesHandler implements Initializable {
 
     ArrayList<Apartment> apartments;
 
+    MFXButton ss = new MFXButton("hhhhhhhhhhhhhhh");
     public MFXScrollPane getMainPane() {
         return mainPane;
     }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        container.getChildren().add(ss);
         apartments = new ArrayList<Apartment>();
         //retrieve the data from database
         ResultSet rst;
@@ -164,6 +173,39 @@ public class CurrentHousesHandler implements Initializable {
 
             container.getChildren().add(card);
 
+            reserveBtn.setId(Integer.toString(apartments.get(i).getHouseId()));
+            detailsBtn.setId(Integer.toString(apartments.get(i).getHouseId()));
+
+            int finalI = i;
+            detailsBtn.setOnAction(handler);
+//            ss.setOnAction(new EventHandler<ActionEvent>() {
+//                @Override
+//                public void handle(ActionEvent event) {
+//                    System.out.println("sssssssssssss");
+//                    Stage newStage = new Stage();
+//                    FXMLLoader loader = new FXMLLoader(getClass().getResource("House-Details.fxml"));
+//                    Parent root = null;
+//                    try {
+//                        root = loader.load();
+//                    } catch (IOException e) {
+//                        e.printStackTrace();
+//                    }
+//                    Scene scene = new Scene(root,800,600);
+//                    newStage.setScene(scene);
+//                    newStage.show();
+//
+//                    HouseDetailsHandler houseDetailsHandler = loader.getController();
+//                    houseDetailsHandler.valuesSetter(apartments.get(finalI));
+//
+//                }
+//            });
+            reserveBtn.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+
+                }
+            });
+
             //where it ends
 
 
@@ -171,5 +213,13 @@ public class CurrentHousesHandler implements Initializable {
 
 
 
+
     }
+    EventHandler<ActionEvent> handler = event -> {
+        MFXButton btn = (MFXButton) event.getSource();
+        int i = Integer.parseInt(btn.getId());
+    };
+
+
+
 }
