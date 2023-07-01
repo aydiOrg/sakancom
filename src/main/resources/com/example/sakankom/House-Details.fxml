@@ -15,7 +15,7 @@
       </Label>
       <Label fx:id="uaddress" layoutX="18.0" layoutY="66.0" prefHeight="32.0" prefWidth="226.0" text="Nablus, Rafedia">
          <font>
-            <Font size="18.0" />
+            <Font size="16.0" />
          </font>
       </Label>
       <Label layoutX="255.0" layoutY="66.0" prefHeight="32.0" prefWidth="48.0" text="Floor:">
@@ -25,7 +25,7 @@
       </Label>
       <Label fx:id="ufloor" layoutX="307.0" layoutY="66.0" prefHeight="32.0" prefWidth="20.0" text="1">
          <font>
-            <Font size="18.0" />
+            <Font size="16.0" />
          </font>
       </Label>
       <Label layoutX="400.0" layoutY="66.0" prefHeight="32.0" prefWidth="162.0" text="Apartment number:">
@@ -35,7 +35,7 @@
       </Label>
       <Label fx:id="uaptnumber" layoutX="568.0" layoutY="66.0" prefHeight="32.0" prefWidth="39.0" text="2">
          <font>
-            <Font size="18.0" />
+            <Font size="16.0" />
          </font>
       </Label>
       <Label layoutX="607.0" layoutY="118.0" prefHeight="32.0" prefWidth="88.0" text="Bedrooms:">
@@ -45,7 +45,7 @@
       </Label>
       <Label fx:id="ubedrooms" layoutX="698.0" layoutY="118.0" prefHeight="32.0" prefWidth="28.0" text="3">
          <font>
-            <Font size="18.0" />
+            <Font size="16.0" />
          </font>
       </Label>
       <Label layoutX="254.0" layoutY="118.0" prefHeight="32.0" prefWidth="96.0" text="Bathrooms:">
@@ -55,7 +55,7 @@
       </Label>
       <Label fx:id="ubathrooms" layoutX="350.0" layoutY="118.0" prefHeight="32.0" prefWidth="39.0" text="2">
          <font>
-            <Font size="18.0" />
+            <Font size="16.0" />
          </font>
       </Label>
       <Label layoutX="398.0" layoutY="118.0" prefHeight="32.0" prefWidth="72.0" text="Balcony:">
@@ -65,7 +65,7 @@
       </Label>
       <Label fx:id="ubalcony" layoutX="474.0" layoutY="118.0" prefHeight="32.0" prefWidth="48.0" text="yes">
          <font>
-            <Font size="18.0" />
+            <Font size="16.0" />
          </font>
       </Label>
       <Label layoutX="18.0" layoutY="118.0" prefHeight="32.0" prefWidth="162.0" text="Apartments in floor:">
@@ -75,7 +75,7 @@
       </Label>
       <Label fx:id="uaptcount" layoutX="184.0" layoutY="118.0" prefHeight="32.0" prefWidth="39.0" text="4">
          <font>
-            <Font size="18.0" />
+            <Font size="16.0" />
          </font>
       </Label>
       <Label layoutX="256.0" layoutY="175.0" prefHeight="32.0" prefWidth="79.0" text="Capacity:">
@@ -85,7 +85,7 @@
       </Label>
       <Label fx:id="ucapacity" layoutX="337.0" layoutY="175.0" prefHeight="32.0" prefWidth="28.0" text="2">
          <font>
-            <Font size="18.0" />
+            <Font size="16.0" />
          </font>
       </Label>
       <Label layoutX="400.0" layoutY="175.0" prefHeight="32.0" prefWidth="79.0" text="Available:">
@@ -95,7 +95,7 @@
       </Label>
       <Label fx:id="uavailable" layoutX="487.0" layoutY="175.0" prefHeight="32.0" prefWidth="39.0" text="2">
          <font>
-            <Font size="18.0" />
+            <Font size="16.0" />
          </font>
       </Label>
       <Label layoutX="18.0" layoutY="175.0" prefHeight="32.0" prefWidth="48.0" text="Type:">
@@ -103,9 +103,9 @@
             <Font size="18.0" />
          </font>
       </Label>
-      <Label fx:id="utype" layoutX="67.0" layoutY="175.0" prefHeight="32.0" prefWidth="79.0" text="solo">
+      <Label fx:id="utype" layoutX="67.0" layoutY="175.0" prefHeight="32.0" prefWidth="152.0" text="solo">
          <font>
-            <Font size="18.0" />
+            <Font size="16.0" />
          </font>
       </Label>
       <Label layoutX="18.0" layoutY="237.0" prefHeight="32.0" prefWidth="61.0" text="Owner:">
@@ -113,9 +113,9 @@
             <Font size="18.0" />
          </font>
       </Label>
-      <Label fx:id="uownername" layoutX="80.0" layoutY="237.0" prefHeight="32.0" prefWidth="152.0" text="Belal">
+      <Label fx:id="uownername" layoutX="80.0" layoutY="237.0" prefHeight="32.0" prefWidth="162.0" text="Belal">
          <font>
-            <Font size="18.0" />
+            <Font size="16.0" />
          </font>
       </Label>
       <Label layoutX="256.0" layoutY="237.0" prefHeight="32.0" prefWidth="61.0" text="Phone:">
@@ -125,7 +125,7 @@
       </Label>
       <Label fx:id="uphone" layoutX="321.0" layoutY="237.0" prefHeight="32.0" prefWidth="130.0" text="05977143639">
          <font>
-            <Font size="18.0" />
+            <Font size="16.0" />
          </font>
       </Label>
       <Label layoutX="467.0" layoutY="237.0" prefHeight="32.0" prefWidth="48.0" text="Email:">
@@ -135,28 +135,28 @@
       </Label>
       <Label fx:id="uemail" layoutX="518.0" layoutY="237.0" prefHeight="32.0" prefWidth="275.0" text="mohammed7.aydi@gmail.com">
          <font>
-            <Font size="18.0" />
+            <Font size="16.0" />
          </font>
       </Label>
-      <Label layoutX="18.0" layoutY="292.0" prefHeight="32.0" prefWidth="105.0" text="Neighbours:">
+      <Label layoutX="18.0" layoutY="347.0" prefHeight="32.0" prefWidth="105.0" text="Neighbours:">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <MFXScrollPane layoutX="17.0" layoutY="324.0" prefHeight="100.0" prefWidth="759.0">
+      <MFXScrollPane layoutX="17.0" layoutY="379.0" prefHeight="125.0" prefWidth="759.0" style="-fx-background-color: #f2f2f2;">
          <content>
-            <HBox fx:id="container1" prefHeight="86.0" prefWidth="757.0" />
+            <HBox fx:id="container1" prefHeight="111.0" prefWidth="755.0" />
          </content>
       </MFXScrollPane>
-      <Label layoutX="18.0" layoutY="437.0" prefHeight="32.0" prefWidth="117.0" text="In same Floor:">
+      <Label layoutX="18.0" layoutY="294.0" prefHeight="32.0" prefWidth="72.0" text="Services:">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <MFXScrollPane layoutX="21.0" layoutY="469.0" prefHeight="100.0" prefWidth="759.0">
-         <content>
-            <HBox fx:id="container2" prefHeight="86.0" prefWidth="757.0" />
-         </content>
-      </MFXScrollPane>
+      <Label fx:id="uservices" layoutX="90.0" layoutY="294.0" prefHeight="32.0" prefWidth="685.0">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>
