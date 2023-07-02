@@ -1,10 +1,21 @@
 package com.example.sakankom.OwnerFiles;
 
 public class House {
+    public House(String name, String imageSrc, int price, String res) {
+        this.name = name;
+        this.imageSrc = imageSrc;
+        this.price = price;
+        this.res = res;
+    }
+
+    public House() {
+    }
+
     private String name;
     private String imageSrc;
-    private double rating;
+    private int price;
     private String res;
+
 
     public String getRes() {
         return res;
@@ -30,11 +41,11 @@ public class House {
         this.imageSrc = imageSrc;
     }
 
-    public double getRating() {
-        return rating;
+    public int getPrice() {
+        return price;
     }
 
-    public void setRating(double rating) {
-        this.rating = rating;
+    public void setPrice(int price) {
+        this.price = price;
     }
 }

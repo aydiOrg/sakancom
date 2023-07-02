@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.JFXButton?>
 <?import io.github.palexdev.materialfx.controls.MFXButton?>
 <?import io.github.palexdev.materialfx.controls.MFXScrollPane?>
 <?import java.lang.String?>
@@ -23,29 +22,42 @@
    <children>
       <VBox alignment="TOP_CENTER" prefHeight="720.0" prefWidth="250.0" spacing="5.0" styleClass="sidebar" stylesheets="@../../../OwnerPage.css">
          <children>
-            <Label alignment="CENTER" prefHeight="60.0" prefWidth="250.0" styleClass="dashboard-text" text="Dashboard" textFill="WHITE">
-               <font>
-                  <Font name="Berlin Sans FB Demi Bold" size="24.0" />
-               </font>
-            </Label>
             <VBox prefHeight="607.0" prefWidth="250.0">
                <children>
-                  <Label prefHeight="30.0" prefWidth="165.0" text="Browse" textFill="WHITE">
+                  <HBox alignment="CENTER_RIGHT" prefHeight="60.0" prefWidth="226.0">
+                     <children>
+                        <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" smooth="false">
+                           <image>
+                              <Image url="@../../../photos/user.png" />
+                           </image>
+                           <HBox.margin>
+                              <Insets right="5.0" />
+                           </HBox.margin>
+                        </ImageView>
+                        <Label prefHeight="60.0" prefWidth="168.0" text="Owner dashboard" textFill="WHITE">
+                           <font>
+                              <Font name="Berlin Sans FB" size="20.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets left="10.0" />
+                           </HBox.margin>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <Pane prefHeight="26.0" prefWidth="250.0" />
+                  <Label layoutX="10.0" layoutY="30.0" prefHeight="30.0" prefWidth="165.0" text="Your Houses" textFill="WHITE">
                      <font>
                         <Font name="Berlin Sans FB" size="20.0" />
                      </font>
                      <padding>
                         <Insets left="15.0" />
                      </padding>
-                     <VBox.margin>
-                        <Insets top="20.0" />
-                     </VBox.margin>
                   </Label>
-                  <MFXButton fx:id="btnMain" buttonType="RAISED" onAction="#mainBtnHandler" prefHeight="60.0" prefWidth="250.0" text="Main" textFill="WHITE">
+                  <MFXButton fx:id="btnMain" buttonType="RAISED" onAction="#mainBtnHandler" prefHeight="60.0" prefWidth="250.0" text="Houses" textFill="WHITE">
                      <graphic>
                         <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" styleClass="btns-icons">
                            <image>
-                              <Image url="@../../../photos/data.png" />
+                              <Image url="@../../../photos/home.png" />
                            </image>
                         </ImageView>
                      </graphic>
@@ -55,95 +67,6 @@
                      <VBox.margin>
                         <Insets />
                      </VBox.margin>
-                     <styleClass>
-                        <String fx:value="btns" />
-                        <String fx:value="mouse-moved" />
-                     </styleClass>
-                  </MFXButton>
-                  <MFXButton fx:id="btnTopHouses" buttonType="RAISED" layoutX="10.0" layoutY="160.0" onAction="#topHousesBtnHandler" prefHeight="60.0" prefWidth="250.0" text="Top Houses" textFill="WHITE">
-                     <font>
-                        <Font name="Berlin Sans FB" size="24.0" />
-                     </font>
-                     <graphic>
-                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../../../photos/top-10.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                     <styleClass>
-                        <String fx:value="btns" />
-                        <String fx:value="mouse-moved" />
-                     </styleClass>
-                  </MFXButton>
-                  <MFXButton fx:id="btnComments" buttonType="RAISED" layoutX="10.0" layoutY="10.0" onAction="#commentsBtnHandler" prefHeight="60.0" prefWidth="250.0" text="Comments" textFill="WHITE">
-                     <font>
-                        <Font name="Berlin Sans FB" size="24.0" />
-                     </font>
-                     <graphic>
-                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../../../photos/mail.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                     <styleClass>
-                        <String fx:value="btns" />
-                        <String fx:value="mouse-moved" />
-                     </styleClass>
-                  </MFXButton>
-                  <Separator prefWidth="200.0" />
-                  <Label layoutX="10.0" layoutY="30.0" prefHeight="30.0" prefWidth="165.0" text="Your Houses" textFill="WHITE">
-                     <font>
-                        <Font name="Berlin Sans FB" size="20.0" />
-                     </font>
-                     <padding>
-                        <Insets left="15.0" />
-                     </padding>
-                  </Label>
-                  <MFXButton fx:id="btnHouses" buttonType="RAISED" layoutX="10.0" layoutY="85.0" onAction="#housesBtnHandler" prefHeight="60.0" prefWidth="250.0" text="Houses" textFill="WHITE">
-                     <font>
-                        <Font name="Berlin Sans FB" size="24.0" />
-                     </font>
-                     <graphic>
-                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../../../photos/home.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                     <styleClass>
-                        <String fx:value="btns" />
-                        <String fx:value="mouse-moved" />
-                     </styleClass>
-                  </MFXButton>
-                  <MFXButton fx:id="btnFavorites" buttonType="RAISED" layoutX="10.0" layoutY="135.0" onAction="#favoritesBtnHandler" prefHeight="60.0" prefWidth="250.0" text="Favorites" textFill="WHITE">
-                     <font>
-                        <Font name="Berlin Sans FB" size="24.0" />
-                     </font>
-                     <graphic>
-                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../../../photos/favorite.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                     <styleClass>
-                        <String fx:value="btns" />
-                        <String fx:value="mouse-moved" />
-                     </styleClass>
-                  </MFXButton>
-                  <MFXButton fx:id="btnHistory" buttonType="RAISED" layoutX="10.0" layoutY="315.0" onAction="#historyBtnHandler" prefHeight="60.0" prefWidth="250.0" text="History" textFill="WHITE">
-                     <font>
-                        <Font name="Berlin Sans FB" size="24.0" />
-                     </font>
-                     <graphic>
-                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../../../photos/history.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
                      <styleClass>
                         <String fx:value="btns" />
                         <String fx:value="mouse-moved" />
@@ -174,7 +97,7 @@
                         <String fx:value="mouse-moved" />
                      </styleClass>
                   </MFXButton>
-                  <MFXButton fx:id="btnCloseHouse" buttonType="RAISED" layoutX="10.0" layoutY="480.0" onAction="#closeHouseBtnHandler" prefHeight="60.0" prefWidth="250.0" text="Close House" textFill="WHITE">
+                  <MFXButton fx:id="btnAddResidence" buttonType="RAISED" layoutX="10.0" layoutY="480.0" onAction="#addResidenceBtnHandler" prefHeight="60.0" prefWidth="250.0" text="Add Residence" textFill="WHITE">
                      <font>
                         <Font name="Berlin Sans FB" size="24.0" />
                      </font>
@@ -215,18 +138,13 @@
                      </HBox.margin>
                   </HBox>
                   <Pane prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
-                  <HBox alignment="CENTER" prefHeight="60.0" prefWidth="192.0">
+                  <HBox alignment="CENTER" prefHeight="60.0" prefWidth="154.0">
                      <children>
-                        <Label prefHeight="60.0" prefWidth="124.0" text="Bara Al Sedih">
+                        <Label prefHeight="60.0" prefWidth="97.0" text="My profile">
                            <font>
                               <Font name="Berlin Sans FB" size="18.0" />
                            </font>
                         </Label>
-                        <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" smooth="false">
-                           <image>
-                              <Image url="@../../../photos/user.png" />
-                           </image>
-                        </ImageView>
                      </children>
                   </HBox>
                </children>
@@ -282,6 +200,5 @@
             </AnchorPane>
          </left>
       </BorderPane>
-      <JFXButton layoutX="23.0" layoutY="-121.0" prefHeight="88.0" prefWidth="121.0" text="Button" />
    </children>
 </AnchorPane>
