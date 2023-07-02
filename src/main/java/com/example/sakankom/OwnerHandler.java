@@ -97,16 +97,16 @@ public class OwnerHandler implements Initializable{
                     recentlyAdded.addAll(recommended);
                 }
                 else {
-                    for (int j = recommended.size() - 1; j > recommended.size() / 2; j--) {
-                        recentlyAdded.add(recentlyAdded.get(recommended.size() - 1 - j));
+                    for (int j = recommended.size() - 1; j >= recommended.size() / 2; j--) {
+                        recentlyAdded.add(recommended.get(recommended.size() - 1 - j));
                     }
                 }
 
                 cardLayout.getChildren().clear();
                 for (House value : recentlyAdded) {
 
-                    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("card.fxml"));
-                    //fxmlLoader.setLocation(getClass().getResource("card.fxml"));
+                    FXMLLoader fxmlLoader = new FXMLLoader();
+                    fxmlLoader.setLocation(getClass().getResource("card.fxml"));
                     HBox cardBox = fxmlLoader.load();
 
                     CardHandler cardHandler = fxmlLoader.getController();
