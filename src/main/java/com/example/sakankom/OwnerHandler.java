@@ -134,6 +134,7 @@ public class OwnerHandler implements Initializable{
                 for (House value : recentlyAdded) {
                     FXMLLoader fxmlLoader = new FXMLLoader();
 
+
                     fxmlLoader.setLocation(getClass().getResource("card.fxml"));
                     HBox cardBox = fxmlLoader.load();
                     System.out.println("hello");
