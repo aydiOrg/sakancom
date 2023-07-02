@@ -21,6 +21,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.Collections;
 
 public class OwnerHandler implements Initializable{
 
@@ -81,10 +82,10 @@ public class OwnerHandler implements Initializable{
                 Statement st3 = con.createStatement();
                 Statement st4 = con.createStatement();
 
-                rst = st.executeQuery("select house_id, residence_id, image, price from house");
+                rst = st.executeQuery("select house_id, residence_id, image, price from house where isValid='1'");
 
                 while(rst.next()){
-                    rst2 = st2.executeQuery("select residence_name from residence where residence_id = '" + rst.getString("residence_id") + "'");
+                    rst2 = st2.executeQuery("select residence_name from residence where residence_id = '" + rst.getString("residence_id") + "' and isVAlid='1'");
                     rst2.next();
                     recommended.add(new House(
                             "House " + rst.getString("house_id"),
@@ -93,6 +94,7 @@ public class OwnerHandler implements Initializable{
                             rst2.getString("residence_name")
                     ));
                 }
+                Collections.reverse(recommended);
                 if (recommended.size() < 4) {
                     recentlyAdded.addAll(recommended);
                 }
@@ -113,7 +115,7 @@ public class OwnerHandler implements Initializable{
                     cardHandler.setDate(value);
                     cardLayout.getChildren().add(cardBox);
                 }
-
+                Collections.reverse(recommended);
                 for (House house : recommended) {
                     FXMLLoader fxmlLoader = new FXMLLoader();
                     fxmlLoader.setLocation(getClass().getResource("house.fxml"));

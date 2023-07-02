@@ -6,9 +6,7 @@ import io.github.palexdev.materialfx.controls.MFXTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class AddResidenceHandler {
 
@@ -35,8 +33,14 @@ public class AddResidenceHandler {
 
         try{
             DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
+            Connection con = DriverManager.getConnection("jdbc:oracle:thin:@//localhost:1521/xepdb1", "sakankom", "12345678");
+            Statement st = con.createStatement();
+            Statement st2 = con.createStatement();
+            Statement st3 = con.createStatement();
+            Statement st4 = con.createStatement();
 
-
+            rst = st.executeQuery("INSERT INTO RESIDENCE VALUES ('" + residenceID.getText() + "','" + ownerID.getText() + "','" + locationField.getText() + "','" + residenceName.getText() + "','1')");
+            con.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
