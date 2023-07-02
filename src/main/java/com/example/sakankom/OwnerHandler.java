@@ -1,8 +1,6 @@
 package com.example.sakankom;
 
-import com.example.sakankom.OwnerFiles.CardHandler;
 import com.example.sakankom.OwnerFiles.House;
-import com.example.sakankom.OwnerFiles.houseHandler;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -107,9 +105,9 @@ public class OwnerHandler implements Initializable{
                 cardLayout.getChildren().clear();
                 for (House value : recentlyAdded) {
 
-                    FXMLLoader fxmlLoader = new FXMLLoader();
-                    fxmlLoader.setLocation(getClass().getResource("card.fxml"));
-                   HBox cardBox = fxmlLoader.load();
+                    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("card.fxml"));
+                    //fxmlLoader.setLocation(getClass().getResource("card.fxml"));
+                    HBox cardBox = fxmlLoader.load();
 
                     CardHandler cardHandler = fxmlLoader.getController();
                     cardHandler.setDate(value);

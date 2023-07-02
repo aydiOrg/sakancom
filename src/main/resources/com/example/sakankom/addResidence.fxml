@@ -9,7 +9,7 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="600.0" prefWidth="800.0" spacing="15.0" styleClass="transparent" stylesheets="@../../../OwnerPage.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.sakankom.OwnerFiles.AddResidenceHandler">
+<VBox prefHeight="600.0" prefWidth="800.0" spacing="15.0" styleClass="transparent" stylesheets="@../../../OwnerPage.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.sakankom.AddResidenceHandler">
     <children>
         <HBox prefHeight="100.0" prefWidth="844.0" spacing="15.0">
             <VBox.margin>
