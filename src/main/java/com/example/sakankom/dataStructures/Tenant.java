@@ -6,17 +6,24 @@ public class Tenant {
     private String lname;
     private String bDate;
     private String pNumber;
-    private  String email;
+    private String email;
     private String job;
     private String gender;
     private String username;
     private String password;
 
+    //flags
+    private boolean isUpdated;
+
+
     public Tenant() {
 
     }
-    //setters ---------------------------------------------------------
 
+    //setters ---------------------------------------------------------
+    public void setUpdated(boolean updated) {
+        isUpdated = updated;
+    }
 
     public void setTenantID(int tenantID) {
         this.tenantID = tenantID;
@@ -60,6 +67,9 @@ public class Tenant {
 
     //getters ----------------------------------------------------------
 
+    public boolean isUpdated() {
+        return isUpdated;
+    }
 
     public int getTenantID() {
         return tenantID;

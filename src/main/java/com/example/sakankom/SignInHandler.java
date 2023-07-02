@@ -118,6 +118,7 @@ public class SignInHandler implements Initializable {
                         MainPageHandler mainPageHandler = loader.getController();
                         mainPageHandler.setUser(user);
                         mainPageHandler.setTenantData(user);
+                        mainPageHandler.manageReservations();
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }

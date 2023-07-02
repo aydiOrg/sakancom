@@ -4,8 +4,6 @@ Feature: tenant's data
 
 Scenario:
   Given user is logged in and the user is a tenant
-  And the user selects the profile from the menu
-
   Then his personal data should be shown
 
 Scenario:
@@ -13,3 +11,7 @@ Scenario:
   And user presses save after editing the data
 
   Then his data should be updated
+
+Scenario:
+  Given the tenant has reservations
+  Then all of them should be displayed

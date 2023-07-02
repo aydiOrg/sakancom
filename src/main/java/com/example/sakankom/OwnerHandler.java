@@ -69,7 +69,7 @@ public class OwnerHandler implements Initializable{
         try {
             mainBtnHandler(new ActionEvent());
         } catch (IOException e) {
-            System.out.println("hello");
+
             throw new RuntimeException(e);
         }
 
@@ -133,8 +133,11 @@ public class OwnerHandler implements Initializable{
                 cardLayout.getChildren().clear();
                 for (House value : recentlyAdded) {
                     FXMLLoader fxmlLoader = new FXMLLoader();
+
+
                     fxmlLoader.setLocation(getClass().getResource("card.fxml"));
                     HBox cardBox = fxmlLoader.load();
+                    System.out.println("hello");
                     CardHandler cardHandler = fxmlLoader.getController();
                     cardHandler.setDate(value);
                     cardLayout.getChildren().add(cardBox);
@@ -177,7 +180,7 @@ public class OwnerHandler implements Initializable{
                 show.getChildren().clear();
                 show.getChildren().add(mainBox);
                 btnMain.getStyleClass().add("selected");
-            }catch (Exception e ){
+            }catch (Exception e){
                 System.out.println(e);
             }
         }
