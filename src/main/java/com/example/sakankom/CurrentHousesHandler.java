@@ -71,9 +71,7 @@ public class CurrentHousesHandler implements Initializable {
         String price = "";
         for(int i= 0; i<apartments.size();i++) {
             if(apartments.get(i).getIsValid().equals("1") && apartments.get(i).getIsAccepted().equals("1") && apartments.get(i).getIsReserved().equalsIgnoreCase("0")){
-                System.out.println(apartments.get(i).getIsReserved());
-                System.out.println(apartments.get(i).getCapacity() + " " + apartments.get(i).getResCapacity() );
-                //data
+               //data
                 name = apartments.get(i).getAptName();
                 owner = apartments.get(i).getOwnerName();
                 type = (apartments.get(i).getCapacity() > 1) ? "shared" : "solo";
@@ -244,7 +242,7 @@ public class CurrentHousesHandler implements Initializable {
 
 
     };
-        EventHandler<ActionEvent> handler2 = event -> {
+    EventHandler<ActionEvent> handler2 = event -> {
         MFXButton btn = (MFXButton) event.getSource();
         String id = btn.getId();
 
@@ -283,7 +281,7 @@ public class CurrentHousesHandler implements Initializable {
             while(!container.getChildren().isEmpty())
                 container.getChildren().remove(0);
             generateGUI();
-            
+
     };
 
 

@@ -19,6 +19,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
@@ -27,6 +28,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.ResourceBundle;
+import java.util.Stack;
+
+import static javafx.application.Platform.exit;
 
 public class MainPageHandler implements Initializable {
         //data from the sign in
@@ -34,7 +38,144 @@ public class MainPageHandler implements Initializable {
         ArrayList<Apartment> apartments;
         ArrayList<Reservation> reservations;
         CurrentHousesHandler currentHousesHandler;
+        FurnitureHandler furnitureHandler;
         Tenant tenant;
+        @FXML
+        private MFXTextField uBdate;
+
+        @FXML
+        private MFXTextField uEmail;
+        @FXML
+        private AnchorPane page1;
+
+        @FXML
+        private MFXTextField uGender;
+
+        @FXML
+        private MFXTextField uJob;
+
+        @FXML
+        private MFXTextField uName;
+
+        @FXML
+        private MFXTextField uPassword;
+
+        @FXML
+        private MFXTextField uPhone;
+
+        @FXML
+        private MFXTextField uUsername;
+
+
+        @FXML
+        private Label userLabel;
+        @FXML
+        private Button btn1;
+        @FXML
+        private HBox container;
+
+        @FXML
+        private Button btn2;
+
+        @FXML
+        private Button btn3;
+        @FXML
+        private Button logoutBtn;
+        @FXML
+        private AnchorPane mainPane;
+        @FXML
+        private MFXButton editBtn;
+
+        private MFXScrollPane page3;
+        MFXScrollPane page2;
+
+        Button[] buttons = new Button[5];
+
+
+        @Override
+        public void initialize(URL url, ResourceBundle resourceBundle) {
+                buttons[0] = btn1;buttons[1] = btn2;buttons[2] = btn3;
+                uEmail.setEditable(false); uUsername.setEditable(false); uPassword.setEditable(false); uGender.setEditable(false); uJob.setEditable(false); uPhone.setEditable(false);uBdate.setEditable(false);uName.setEditable(false);
+                reservations =new ArrayList<Reservation>();
+                //loading my pages
+                FXMLLoader loader1 = new FXMLLoader(getClass().getResource("Current-Houses.fxml"));
+                try {
+                        Parent root1 = loader1.load();
+                } catch (IOException e) {
+                        throw new RuntimeException(e);
+                }
+                currentHousesHandler = loader1.getController();
+                page3 = currentHousesHandler.getMainPane();
+                apartments = currentHousesHandler.getApartments();
+
+                FXMLLoader loader2= new FXMLLoader(getClass().getResource("Furniture.fxml"));
+
+                try{
+                        Parent root2 = loader2.load();
+                }catch (IOException e) {
+                        e.printStackTrace();
+                }
+                furnitureHandler = loader2.getController();
+                page2 = furnitureHandler.getMainPane();
+
+
+
+
+
+
+
+        }
+
+        @FXML
+        public void editData(ActionEvent event) {
+               if(editBtn.getText().equalsIgnoreCase("edit")){
+                       tenant.setUpdated(true);
+                       //setting the fields to be editable
+                       uEmail.setEditable(true); uUsername.setEditable(true); uPassword.setEditable(true); uGender.setEditable(true); uJob.setEditable(true); uPhone.setEditable(true);uBdate.setEditable(true);uName.setEditable(true);
+                       editBtn.setText("Save");uPassword.setText(tenant.getPassword());
+                }
+                else if(editBtn.getText().equalsIgnoreCase("save")){
+                        tenant.setUpdated(false);
+                        //setting the fields to be editable
+                        uEmail.setEditable(false); uUsername.setEditable(false); uPassword.setEditable(false); uGender.setEditable(false); uJob.setEditable(false); uPhone.setEditable(false);uBdate.setEditable(false);uName.setEditable(false);
+                        editBtn.setText("edit");
+                        //insert the data to the database
+
+                        String []name = uName.getText().split(" ");
+                        String bdate = uBdate.getText();
+                        String pnumber = uPhone.getText();
+                        String email = uEmail.getText();
+                        String job = uJob.getText();
+                        String gender = uGender.getText();
+                        String username = uUsername.getText();
+                        String password = uPassword.getText();
+
+
+
+                        try{
+                                DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
+                                Connection con = DriverManager.getConnection("jdbc:oracle:thin:@//localhost:1521/xepdb1", "sakankom", "12345678");
+                                //jdbc:oracle:thin:@//localhost:1521/xepdb1
+                                Statement st = con.createStatement();
+                                st.executeUpdate("update tenant set fname= '" + name[0] + "' , lname = '" + name[1] + "' , birthdate = to_date('" + bdate + "','yyyy-mm-dd') , phone_number = '" + pnumber + "' , email = '" + email + "', job = '" + job+ "' , gender = '" + gender + "', username = '" +username+ "', pass = '" +password + "' where username = '" + tenant.getUsername() + "'" );
+
+                                con.setAutoCommit(false);
+                                con.commit();
+                                con.close();
+                        } catch (Exception e)
+                        {
+                                e.printStackTrace();
+                        }
+                       String s ="";
+                       for(int i =0;i<tenant.getPassword().length();i++) {
+                               s += "*";
+                       }
+                       uPassword.setText(s);
+
+                }
+
+        }
+
         void setUser(User u) {
                 this.user = u;
                 userLabel.setText(user.getUsername());
@@ -70,6 +211,7 @@ public class MainPageHandler implements Initializable {
 
                 //send the tenant data to currentHousesHandler
                 currentHousesHandler.setTenant(tenant);
+                furnitureHandler.setTenant(tenant);
 
                 //set the labels
                 uName.setText(tenant.getFname() + " " + tenant.getLname());
@@ -202,133 +344,6 @@ public class MainPageHandler implements Initializable {
                 }
 
         }
-        @FXML
-        private MFXTextField uBdate;
-
-        @FXML
-        private MFXTextField uEmail;
-        @FXML
-        private AnchorPane page1;
-
-        @FXML
-        private MFXTextField uGender;
-
-        @FXML
-        private MFXTextField uJob;
-
-        @FXML
-        private MFXTextField uName;
-
-        @FXML
-        private MFXTextField uPassword;
-
-        @FXML
-        private MFXTextField uPhone;
-
-        @FXML
-        private MFXTextField uUsername;
-
-
-        @FXML
-        private Label userLabel;
-        @FXML
-        private Button btn1;
-        @FXML
-        private HBox container;
-
-        @FXML
-        private Button btn2;
-
-        @FXML
-        private Button btn3;
-
-        @FXML
-        private Button btn4;
-
-        @FXML
-        private Button btn5;
-
-        @FXML
-        private AnchorPane mainPane;
-        @FXML
-        private MFXButton editBtn;
-
-        private MFXScrollPane page3;
-        AnchorPane page2;
-        AnchorPane page4;
-        AnchorPane page5;
-
-        Button[] buttons = new Button[5];
-
-
-        @Override
-        public void initialize(URL url, ResourceBundle resourceBundle) {
-                buttons[0] = btn1;buttons[1] = btn2;buttons[2] = btn3;buttons[3] = btn4;buttons[4] = btn5;
-                uEmail.setEditable(false); uUsername.setEditable(false); uPassword.setEditable(false); uGender.setEditable(false); uJob.setEditable(false); uPhone.setEditable(false);uBdate.setEditable(false);uName.setEditable(false);
-                reservations =new ArrayList<Reservation>();
-                //loading my pages
-                FXMLLoader loader1 = new FXMLLoader(getClass().getResource("Current-Houses.fxml"));
-                try {
-                        Parent root1 = loader1.load();
-                } catch (IOException e) {
-                        throw new RuntimeException(e);
-                }
-                currentHousesHandler = loader1.getController();
-                page3 = currentHousesHandler.getMainPane();
-                apartments = currentHousesHandler.getApartments();
-
-
-
-
-
-
-
-        }
-
-        @FXML
-        public void editData(ActionEvent event) {
-               if(editBtn.getText().equalsIgnoreCase("edit")){
-                       tenant.setUpdated(true);
-                       //setting the fields to be editable
-                       uEmail.setEditable(true); uUsername.setEditable(true); uPassword.setEditable(true); uGender.setEditable(true); uJob.setEditable(true); uPhone.setEditable(true);uBdate.setEditable(true);uName.setEditable(true);
-                       editBtn.setText("Save");
-                }
-                else if(editBtn.getText().equalsIgnoreCase("save")){
-                        tenant.setUpdated(false);
-                        //setting the fields to be editable
-                        uEmail.setEditable(false); uUsername.setEditable(false); uPassword.setEditable(false); uGender.setEditable(false); uJob.setEditable(false); uPhone.setEditable(false);uBdate.setEditable(false);uName.setEditable(false);
-                        editBtn.setText("edit");
-                        //insert the data to the database
-
-                        String []name = uName.getText().split(" ");
-                        String bdate = uBdate.getText();
-                        String pnumber = uPhone.getText();
-                        String email = uEmail.getText();
-                        String job = uJob.getText();
-                        String gender = uGender.getText();
-                        String username = uUsername.getText();
-                        String password = uPassword.getText();
-
-
-
-                        try{
-                                DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
-                                Connection con = DriverManager.getConnection("jdbc:oracle:thin:@//localhost:1521/xepdb1", "sakankom", "12345678");
-                                //jdbc:oracle:thin:@//localhost:1521/xepdb1
-                                Statement st = con.createStatement();
-                                st.executeUpdate("update tenant set fname= '" + name[0] + "' , lname = '" + name[1] + "' , birthdate = to_date('" + bdate + "','yyyy-mm-dd') , phone_number = '" + pnumber + "' , email = '" + email + "', job = '" + job+ "' , gender = '" + gender + "', username = '" +username+ "', pass = '" +password + "' where username = '" + tenant.getUsername() + "'" );
-
-                                con.setAutoCommit(false);
-                                con.commit();
-                                con.close();
-                        } catch (Exception e)
-                        {
-                                e.printStackTrace();
-                        }
-
-                }
-
-        }
 
         @FXML
         void showPage1(ActionEvent event) {
@@ -337,7 +352,7 @@ public class MainPageHandler implements Initializable {
                 }
                 mainPane.getChildren().add(page1);
 
-                for(int i=0 ; i<5;i++) {
+                for(int i=0 ; i<3;i++) {
                         if(!buttons[i].getStylesheets().isEmpty())
                         buttons[i].getStylesheets().remove(0);
                         buttons[i].getStylesheets().add("mainPageButtonsUnselected.css");
@@ -349,12 +364,12 @@ public class MainPageHandler implements Initializable {
 
         @FXML
         void showPage2(ActionEvent event) {
-//                if(! mainPane.getChildren().isEmpty()){
-//                        mainPane.getChildren().remove(0);
-//                }
-//                mainPane.getChildren().add(page2);
+                if(! mainPane.getChildren().isEmpty()){
+                        mainPane.getChildren().remove(0);
+                }
+                mainPane.getChildren().add(page2);
 
-                for(int i=0 ; i<5;i++) {
+                for(int i=0 ; i<3;i++) {
                         if(!buttons[i].getStylesheets().isEmpty())
                                 buttons[i].getStylesheets().remove(0);
                         buttons[i].getStylesheets().add("mainPageButtonsUnselected.css");
@@ -371,7 +386,7 @@ public class MainPageHandler implements Initializable {
                 }
                 mainPane.getChildren().add(page3);
 
-                for(int i=0 ; i<5;i++) {
+                for(int i=0 ; i<3;i++) {
                         if(!buttons[i].getStylesheets().isEmpty())
                                 buttons[i].getStylesheets().remove(0);
                         buttons[i].getStylesheets().add("mainPageButtonsUnselected.css");
@@ -381,31 +396,13 @@ public class MainPageHandler implements Initializable {
                 btn3.getStylesheets().add("mainPageButtons.css");
         }
 
-        @FXML
-        void showPage4(ActionEvent event) {
-                for(int i=0 ; i<5;i++) {
-                        if(!buttons[i].getStylesheets().isEmpty())
-                                buttons[i].getStylesheets().remove(0);
-                        buttons[i].getStylesheets().add("mainPageButtonsUnselected.css");
-                }
-                if(!btn4.getStylesheets().isEmpty())
-                        btn4.getStylesheets().remove(0);
-                btn4.getStylesheets().add("mainPageButtons.css");
-        }
 
         @FXML
-        void showPage5(ActionEvent event) {
-                for(int i=0 ; i<5;i++) {
-                        if(!buttons[i].getStylesheets().isEmpty())
-                                buttons[i].getStylesheets().remove(0);
-                        buttons[i].getStylesheets().add("mainPageButtonsUnselected.css");
-                }
-                if(!btn5.getStylesheets().isEmpty())
-                        btn5.getStylesheets().remove(0);
-                btn5.getStylesheets().add("mainPageButtons.css");
+        void logout(ActionEvent event) {
+                Stage stage = (Stage) mainPane.getScene().getWindow();
+                stage.close();
+                exit();
         }
-
-
 }
 
 

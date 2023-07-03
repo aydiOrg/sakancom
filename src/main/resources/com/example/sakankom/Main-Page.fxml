@@ -34,7 +34,7 @@
                   <Insets top="15.0" />
                </VBox.margin>
             </Label>
-            <VBox prefHeight="520.0" prefWidth="241.0">
+            <VBox prefHeight="346.0" prefWidth="241.0">
                <VBox.margin>
                   <Insets top="120.0" />
                </VBox.margin>
@@ -44,7 +44,7 @@
                         <Font size="20.0" />
                      </font>
                   </Button>
-                  <Button fx:id="btn2" mnemonicParsing="false" onAction="#showPage2" prefHeight="60.0" prefWidth="241.0" style="-fx-cursor: hand;" stylesheets="@../../../mainPageButtonsUnselected.css" text="Reservations">
+                  <Button fx:id="btn2" mnemonicParsing="false" onAction="#showPage2" prefHeight="60.0" prefWidth="241.0" style="-fx-cursor: hand;" stylesheets="@../../../mainPageButtonsUnselected.css" text="Furniture">
                      <font>
                         <Font size="20.0" />
                      </font>
@@ -54,18 +54,13 @@
                         <Font size="20.0" />
                      </font>
                   </Button>
-                  <Button fx:id="btn4" mnemonicParsing="false" onAction="#showPage4" prefHeight="60.0" prefWidth="243.0" style="-fx-cursor: hand;" stylesheets="@../../../mainPageButtonsUnselected.css" text="Page4">
-                     <font>
-                        <Font size="20.0" />
-                     </font>
-                  </Button>
-                  <Button fx:id="btn5" mnemonicParsing="false" onAction="#showPage5" prefHeight="60.0" prefWidth="251.0" style="-fx-cursor: hand;" stylesheets="@../../../mainPageButtonsUnselected.css" text="Page5">
-                     <font>
-                        <Font size="20.0" />
-                     </font>
-                  </Button>
                </children>
             </VBox>
+            <Button fx:id="logoutBtn" mnemonicParsing="false" onAction="#logout" prefHeight="60.0" prefWidth="241.0" style="-fx-cursor: hand;" stylesheets="@../../../mainPageButtonsUnselected.css" text="Log out">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Button>
          </children>
       </VBox>
       <AnchorPane fx:id="mainPane" layoutX="241.0" layoutY="1.0" prefHeight="720.0" prefWidth="1039.0" style="-fx-background-color: #f2f2f2;">
