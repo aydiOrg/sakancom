@@ -1,6 +1,7 @@
 package com.example.sakankom;
 
 import com.example.sakankom.OwnerFiles.House;
+import com.example.sakankom.OwnerFiles.Residence;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -32,6 +33,8 @@ public class OwnerHandler implements Initializable{
     private MFXButton btnAddResidence;
 
     @FXML
+    private MFXButton btnResidences;
+    @FXML
     private MFXButton btnMain;
 
     @FXML
@@ -57,7 +60,6 @@ public class OwnerHandler implements Initializable{
         try {
             mainBtnHandler(new ActionEvent());
         } catch (IOException e) {
-
             throw new RuntimeException(e);
         }
 
@@ -137,6 +139,7 @@ public class OwnerHandler implements Initializable{
                         btnAddHouse.getStyleClass().remove("selected");
                     if (foundButton.getStyleClass().equals(btnAddResidence.getStyleClass()))
                         btnAddResidence.getStyleClass().remove("selected");
+                    if(foundButton.getStyleClass().equals(btnResidences.getStyleClass())) btnResidences.getStyleClass().remove("selected");
                 }
 
 
@@ -164,6 +167,7 @@ public class OwnerHandler implements Initializable{
             if (foundButton != null) {
                 if(foundButton.getStyleClass().equals(btnMain.getStyleClass())) btnMain.getStyleClass().remove("selected");
                 if(foundButton.getStyleClass().equals(btnAddResidence.getStyleClass())) btnAddResidence.getStyleClass().remove("selected");
+                if(foundButton.getStyleClass().equals(btnResidences.getStyleClass())) btnResidences.getStyleClass().remove("selected");
             }
 
 
@@ -186,12 +190,42 @@ public class OwnerHandler implements Initializable{
             if (foundButton != null) {
                 if(foundButton.getStyleClass().equals(btnMain.getStyleClass())) btnMain.getStyleClass().remove("selected");
                 if(foundButton.getStyleClass().equals(btnAddHouse.getStyleClass())) btnAddHouse.getStyleClass().remove("selected");
+                if(foundButton.getStyleClass().equals(btnResidences.getStyleClass())) btnResidences.getStyleClass().remove("selected");
             }
 
 
             show.getChildren().clear();
             show.getChildren().add(showBox);
             btnAddResidence.getStyleClass().add("selected");
+        }
+    }
+
+    @FXML
+    void residencesBtnHandler(ActionEvent event) {
+        if (btnResidences.getStyleClass().contains("selected")) {
+            System.out.println("Do nothing");
+        } else {
+            try{
+                FXMLLoader fxmlLoader = new FXMLLoader();
+                fxmlLoader.setLocation(getClass().getResource("Residences.fxml"));
+                VBox showBox = fxmlLoader.load();
+
+                MFXButton foundButton = (MFXButton) page.lookup(".selected");
+                if (foundButton != null) {
+                    if (foundButton.getStyleClass().equals(btnAddHouse.getStyleClass()))
+                        btnAddHouse.getStyleClass().remove("selected");
+                    if (foundButton.getStyleClass().equals(btnAddResidence.getStyleClass()))
+                        btnAddResidence.getStyleClass().remove("selected");
+                    if (foundButton.getStyleClass().equals(btnMain.getStyleClass()))
+                        btnMain.getStyleClass().remove("selected");
+                }
+
+                show.getChildren().clear();
+                show.getChildren().add(showBox);
+                btnResidences.getStyleClass().add("selected");
+            }catch (Exception e){
+                System.out.println(e);
+            }
         }
     }
 }
