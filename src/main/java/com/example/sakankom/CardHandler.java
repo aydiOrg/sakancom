@@ -1,5 +1,7 @@
-package com.example.sakankom.OwnerFiles;
 
+package com.example.sakankom;
+
+import com.example.sakankom.OwnerFiles.House;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.image.Image;

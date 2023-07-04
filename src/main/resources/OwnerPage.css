@@ -1,3 +1,4 @@
+
 .white-background{
     -fx-background-color:#fff;
 
@@ -25,6 +26,9 @@
     -fx-font-size: 20px;
     -fx-spacing: 10px;
     -fx-text-fill: white;
+}
+.btnProfile:hover{
+    -fx-background-color: #323c4d;
 }
 .content{
     -fx-background-color: #b2bccd
