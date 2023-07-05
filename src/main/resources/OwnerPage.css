@@ -10,6 +10,9 @@
 .sidebar{
     -fx-background-color: rgb(58, 69, 88);
 }
+.showHouses{
+    -fx-background-color: rgb(58, 69, 88);
+}
 .dashboard-text{
     -fx-background-color: transparent;
     -fx-background-radius: 5px;
