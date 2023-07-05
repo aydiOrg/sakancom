@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -22,7 +23,8 @@ import java.util.ResourceBundle;
 public class ResidencesHandler implements Initializable {
     @FXML
     private GridPane residenceContainer;
-
+    @FXML
+    private VBox residenceCard;
     @FXML
     private HBox residenceLayout;
 
@@ -79,4 +81,6 @@ public class ResidencesHandler implements Initializable {
             System.out.println(e);
         }
     }
+
+
 }
