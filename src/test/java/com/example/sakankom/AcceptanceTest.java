@@ -1,4 +1,4 @@
-package aydi.sedih.masters;
+package com.example.sakankom;
 
 import io.cucumber.junit.Cucumber;
 import io.cucumber.junit.CucumberOptions;
@@ -10,7 +10,7 @@ import org.junit.runner.RunWith;
         plugin = {"summary","html:target/cucumber/report.html"},
         monochrome = true,
         snippets = CucumberOptions.SnippetType.CAMELCASE,
-        glue = "aydi.sedih.masters"
+        glue = "com.example.sakankom"
 )
 
 public class AcceptanceTest {

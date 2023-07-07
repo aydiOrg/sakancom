@@ -5,9 +5,10 @@ Feature: user login
 
   Scenario:
     Given the user is not logged in
-    And the password is equal to <username> and the username is equal to <password>
+    And the username is equal to <username> and the username is equal to <password>
       | username | password |
-      | "aydi"   | "123"    |
+      | aydi     | 123      |
+      | bara     | 789      |
 
     Then the user should log in to the system
     And the user type is determined

@@ -1,4 +1,4 @@
-package aydi.sedih.masters;
+package com.example.sakankom;
 
 import com.example.sakankom.dataStructures.Tenant;
 import com.example.sakankom.dataStructures.User;
