@@ -24,23 +24,27 @@ import java.util.ResourceBundle;
 
 public class SignInHandler implements Initializable {
     @FXML
-    private MFXTextField password;
+    public MFXTextField password;
     @FXML
     private AnchorPane mainPane;
     @FXML
-    private MFXTextField username;
+    public MFXTextField username;
     @FXML
     private MFXButton signBtn;
 
     Stage newStage = new Stage();
     Stage currentStage = new Stage();
-
     ArrayList<User> users ;
+    public boolean isUserLoggedIn;
 
 
 
+    public ArrayList<User> getUsers(){
+        return users;
+    }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        isUserLoggedIn = false;
         users = new ArrayList<User>();
         ResultSet rst, rst2, rst3;
         try {
@@ -53,40 +57,23 @@ public class SignInHandler implements Initializable {
 
 
             //bringing tenants
-            int i = 0;
             while (rst.next()) {
                 System.out.println(rst.getString("username"));
                 users.add(new User(rst.getString("username"), rst.getString("pass"), "tenant",false));
-                i++;
-//                unq_id = Integer.toString(rst.getInt("employee_id"));
-//                id = rst.getString("id");
-//                superRank = rst.getString("rank");
             }
             rst2 = st.executeQuery("select username, pass from owner ");
             //bringing owners
-            int j = 0;
             while (rst2.next()) {
                 System.out.println(rst2.getString("username"));
                 users.add(new User(rst2.getString("username"), rst2.getString("pass"), "owner",false));
-                i++;
-//                unq_id = Integer.toString(rst.getInt("employee_id"));
-//                id = rst.getString("id");
-//                superRank = rst.getString("rank");
             }
             rst3 = st.executeQuery("select username, pass from admin ");
             //bringing admins
-            int k = 0;
             while (rst3.next()) {
                 System.out.println(rst3.getString("username"));
                 users.add(new User(rst3.getString("username"), rst3.getString("pass"), "admin",false));
-                i++;
-//                unq_id = Integer.toString(rst.getInt("employee_id"));
-//                id = rst.getString("id");
-//                superRank = rst.getString("rank");
             }
             con.close();
-            if(i == 1)
-                System.out.println("connection successful");
 
         }catch (SQLException e){
             e.printStackTrace();
@@ -130,6 +117,8 @@ public class SignInHandler implements Initializable {
                 else if (user.getUserType().equals("admin")) {
 
                 }
+
+                isUserLoggedIn = true;
                 //closing the current stage
                 currentStage = (Stage) mainPane.getScene().getWindow();
                 currentStage.close();
