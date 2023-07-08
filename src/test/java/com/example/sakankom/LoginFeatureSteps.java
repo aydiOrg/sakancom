@@ -80,23 +80,20 @@ public class LoginFeatureSteps {
         }
         assertTrue(userTypeDetermined);
     }
-    @Then("A page opens which is related to the user type")
-    public void aPageOpensWhichIsRelatedToTheUserType() {
 
-    }
-
-    //second scenario
+    //second scenario --------------------------------------------
     @Given("user not logged in")
     public void userNotLoggedIn() {
-
+        user.setFlag(false);
+        assertFalse(user.getFlag());
     }
     @Given("the password is not equal to <username> or the username is not equal to <password>")
     public void thePasswordIsNotEqualToUsernameOrTheUsernameIsNotEqualToPassword() {
-
+            boolean outcome = userValid;
     }
     @Then("show a message indicating that the entered data is false")
     public void showAMessageIndicatingThatTheEnteredDataIsFalse() {
-
+        assertTrue(wrapper.signInHandler.alertShown);
     }
 
 }
