@@ -42,7 +42,6 @@ public class ShowHousesHandler implements Initializable {
         int column = 1;
         int row = 1;
         for (House house : houses) {
-            System.out.println(house.getName());
             FXMLLoader fxmlLoader = new FXMLLoader();
             fxmlLoader.setLocation(getClass().getResource("showHouse.fxml"));
             VBox houseBox = fxmlLoader.load();
