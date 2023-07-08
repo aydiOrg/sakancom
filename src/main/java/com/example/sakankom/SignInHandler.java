@@ -8,6 +8,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
@@ -35,8 +36,7 @@ public class SignInHandler implements Initializable {
     Stage newStage = new Stage();
     Stage currentStage = new Stage();
     ArrayList<User> users ;
-    public boolean isUserLoggedIn;
-
+    public boolean isUserLoggedIn , alertShown;
 
 
     public ArrayList<User> getUsers(){
@@ -45,6 +45,7 @@ public class SignInHandler implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         isUserLoggedIn = false;
+        alertShown = false;
         users = new ArrayList<User>();
         ResultSet rst, rst2, rst3;
         try {
@@ -125,6 +126,13 @@ public class SignInHandler implements Initializable {
             }
 
         }
+            if (!isUserLoggedIn) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setContentText("Invalid data");
+                alert.setHeaderText("Invalid input, check the inserted data and try again");
+                alert.show();
+                alertShown = true;
+            }
 
 
     }
