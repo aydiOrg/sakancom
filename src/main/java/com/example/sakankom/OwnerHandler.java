@@ -163,16 +163,15 @@ public class OwnerHandler implements Initializable{
             fxmlLoader.setLocation(getClass().getResource("addHouse.fxml"));
             VBox showBox = fxmlLoader.load();
 
+            show.getChildren().clear();
+            show.getChildren().add(showBox);
+
             MFXButton foundButton = (MFXButton) page.lookup(".selected");
             if (foundButton != null) {
                 if(foundButton.getStyleClass().equals(btnMain.getStyleClass())) btnMain.getStyleClass().remove("selected");
                 if(foundButton.getStyleClass().equals(btnAddResidence.getStyleClass())) btnAddResidence.getStyleClass().remove("selected");
                 if(foundButton.getStyleClass().equals(btnResidences.getStyleClass())) btnResidences.getStyleClass().remove("selected");
             }
-
-
-            show.getChildren().clear();
-            show.getChildren().add(showBox);
             btnAddHouse.getStyleClass().add("selected");
         }
     }

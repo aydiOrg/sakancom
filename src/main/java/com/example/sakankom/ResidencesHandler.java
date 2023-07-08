@@ -160,6 +160,47 @@ public class ResidencesHandler implements Initializable {
 
                     residenceContainer.add(floor, 0, row++);
                     GridPane.setMargin(floor, new Insets(10));
+//                            Button selectedButton = (Button) vbox.lookup("#button1");
+
+
+//                    GridPane gridPane = (GridPane) floor.lookup("#floorContainer");
+//
+//                    for(Node node : gridPane.getChildren()){
+//                        if(node instanceof VBox vBox){
+//                            MFXButton button = (MFXButton) vBox.lookup("#btnShow");
+//                            button.setOnAction(event ->{
+//                                showMore();
+//                            });
+//                        }
+//                    }
+
+
+
+//                    for (Node node : floor.getChildren()) {
+//                        if (node instanceof HBox cont1) {
+//                            for(Node node1 : cont1.getChildren()){
+//                                if(node1 instanceof GridPane cont2){
+//                                    for(Node node2 : cont2.getChildren()){
+//                                        if(node2 instanceof VBox cont3){
+//                                            for (Node node3 : cont3.getChildren()){
+//                                                if (node3 instanceof VBox cont4){
+//                                                    for(Node node4 : cont4.getChildren()){
+//                                                        if (node4 instanceof MFXButton button){
+//                                                            button.setOnAction(event -> {
+//                                                                showMore();
+//                                                            });
+//                                                        }
+//                                                    }
+//                                                }
+//                                            }
+//                                        }
+//                                    }
+//                                }
+//                            }
+//                        }
+//                    }
+
+
                     con.close();
                 }
             } catch (SQLException e) {
@@ -171,4 +212,7 @@ public class ResidencesHandler implements Initializable {
         }
     }
 
+    public void showMore(){
+        System.out.println("Yeeaaahhh");
+    }
 }
