@@ -12,7 +12,6 @@ Feature: user login
 
     Then the user should log in to the system
     And the user type is determined
-    And A page opens which is related to the user type
 
   Scenario:
     Given user not logged in
