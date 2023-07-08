@@ -16,7 +16,7 @@
                 <Image url="@../../../photos/a4.jpeg" />
             </image>
         </ImageView>
-        <VBox prefHeight="21.0" prefWidth="160.0" spacing="2.0">
+        <VBox fx:id="labels" prefHeight="21.0" prefWidth="160.0" spacing="2.0">
             <children>
                 <Label fx:id="houseName" prefHeight="35.0" prefWidth="160.0" text="House 223433">
                     <font>
