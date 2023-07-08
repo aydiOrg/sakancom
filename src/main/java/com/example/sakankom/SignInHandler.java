@@ -36,6 +36,7 @@ public class SignInHandler implements Initializable {
     Stage newStage = new Stage();
     Stage currentStage = new Stage();
     ArrayList<User> users ;
+    public MainPageHandler mainPageHandler;
     public boolean isUserLoggedIn , alertShown;
 
 
@@ -103,7 +104,7 @@ public class SignInHandler implements Initializable {
                         newStage.setScene(scene);
                         newStage.show();
 
-                        MainPageHandler mainPageHandler = loader.getController();
+                        mainPageHandler = loader.getController();
                         mainPageHandler.setUser(user);
                         mainPageHandler.setTenantData(user);
                         mainPageHandler.manageReservations();

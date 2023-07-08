@@ -72,7 +72,7 @@ public class MainPageHandler implements Initializable {
         @FXML
         private Button btn1;
         @FXML
-        private HBox container;
+        public HBox container;
 
         @FXML
         private Button btn2;
@@ -90,13 +90,16 @@ public class MainPageHandler implements Initializable {
         MFXScrollPane page2;
 
         Button[] buttons = new Button[5];
+        public boolean isEditPressed , isSavePressed;
 
 
         @Override
         public void initialize(URL url, ResourceBundle resourceBundle) {
+                isSavePressed = false;  isEditPressed = false;
                 buttons[0] = btn1;buttons[1] = btn2;buttons[2] = btn3;
                 uEmail.setEditable(false); uUsername.setEditable(false); uPassword.setEditable(false); uGender.setEditable(false); uJob.setEditable(false); uPhone.setEditable(false);uBdate.setEditable(false);uName.setEditable(false);
                 reservations =new ArrayList<Reservation>();
+
                 //loading my pages
                 FXMLLoader loader1 = new FXMLLoader(getClass().getResource("Current-Houses.fxml"));
                 try {
@@ -133,6 +136,7 @@ public class MainPageHandler implements Initializable {
                        //setting the fields to be editable
                        uEmail.setEditable(true); uUsername.setEditable(true); uPassword.setEditable(true); uGender.setEditable(true); uJob.setEditable(true); uPhone.setEditable(true);uBdate.setEditable(true);uName.setEditable(true);
                        editBtn.setText("Save");uPassword.setText(tenant.getPassword());
+                       isEditPressed = true;
                 }
                 else if(editBtn.getText().equalsIgnoreCase("save")){
                         tenant.setUpdated(false);
@@ -171,11 +175,10 @@ public class MainPageHandler implements Initializable {
                                s += "*";
                        }
                        uPassword.setText(s);
-
+                       isSavePressed = true;
                 }
 
         }
-
         void setUser(User u) {
                 this.user = u;
                 userLabel.setText(user.getUsername());
@@ -403,7 +406,47 @@ public class MainPageHandler implements Initializable {
                 stage.close();
                 exit();
         }
+
+
+        //getters of textfields
+
+        public MFXTextField getuBdate() {
+                return uBdate;
+        }
+
+        public MFXTextField getuEmail() {
+                return uEmail;
+        }
+
+        public MFXTextField getuGender() {
+                return uGender;
+        }
+
+        public MFXTextField getuJob() {
+                return uJob;
+        }
+
+        public MFXTextField getuPhone() {
+                return uPhone;
+        }
+
+        public MFXTextField getuUsername() {
+                return uUsername;
+        }
+
+        public User getUser() {
+                return user;
+        }
+
+        public Tenant getTenant() {
+                return tenant;
+        }
+
+        public ArrayList<Reservation> getReservations() {
+                return reservations;
+        }
 }
+
 
 
 
