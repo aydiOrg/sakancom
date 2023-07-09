@@ -37,6 +37,7 @@ public class SignInHandler implements Initializable {
     Stage currentStage = new Stage();
     ArrayList<User> users ;
     public MainPageHandler mainPageHandler;
+    public OwnerHandler ownerHandler;
     public boolean isUserLoggedIn , alertShown;
 
 
@@ -57,17 +58,21 @@ public class SignInHandler implements Initializable {
             rst = st.executeQuery("select username, pass from tenant ");
 
 
-
             //bringing tenants
             while (rst.next()) {
                 System.out.println(rst.getString("username"));
                 users.add(new User(rst.getString("username"), rst.getString("pass"), "tenant",false));
             }
-            rst2 = st.executeQuery("select username, pass from owner ");
+            rst2 = st.executeQuery("select username, pass, fname, lname from owner ");
             //bringing owners
             while (rst2.next()) {
                 System.out.println(rst2.getString("username"));
-                users.add(new User(rst2.getString("username"), rst2.getString("pass"), "owner",false));
+                users.add(new User(
+                        rst2.getString("username"),
+                        rst2.getString("pass"),
+                        "owner",
+                        false,
+                        rst2.getString("fname") + " " + rst2.getString("lname")));
             }
             rst3 = st.executeQuery("select username, pass from admin ");
             //bringing admins
@@ -114,7 +119,18 @@ public class SignInHandler implements Initializable {
 
                 }
                 else if (user.getUserType().equals("owner")) {
+                    try {
+                        FXMLLoader loader = new FXMLLoader(getClass().getResource("Owner.fxml"));
+                        Parent root = loader.load();
+                        Scene scene = new Scene(root);
+                        newStage.setScene(scene);
+                        newStage.show();
 
+                        ownerHandler = loader.getController();
+                        ownerHandler.setUser(user);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
                 else if (user.getUserType().equals("admin")) {
 

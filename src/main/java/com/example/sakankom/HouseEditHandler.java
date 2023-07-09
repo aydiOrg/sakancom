@@ -24,9 +24,6 @@ public class HouseEditHandler implements Initializable {
     private MFXTextField bedroomsNumber;
 
     @FXML
-    private MFXButton btnUpdate;
-
-    @FXML
     private MFXTextField capacity;
 
     @FXML
@@ -45,12 +42,6 @@ public class HouseEditHandler implements Initializable {
     private MFXTextField imageName;
 
     @FXML
-    private MFXCheckbox isAccepted;
-
-    @FXML
-    private MFXCheckbox isReserved;
-
-    @FXML
     private MFXTextField price;
 
     @FXML
@@ -61,7 +52,8 @@ public class HouseEditHandler implements Initializable {
 
     @FXML
     private MFXTextField services;
-
+    private String isAcceptedValue;
+    private String isReservedValue;
     public void setDate(String houseName){
         ResultSet rst1;
 
@@ -86,8 +78,8 @@ public class HouseEditHandler implements Initializable {
             reservedCapacity.setText(rst1.getString("reserved_capacity"));
             genders.setText(rst1.getString("genders"));
             services.setText(rst1.getString("services"));
-            isAccepted.setSelected(rst1.getString("isaccepted").equals("1") ? true : false);
-            isReserved.setSelected(rst1.getString("isreserved").equals("1") ? true : false);
+            isAcceptedValue = rst1.getString("isAccepted");
+            isReservedValue = rst1.getString("isReserved");
 
             houseID.setEditable(false);
         } catch (SQLException e) {
@@ -109,14 +101,14 @@ public class HouseEditHandler implements Initializable {
             Statement st = con.createStatement();
             Statement st2 = con.createStatement();
 
-            String isAcceptedValue = isAccepted.isSelected() ? "1" : "0";
-            String isReserverValue = isReserved.isSelected() ? "1" : "0";
+
 
 
             rst1 = st.executeQuery("update house set " +
                     "HOUSE_ID='" + houseID.getText() + "'," +
                     " RESIDENCE_ID='" + residenceID.getText() + "'," +
                     "BEDROOMS_NUMBER='" + bedroomsNumber.getText() + "'," +
+                    "BATHROOMS_NUMBER='" + bathroomsNumber.getText() + "'," +
                     "SERVICES='" + services.getText() + "'," +
                     "PRICE='" + price.getText() + "'," +
                     "FLOOR_NUMBER='" + floorNumber.getText() + "'," +
@@ -127,7 +119,7 @@ public class HouseEditHandler implements Initializable {
                     "BALCONY='" + balaconyNumber.getText() + "'," +
                     "ISVALID='1'," +
                     "ISACCEPTED='" + isAcceptedValue + "'," +
-                    "ISRESERVED='" + isReserverValue + "'," +
+                    "ISRESERVED='" + isReservedValue + "'," +
                     "IMAGE='" + imageName.getText() + "' " +
                     "WHERE house_id='" + houseID.getText() + "'"
             );

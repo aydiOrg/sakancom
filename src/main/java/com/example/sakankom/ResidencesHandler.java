@@ -1,6 +1,7 @@
 package com.example.sakankom;
 
 import com.example.sakankom.OwnerFiles.House;
+import com.example.sakankom.OwnerFiles.Owner;
 import com.example.sakankom.OwnerFiles.Residence;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXScrollPane;
@@ -30,9 +31,14 @@ public class ResidencesHandler implements Initializable {
     @FXML
     private VBox show;
     private int totalTenants;
+    private int owner_id;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+    }
+
+    public void display(){
         residences = new ArrayList<>();
         int column = 1;
         int row = 1;
@@ -44,7 +50,8 @@ public class ResidencesHandler implements Initializable {
             Statement st = con.createStatement();
             Statement st2 = con.createStatement();
 
-            rst = st.executeQuery("select owner_id, residence_id, residence_name, location from residence where isValid='1'");
+            System.out.println(owner_id);
+            rst = st.executeQuery("select owner_id, residence_id, residence_name, location from residence where isValid='1' and owner_id='" + owner_id + "'");
 
             while (rst.next()) {
                 rst2 = st2.executeQuery("SELECT fname, lname FROM owner WHERE owner_id='" + rst.getString("owner_id") + "'");
@@ -213,5 +220,10 @@ public class ResidencesHandler implements Initializable {
         }catch (IOException e){
             System.out.println(e);
         }
+    }
+
+    public void setData(Owner owner){
+        this.owner_id = owner.getOwnerId();
+        this.display();
     }
 }

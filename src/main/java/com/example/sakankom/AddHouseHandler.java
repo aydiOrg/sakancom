@@ -39,15 +39,7 @@ public class AddHouseHandler {
     private MFXTextField imageName;
 
     @FXML
-    private MFXCheckbox isAccepted;
-
-    @FXML
     private MFXTextField houseID;
-    @FXML
-    private MFXCheckbox isReserved;
-
-    @FXML
-    private MFXCheckbox isValid;
 
     @FXML
     private MFXTextField price;
@@ -63,8 +55,6 @@ public class AddHouseHandler {
     void submitBtnHandler(ActionEvent event) {
         ResultSet rst;
 
-        String accepted = isAccepted.isSelected() ? "1" : "0";
-        String reserved = isReserved.isSelected() ? "1" : "0";
         try{
             DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
             Connection con = DriverManager.getConnection("jdbc:oracle:thin:@//localhost:1521/xepdb1", "sakankom", "12345678");
@@ -81,7 +71,7 @@ public class AddHouseHandler {
                     floorNumber.getText() + "','" + flatNumber.getText() + "','" +
                     capacity.getText() + "','" + reservedCapacity.getText() + "','" +
                     genders.getText() + "','" + balaconyNumber.getText() + "','" +
-                    "1" + "','" + accepted + "','" + reserved + "','" + imageName.getText() + "' )"
+                    "1" + "','" + "0" + "','" + "0" + "','" + imageName.getText() + "' )"
             );
 
             con.close();

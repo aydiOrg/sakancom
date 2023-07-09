@@ -6,6 +6,16 @@ public class User {
     private String userType;
     private boolean flag;
 
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
+    private String fullName;
+
     public boolean getFlag() {
         return flag;
     }
@@ -21,6 +31,13 @@ public class User {
         this.password = password;
         this.userType = userType;
         this.flag = false;
+    }
+    public User(String username, String password, String userType, boolean flag, String fullName) {
+        this.username = username;
+        this.password = password;
+        this.userType = userType;
+        this.flag = false;
+        this.fullName = fullName;
     }
 
     // Getters -------------------------------------------------------------
