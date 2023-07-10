@@ -15,9 +15,10 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class HouseDetailsHandler implements Initializable {
-        Apartment apartment;
+        public Apartment apartment;
+        public ArrayList<Neigbour> neigbours;
         @FXML
-        private HBox container1;
+        public HBox container1;
 
 
         @FXML
@@ -66,6 +67,8 @@ public class HouseDetailsHandler implements Initializable {
 
         public void valuesSetter(Apartment apartment, ArrayList<Apartment> apartments, ArrayList<Neigbour> neigbours){
                 this.apartment = apartment;
+                this.neigbours = neigbours;
+
                 resName.setText(apartment.getAptName());
                 uaddress.setText(apartment.getAddress());
                 ufloor.setText(Integer.toString(apartment.getFloor()));
@@ -93,7 +96,11 @@ public class HouseDetailsHandler implements Initializable {
                 uemail.setText(apartment.getOwnerEmail());
 
                 //neighbours generating
+                generateGUI();
 
+        }
+
+        public void generateGUI(){
                 String name= "";
                 String job = "";
 
@@ -140,15 +147,11 @@ public class HouseDetailsHandler implements Initializable {
                                 container1.getChildren().add(card);
                         }
                 }
-
-
-
-
         }
 
 
         @Override
         public void initialize(URL url, ResourceBundle resourceBundle) {
-
+                neigbours = new ArrayList<Neigbour>();
         }
 }

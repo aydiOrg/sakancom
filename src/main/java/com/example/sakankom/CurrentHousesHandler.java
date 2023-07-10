@@ -35,7 +35,7 @@ import java.util.ResourceBundle;
 
 public class CurrentHousesHandler implements Initializable {
     @FXML
-    private VBox container;
+    public VBox container;
     @FXML
     private MFXScrollPane mainPane;
     public ArrayList<Apartment> getApartments() {
@@ -44,9 +44,13 @@ public class CurrentHousesHandler implements Initializable {
     ArrayList<Apartment> apartments;
     ArrayList<Neigbour> neigbours;
     Tenant tenant;
+    public boolean detailsPressed , reservePressed;
+    HouseDetailsHandler houseDetailsHandler;
+    Apartment myApartment;
 
     public void setTenant(Tenant tenant) {
         this.tenant = tenant;
+        generateGUI();
     }
 
     public MFXScrollPane getMainPane() {
@@ -69,9 +73,20 @@ public class CurrentHousesHandler implements Initializable {
         String type = "";
         String address = "";
         String price = "";
+
+
         for(int i= 0; i<apartments.size();i++) {
+            boolean checkTenant = false;
+            for (int f=0;f<neigbours.size();f++) {
+                if(neigbours.get(f).getTenantID() == tenant.getTenantID() && neigbours.get(f).getHouseID() == apartments.get(i).getHouseId()){
+                    checkTenant = true;
+                }
+            }
+            if (checkTenant)
+                continue;
+
             if(apartments.get(i).getIsValid().equals("1") && apartments.get(i).getIsAccepted().equals("1") && apartments.get(i).getIsReserved().equalsIgnoreCase("0")){
-               //data
+                //data
                 name = apartments.get(i).getAptName();
                 owner = apartments.get(i).getOwnerName();
                 type = (apartments.get(i).getCapacity() > 1) ? "shared" : "solo";
@@ -154,6 +169,7 @@ public class CurrentHousesHandler implements Initializable {
     }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        detailsPressed = false; reservePressed = false;
         apartments = new ArrayList<Apartment>();
         neigbours = new ArrayList<Neigbour>();
         //retrieve the data from database
@@ -213,7 +229,7 @@ public class CurrentHousesHandler implements Initializable {
             e.printStackTrace();
         }
 
-        generateGUI();
+
 
 
     }
@@ -233,20 +249,20 @@ public class CurrentHousesHandler implements Initializable {
         newStage.setScene(scene);
         newStage.show();
 
-        HouseDetailsHandler houseDetailsHandler = loader.getController();
+         houseDetailsHandler = loader.getController();
         for(int k= 0;k<apartments.size();k++){
             if(apartments.get(k).getHouseId() == i){
                 houseDetailsHandler.valuesSetter(apartments.get(k),apartments,neigbours);
             }
         }
-
+        detailsPressed = true;
 
     };
     EventHandler<ActionEvent> handler2 = event -> {
         MFXButton btn = (MFXButton) event.getSource();
         String id = btn.getId();
 
-        Apartment myApartment = new Apartment();
+         myApartment = new Apartment();
         for(int i =0;i<apartments.size();i++) {
             if(Integer.toString(apartments.get(i).getHouseId()).equalsIgnoreCase(id)) {
                 myApartment = apartments.get(i);
@@ -264,6 +280,13 @@ public class CurrentHousesHandler implements Initializable {
                 Statement st = con.createStatement();
 
                 st.executeUpdate("insert into reservation values ("+ myApartment.getHouseId() +" , " + tenant.getTenantID() +", " + myApartment.getPrice() +", to_date('" + currDate +  "' ,'yyyy-MM-dd') ,to_date('" +  currDate +  "' ,'yyyy-MM-dd') , '1' )" );
+                Neigbour neigbour = new Neigbour();
+                neigbour.setName(tenant.getFname() + " " + tenant.getLname());
+                neigbour.setHouseID(myApartment.getHouseId());
+                neigbour.setJob(tenant.getJob());
+                neigbour.setTenantID(tenant.getTenantID());
+                neigbours.add(neigbour);
+
                 boolean flag = false;
                 myApartment.setResCapacity(myApartment.getResCapacity() + 1);
                 st.executeUpdate("update house set reserved_capacity ="+ myApartment.getResCapacity() +" where house_id = " + myApartment.getHouseId() );
@@ -282,6 +305,7 @@ public class CurrentHousesHandler implements Initializable {
                 container.getChildren().remove(0);
             generateGUI();
 
+            reservePressed = true;
     };
 
 
