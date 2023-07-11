@@ -89,7 +89,7 @@ public class LoginFeatureSteps {
     }
     @Given("the password is not equal to <username> or the username is not equal to <password>")
     public void thePasswordIsNotEqualToUsernameOrTheUsernameIsNotEqualToPassword() {
-            boolean outcome = userValid;
+
     }
     @Then("show a message indicating that the entered data is false")
     public void showAMessageIndicatingThatTheEnteredDataIsFalse() {

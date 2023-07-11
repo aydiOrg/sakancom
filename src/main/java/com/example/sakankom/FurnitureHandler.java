@@ -33,8 +33,16 @@ public class FurnitureHandler implements Initializable {
         private VBox container;
         @FXML
         private MFXScrollPane mainPane;
+        NewFurnitureHandler newFurnitureHandler;
+        ArrayList<Furniture> furnitures;
+        public boolean buyPressed;
+        public boolean addPressed;
+        String soldFID;
 
-    ArrayList<Furniture> furnitures;
+    public ArrayList<Furniture> getFurnitures() {
+        return furnitures;
+    }
+
     public MFXScrollPane getMainPane() {
         return mainPane;
     }
@@ -44,6 +52,9 @@ public class FurnitureHandler implements Initializable {
 
     @Override
         public void initialize(URL url, ResourceBundle resourceBundle) {
+        addPressed = false;
+        soldFID = "";
+        buyPressed = false;
         tenant = new Tenant();
              furnitures = new ArrayList<Furniture>();
              ResultSet rst;
@@ -152,6 +163,7 @@ public class FurnitureHandler implements Initializable {
             EventHandler<ActionEvent> handler = event -> {
                 MFXButton btn = (MFXButton) event.getSource();
                 String id = btn.getId();
+                soldFID = id;
 
                 try {
                     DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
@@ -170,6 +182,7 @@ public class FurnitureHandler implements Initializable {
                     }
                 }
                 generateGUI();
+                buyPressed = true;
             };
         @FXML
         void addFurniture(ActionEvent event) {
@@ -187,10 +200,12 @@ public class FurnitureHandler implements Initializable {
                 e.printStackTrace();
             }
 
-            NewFurnitureHandler newFurnitureHandler  = loader2.getController();
+            newFurnitureHandler  = loader2.getController();
             newFurnitureHandler.setTenant(tenant);
             newFurnitureHandler.setFurnitures(furnitures);
             newFurnitureHandler.setFurnitureHandler(this);
+
+            addPressed = true;
         }
 
 

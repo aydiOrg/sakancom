@@ -92,9 +92,11 @@ public class MainPageHandler implements Initializable {
         Button[] buttons = new Button[5];
         public boolean isEditPressed , isSavePressed;
         public boolean isApartementsPressed;
+        public boolean isFurniturePressed;
 
         @Override
         public void initialize(URL url, ResourceBundle resourceBundle) {
+                isFurniturePressed = false;
                 isSavePressed = false;  isEditPressed = false;
                 isApartementsPressed = false;
                 buttons[0] = btn1;buttons[1] = btn2;buttons[2] = btn3;
@@ -381,6 +383,8 @@ public class MainPageHandler implements Initializable {
                 if(!btn2.getStylesheets().isEmpty())
                         btn2.getStylesheets().remove(0);
                 btn2.getStylesheets().add("mainPageButtons.css");
+
+                isFurniturePressed = true;
         }
 
         @FXML

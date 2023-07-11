@@ -33,6 +33,8 @@ public class NewFurnitureHandler implements Initializable {
         ArrayList<Furniture> furnitures;
         VBox container;
         FurnitureHandler furnitureHandler;
+        public boolean savePressed;
+        int insertedId;
         public void setFurnitures(ArrayList<Furniture> furnitures){
             this.furnitures = furnitures;
         }
@@ -42,7 +44,6 @@ public class NewFurnitureHandler implements Initializable {
         }
         public void setFurnitureHandler(FurnitureHandler t){
             this.furnitureHandler = t;
-
         }
         public AnchorPane getMainPane() {
             return mainPane;
@@ -78,6 +79,7 @@ public class NewFurnitureHandler implements Initializable {
                          furniture.setTenantId(tenant.getTenantID());
                          furniture.setIsSold("0");
                          furniture.setIsValid("1");
+                         insertedId = furniture.getFurnitureId();
 
                          furnitures.add(furniture);
 
@@ -86,11 +88,26 @@ public class NewFurnitureHandler implements Initializable {
                          e.printStackTrace();
                  }
                  furnitureHandler.generateGUI();
+                 savePressed = true;
 
         }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         tenant = new Tenant();
+        savePressed = false;
+        insertedId = -1;
+    }
+
+    public MFXTextField getUdescription() {
+        return udescription;
+    }
+
+    public MFXTextField getUname() {
+        return uname;
+    }
+
+    public MFXTextField getUprice() {
+        return uprice;
     }
 }
