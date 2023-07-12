@@ -14,6 +14,7 @@ import java.sql.*;
 import java.util.ResourceBundle;
 
 public class HouseEditHandler implements Initializable {
+    public boolean isClicked = false;
     @FXML
     private MFXTextField balaconyNumber;
 
@@ -22,6 +23,66 @@ public class HouseEditHandler implements Initializable {
 
     @FXML
     private MFXTextField bedroomsNumber;
+
+    public String getBalaconyNumber() {
+        return balaconyNumber.getText();
+    }
+
+    public int getBathroomsNumber() {
+        return Integer.parseInt(bathroomsNumber.getText());
+    }
+
+    public int getBedroomsNumber() {
+        return Integer.parseInt(bedroomsNumber.getText());
+    }
+
+    public int getCapacity() {
+        return Integer.parseInt(capacity.getText());
+    }
+
+    public int getFlatNumber() {
+        return Integer.parseInt(flatNumber.getText());
+    }
+
+    public int getFloorNumber() {
+        return Integer.parseInt(floorNumber.getText());
+    }
+
+    public String getGenders() {
+        return genders.getText();
+    }
+
+    public String getHouseID() {
+        return houseID.getText();
+    }
+
+    public String getImageName() {
+        return imageName.getText();
+    }
+
+    public int getPrice() {
+        return Integer.parseInt(price.getText());
+    }
+
+    public int getReservedCapacity() {
+        return Integer.parseInt(reservedCapacity.getText());
+    }
+
+    public int getResidenceID() {
+        return Integer.parseInt(residenceID.getText());
+    }
+
+    public String getServices() {
+        return services.getText();
+    }
+
+    public String getIsAcceptedValue() {
+        return isAcceptedValue;
+    }
+
+    public String getIsReservedValue() {
+        return isReservedValue;
+    }
 
     @FXML
     private MFXTextField capacity;
@@ -93,6 +154,7 @@ public class HouseEditHandler implements Initializable {
 
     @FXML
     void updateBtnHandler(ActionEvent event) {
+        isClicked = true;
         ResultSet rst1, rst2;
 
         try{

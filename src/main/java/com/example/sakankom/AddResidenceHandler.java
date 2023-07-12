@@ -17,13 +17,32 @@ public class AddResidenceHandler {
     @FXML
     private MFXTextField ownerID;
 
+    public String getLocationField() {
+        return locationField.getText();
+    }
+
+    public String getOwnerID() {
+        return ownerID.getText();
+    }
+
+    public String getResidenceID() {
+        return residenceID.getText();
+    }
+
+    public String getResidenceName() {
+        return residenceName.getText();
+    }
+
     @FXML
     private MFXTextField residenceID;
 
     @FXML
     private MFXTextField residenceName;
+
+    public boolean isClicked = false;
     @FXML
     void submitBtnHandler(ActionEvent event) {
+        isClicked = true;
         ResultSet rst,rst2;
 
         try{

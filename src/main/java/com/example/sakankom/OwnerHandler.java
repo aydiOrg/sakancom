@@ -27,6 +27,8 @@ public class OwnerHandler implements Initializable{
 
     @FXML
     private MFXButton btnAddHouse;
+    public boolean userClickedAddResidencesBtn = false;
+    public boolean userClickedResidencesBtn = false;
     @FXML
     private Label ownerName;
 
@@ -38,10 +40,13 @@ public class OwnerHandler implements Initializable{
     @FXML
     private MFXButton btnMain;
     public ResidencesHandler residencesHandler;
+    public AddHouseHandler addHouseHandler;
+    public AddResidenceHandler addResidenceHandler;
+    public CardHandler cardHandler;
     @FXML
     private HBox cardLayout;
-    private List<House> recentlyAdded;
-    private List<House> recommended;
+    public List<House> recentlyAdded;
+    public List<House> recommended;
 
     private VBox mainBox;
 
@@ -54,6 +59,13 @@ public class OwnerHandler implements Initializable{
     User user;
     Owner owner;
 
+    public Owner getOwner() {
+        return owner;
+    }
+
+    public User getUser() {
+        return user;
+    }
     public void setUser(User user) {
         this.user = user;
         ownerName.setText(user.getFullName());
@@ -115,7 +127,6 @@ public class OwnerHandler implements Initializable{
                 Statement st = con.createStatement();
                 Statement st2 = con.createStatement();
 
-                System.out.println("Hello " + owner.getOwnerId());
                 rst2 = st2.executeQuery("select residence_name, residence_id from residence where isVAlid='1' and owner_id='" + owner.getOwnerId() + "'");
                 while(rst2.next()){
                     rst = st.executeQuery("select house_id, residence_id, image, price from house where isValid='1' and residence_id='" + rst2.getInt("residence_id") +"'");
@@ -144,7 +155,7 @@ public class OwnerHandler implements Initializable{
                     fxmlLoader.setLocation(getClass().getResource("card.fxml"));
                     HBox cardBox = fxmlLoader.load();
 
-                    CardHandler cardHandler = fxmlLoader.getController();
+                    cardHandler = fxmlLoader.getController();
                     cardHandler.setDate(value);
                     cardLayout.getChildren().add(cardBox);
                 }
@@ -194,6 +205,8 @@ public class OwnerHandler implements Initializable{
             fxmlLoader.setLocation(getClass().getResource("addHouse.fxml"));
             VBox showBox = fxmlLoader.load();
 
+            addHouseHandler = fxmlLoader.getController();
+
             show.getChildren().clear();
             show.getChildren().add(showBox);
 
@@ -209,12 +222,15 @@ public class OwnerHandler implements Initializable{
 
     @FXML
     void addResidenceBtnHandler(ActionEvent event) throws IOException {
+        userClickedAddResidencesBtn = true;
         if (btnAddResidence.getStyleClass().contains("selected")){
             System.out.println("Do nothing");
         } else {
             FXMLLoader fxmlLoader = new FXMLLoader();
             fxmlLoader.setLocation(getClass().getResource("addResidence.fxml"));
             VBox showBox = fxmlLoader.load();
+
+            addResidenceHandler = fxmlLoader.getController();
 
             MFXButton foundButton = (MFXButton) page.lookup(".selected");
             if (foundButton != null) {
@@ -232,6 +248,7 @@ public class OwnerHandler implements Initializable{
 
     @FXML
     void residencesBtnHandler(ActionEvent event) {
+        userClickedResidencesBtn = true;
         if (btnResidences.getStyleClass().contains("selected")) {
             System.out.println("Do nothing");
         } else {
