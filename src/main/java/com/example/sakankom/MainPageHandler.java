@@ -14,6 +14,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
@@ -85,7 +86,6 @@ public class MainPageHandler implements Initializable {
         private AnchorPane mainPane;
         @FXML
         private MFXButton editBtn;
-
         private MFXScrollPane page3;
         MFXScrollPane page2;
 
@@ -93,9 +93,11 @@ public class MainPageHandler implements Initializable {
         public boolean isEditPressed , isSavePressed;
         public boolean isApartementsPressed;
         public boolean isFurniturePressed;
-
+        public boolean logoutPressed , loggedOut;
         @Override
         public void initialize(URL url, ResourceBundle resourceBundle) {
+                loggedOut = false;
+                logoutPressed = false;
                 isFurniturePressed = false;
                 isSavePressed = false;  isEditPressed = false;
                 isApartementsPressed = false;
@@ -411,7 +413,22 @@ public class MainPageHandler implements Initializable {
         void logout(ActionEvent event) {
                 Stage stage = (Stage) mainPane.getScene().getWindow();
                 stage.close();
-                exit();
+                loggedOut =true;
+                logoutPressed = true;
+
+                Stage newStage = new Stage();
+                try {
+                        FXMLLoader loader = new FXMLLoader(getClass().getResource("Sign-In.fxml"));
+                        Parent root = loader.load();
+                        Scene scene = new Scene(root);
+                        newStage.setScene(scene);
+                        newStage.show();
+
+                } catch (IOException e) {
+                        e.printStackTrace();
+                        loggedOut = false;
+                }
+
         }
 
 

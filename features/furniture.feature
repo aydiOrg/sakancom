@@ -21,3 +21,11 @@ Scenario:
   And presses on sell
 
   Then the furniture piece should be added to the system
+
+  Scenario:
+    Given a tenant navigates to the furniture page
+    And the tenant presses on add new
+    And the tenant does not fill all the required fields
+    And the tenant presses on sell
+
+    Then an Alert is shown

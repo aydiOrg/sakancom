@@ -6,6 +6,7 @@ import io.github.palexdev.materialfx.controls.MFXTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 
@@ -34,6 +35,7 @@ public class NewFurnitureHandler implements Initializable {
         VBox container;
         FurnitureHandler furnitureHandler;
         public boolean savePressed;
+        public boolean valuesInvalid;
         int insertedId;
         public void setFurnitures(ArrayList<Furniture> furnitures){
             this.furnitures = furnitures;
@@ -48,10 +50,18 @@ public class NewFurnitureHandler implements Initializable {
         public AnchorPane getMainPane() {
             return mainPane;
         }
-
-
         @FXML
         void sellItem(ActionEvent event) {
+                 if (uname.getText().isEmpty() || uprice.getText().isEmpty() || udescription.getText().isEmpty()){
+                    valuesInvalid =true;
+
+                     Alert alert = new Alert(Alert.AlertType.ERROR);
+                     alert.setContentText("Invalid data");
+                     alert.setHeaderText("Invalid input, check the inserted data and try again");
+                     alert.show();
+                     return;
+                 }
+
                  String name = uname.getText();
                  String price = uprice.getText();
                  String description = udescription.getText();
@@ -92,22 +102,23 @@ public class NewFurnitureHandler implements Initializable {
 
         }
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        tenant = new Tenant();
-        savePressed = false;
-        insertedId = -1;
-    }
+        @Override
+        public void initialize(URL url, ResourceBundle resourceBundle) {
+            valuesInvalid =false;
+            tenant = new Tenant();
+            savePressed = false;
+            insertedId = -1;
+        }
 
-    public MFXTextField getUdescription() {
-        return udescription;
-    }
+        public MFXTextField getUdescription() {
+            return udescription;
+        }
 
-    public MFXTextField getUname() {
-        return uname;
-    }
+        public MFXTextField getUname() {
+            return uname;
+        }
 
-    public MFXTextField getUprice() {
-        return uprice;
-    }
+        public MFXTextField getUprice() {
+            return uprice;
+        }
 }

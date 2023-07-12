@@ -76,11 +76,11 @@ public class FurnitureSteps {
         for (int i =0;i<furnitures.size();i++) {
             for (int j = 0; j < realFurnitures.size(); j++) {
                 if (furnitures.get(i).getFurnitureId() == realFurnitures.get(j).getFurnitureId()) {
-                    if (!(furnitures.get(i).getOwnerName().equalsIgnoreCase(realFurnitures.get(i).getOwnerName()) && furnitures.get(i).getIsSold().equalsIgnoreCase(realFurnitures.get(i).getIsSold()))) {
+                    if (!(furnitures.get(i).getOwnerName().equalsIgnoreCase(realFurnitures.get(j).getOwnerName()) && furnitures.get(i).getIsSold().equalsIgnoreCase(realFurnitures.get(j).getIsSold()))) {
                         dataMathces = false;
-                        System.out.println(furnitures.get(i).getFurnitureId() + "  " + realFurnitures.get(i).getFurnitureId());
-                        System.out.println(furnitures.get(i).getOwnerName() + "  " + realFurnitures.get(i).getOwnerName());
-                        System.out.println(furnitures.get(i).getIsSold() + "  " + realFurnitures.get(i).getIsSold());
+                        System.out.println(furnitures.get(i).getFurnitureId() + "  " + realFurnitures.get(j).getFurnitureId());
+                        System.out.println(furnitures.get(i).getOwnerName() + "  " + realFurnitures.get(j).getOwnerName());
+                        System.out.println(furnitures.get(i).getIsSold() + "  " + realFurnitures.get(j).getIsSold());
                     }
                     break;
                 }
@@ -183,6 +183,36 @@ public class FurnitureSteps {
         }
 
         assertTrue(checker);
+    }
+
+    //4th Scenario
+    @Given("a tenant navigates to the furniture page")
+    public void aTenantNavigatesToTheFurniturePage() {
+        // Write code here that turns the phrase above into concrete actions
+        MainPageHandler mainPageHandler = Wrapper.signInHandler.mainPageHandler;
+        user = mainPageHandler.getUser();
+        assertTrue(user.getFlag() && user.getUserType().equalsIgnoreCase("tenant"));
+    }
+    @Given("the tenant presses on add new")
+    public void theTenantPressesOnAddNew() {
+        // Write code here that turns the phrase above into concrete actions
+        assertTrue(Wrapper.signInHandler.mainPageHandler.furnitureHandler.addPressed);
+    }
+    @Given("the tenant does not fill all the required fields")
+    public void theTenantDoesNotFillAllTheRequiredFields() {
+        // Write code here that turns the phrase above into concrete actions
+        assertTrue(Wrapper.signInHandler.mainPageHandler.furnitureHandler.newFurnitureHandler.valuesInvalid);
+    }
+    @Given("the tenant presses on sell")
+    public void theTenantPressesOnSell() {
+        // Write code here that turns the phrase above into concrete actions
+        NewFurnitureHandler newFurnitureHandler = Wrapper.signInHandler.mainPageHandler.furnitureHandler.newFurnitureHandler;
+        assertTrue(newFurnitureHandler.savePressed);
+    }
+    @Then("an Alert is shown")
+    public void anAlertIsShown() {
+        // Write code here that turns the phrase above into concrete actions
+        assertTrue(Wrapper.signInHandler.mainPageHandler.furnitureHandler.newFurnitureHandler.valuesInvalid);
     }
 
 

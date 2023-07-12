@@ -49,16 +49,21 @@ public class LoginFeatureSteps {
         // Double, Byte, Short, Long, BigInteger or BigDecimal.
         //
         // For other transformations you can register a DataTableType.
-
         List<List<String>> myList = dataTable.asLists();
-        user.setUsername(wrapper.signInHandler.username.getText());
-        user.setPassword(wrapper.signInHandler.password.getText());
+        ArrayList<User> values = wrapper.signInHandler.getValues();
 
         for(int i = 1;i< myList.size();i++) {
-            if(myList.get(i).get(0).equals(user.getUsername()) && myList.get(i).get(1).equals(user.getPassword())) {
-                userValid = true;
-                break;
+            for (int k = 0;k<values.size();k++) {
+                user.setUsername(values.get(k).getUsername());
+                user.setPassword(values.get(k).getPassword());
+                if(myList.get(i).get(0).equals(user.getUsername()) && myList.get(i).get(1).equals(user.getPassword())) {
+                    userValid = true;
+                    break;
+                }
+
             }
+            if (userValid)
+                break;
         }
 
         assertTrue(userValid);
@@ -88,12 +93,56 @@ public class LoginFeatureSteps {
         assertFalse(user.getFlag());
     }
     @Given("the password is not equal to <username> or the username is not equal to <password>")
-    public void thePasswordIsNotEqualToUsernameOrTheUsernameIsNotEqualToPassword() {
+    public void thePasswordIsNotEqualToUsernameOrTheUsernameIsNotEqualToPassword(DataTable dataTable) {
+        // Write code here that turns the phrase above into concrete actions
+        // For automatic transformation, change DataTable to one of
+        // E, List<E>, List<List<E>>, List<Map<K,V>>, Map<K,V> or
+        // Map<K, List<V>>. E,K,V must be a String, Integer, Float,
+        // Double, Byte, Short, Long, BigInteger or BigDecimal.
+        //
+        // For other transformations you can register a DataTableType.
+        // Write code here that turns the phrase above into concrete actions
+        // For automatic transformation, change DataTable to one of
+        // E, List<E>, List<List<E>>, List<Map<K,V>>, Map<K,V> or
+        // Map<K, List<V>>. E,K,V must be a String, Integer, Float,
+        // Double, Byte, Short, Long, BigInteger or BigDecimal.
+        //
+        // For other transformations you can register a DataTableType.
+        boolean userValid2 = true;
+        List<List<String>> myList = dataTable.asLists();
+        ArrayList<User> values = wrapper.signInHandler.getValues();
 
+        for(int i = 1;i< myList.size();i++) {
+            for (int k = 0;k<values.size();k++) {
+                user.setUsername(values.get(k).getUsername());
+                user.setPassword(values.get(k).getPassword());
+                if(!myList.get(i).get(0).equals(user.getUsername()) && !myList.get(i).get(1).equals(user.getPassword())) {
+                    userValid2 = false;
+                    break;
+                }
+
+            }
+            if (!userValid2)
+                break;
+        }
+
+        assertFalse(userValid2);
     }
     @Then("show a message indicating that the entered data is false")
     public void showAMessageIndicatingThatTheEnteredDataIsFalse() {
         assertTrue(wrapper.signInHandler.alertShown);
+    }
+
+    //3rd Scenario
+    @Given("the user presses on logout")
+    public void theUserPressesOnLogout() {
+        // Write code here that turns the phrase above into concrete actions
+        assertTrue(Wrapper.signInHandler.mainPageHandler.logoutPressed);
+    }
+    @Then("the user should be logged out of the system")
+    public void theUserShouldBeLoggedOutOfTheSystem() {
+        // Write code here that turns the phrase above into concrete actions
+        assertTrue(Wrapper.signInHandler.mainPageHandler.loggedOut);
     }
 
 }
