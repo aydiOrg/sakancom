@@ -8,7 +8,7 @@ Feature: user login
     And the username is equal to <username> and the username is equal to <password>
       | username | password |
       | aydi     | 123      |
-      | bara     | 789      |
+      | bara     | 123       |
 
     Then the user should log in to the system
     And the user type is determined
@@ -16,5 +16,12 @@ Feature: user login
   Scenario:
     Given user not logged in
     And the password is not equal to <username> or the username is not equal to <password>
+      | username | password |
+      | aydi     | 123      |
+      | bara     | 123      |
 
     Then show a message indicating that the entered data is false
+
+  Scenario:
+    Given the user presses on logout
+    Then the user should be logged out of the system

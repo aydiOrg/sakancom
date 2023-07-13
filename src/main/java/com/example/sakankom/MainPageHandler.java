@@ -14,6 +14,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
@@ -37,8 +38,8 @@ public class MainPageHandler implements Initializable {
         User user;
         ArrayList<Apartment> apartments;
         ArrayList<Reservation> reservations;
-        CurrentHousesHandler currentHousesHandler;
-        FurnitureHandler furnitureHandler;
+        public CurrentHousesHandler currentHousesHandler;
+        public FurnitureHandler furnitureHandler;
         Tenant tenant;
         @FXML
         private MFXTextField uBdate;
@@ -85,17 +86,21 @@ public class MainPageHandler implements Initializable {
         private AnchorPane mainPane;
         @FXML
         private MFXButton editBtn;
-
         private MFXScrollPane page3;
         MFXScrollPane page2;
 
         Button[] buttons = new Button[5];
         public boolean isEditPressed , isSavePressed;
-
-
+        public boolean isApartementsPressed;
+        public boolean isFurniturePressed;
+        public boolean logoutPressed , loggedOut;
         @Override
         public void initialize(URL url, ResourceBundle resourceBundle) {
+                loggedOut = false;
+                logoutPressed = false;
+                isFurniturePressed = false;
                 isSavePressed = false;  isEditPressed = false;
+                isApartementsPressed = false;
                 buttons[0] = btn1;buttons[1] = btn2;buttons[2] = btn3;
                 uEmail.setEditable(false); uUsername.setEditable(false); uPassword.setEditable(false); uGender.setEditable(false); uJob.setEditable(false); uPhone.setEditable(false);uBdate.setEditable(false);uName.setEditable(false);
                 reservations =new ArrayList<Reservation>();
@@ -380,6 +385,8 @@ public class MainPageHandler implements Initializable {
                 if(!btn2.getStylesheets().isEmpty())
                         btn2.getStylesheets().remove(0);
                 btn2.getStylesheets().add("mainPageButtons.css");
+
+                isFurniturePressed = true;
         }
 
         @FXML
@@ -397,6 +404,8 @@ public class MainPageHandler implements Initializable {
                 if(!btn3.getStylesheets().isEmpty())
                         btn3.getStylesheets().remove(0);
                 btn3.getStylesheets().add("mainPageButtons.css");
+
+                isApartementsPressed = true;
         }
 
 
@@ -404,7 +413,22 @@ public class MainPageHandler implements Initializable {
         void logout(ActionEvent event) {
                 Stage stage = (Stage) mainPane.getScene().getWindow();
                 stage.close();
-                exit();
+                loggedOut =true;
+                logoutPressed = true;
+
+                Stage newStage = new Stage();
+                try {
+                        FXMLLoader loader = new FXMLLoader(getClass().getResource("Sign-In.fxml"));
+                        Parent root = loader.load();
+                        Scene scene = new Scene(root);
+                        newStage.setScene(scene);
+                        newStage.show();
+
+                } catch (IOException e) {
+                        e.printStackTrace();
+                        loggedOut = false;
+                }
+
         }
 
 
