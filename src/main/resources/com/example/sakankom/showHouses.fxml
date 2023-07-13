@@ -15,7 +15,7 @@
             <Font name="Berlin Sans FB" size="24.0" />
          </font>
       </Label>
-      <MFXScrollPane prefHeight="321.0" prefWidth="768.0" styleClass="transparent">
+      <MFXScrollPane fx:id="scrollPane" prefHeight="321.0" prefWidth="768.0" styleClass="transparent">
          <content>
             <HBox fx:id="residenceLayout" alignment="CENTER_LEFT" prefHeight="601.0" prefWidth="990.0" spacing="20.0" styleClass="transparent">
                <children>

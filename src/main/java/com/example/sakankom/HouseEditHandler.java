@@ -6,8 +6,11 @@ import io.github.palexdev.materialfx.controls.MFXTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 
+import javax.swing.*;
 import java.net.URL;
+import java.sql.*;
 import java.util.ResourceBundle;
 
 public class HouseEditHandler implements Initializable {
@@ -21,7 +24,7 @@ public class HouseEditHandler implements Initializable {
     private MFXTextField bedroomsNumber;
 
     @FXML
-    private MFXButton btnSubmit;
+    private MFXButton btnUpdate;
 
     @FXML
     private MFXTextField capacity;
@@ -48,9 +51,6 @@ public class HouseEditHandler implements Initializable {
     private MFXCheckbox isReserved;
 
     @FXML
-    private MFXCheckbox isValid;
-
-    @FXML
     private MFXTextField price;
 
     @FXML
@@ -62,13 +62,85 @@ public class HouseEditHandler implements Initializable {
     @FXML
     private MFXTextField services;
 
-    @FXML
-    void submitBtnHandler(ActionEvent event) {
+    public void setDate(String houseName){
+        ResultSet rst1;
 
+        try{
+            DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
+            Connection con = DriverManager.getConnection("jdbc:oracle:thin:@//localhost:1521/xepdb1", "sakankom", "12345678");
+            Statement st = con.createStatement();
+
+            rst1 = st.executeQuery("SELECT * FROM house WHERE isValid='1' and house_id='" + houseName + "'");
+            rst1.next();
+
+            houseID.setText(rst1.getString("house_id"));
+            bedroomsNumber.setText(rst1.getString("bedrooms_number"));
+            residenceID.setText(rst1.getString("residence_id"));
+            imageName.setText(rst1.getString("image"));
+            floorNumber.setText(rst1.getString("floor_number"));
+            flatNumber.setText(rst1.getString("flat_number"));
+            bathroomsNumber.setText(rst1.getString("bathrooms_number"));
+            balaconyNumber.setText(rst1.getString("balcony"));
+            price.setText(rst1.getString("price"));
+            capacity.setText(rst1.getString("capacity"));
+            reservedCapacity.setText(rst1.getString("reserved_capacity"));
+            genders.setText(rst1.getString("genders"));
+            services.setText(rst1.getString("services"));
+            isAccepted.setSelected(rst1.getString("isaccepted").equals("1") ? true : false);
+            isReserved.setSelected(rst1.getString("isreserved").equals("1") ? true : false);
+
+            houseID.setEditable(false);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
+    }
+
+    @FXML
+    void updateBtnHandler(ActionEvent event) {
+        ResultSet rst1, rst2;
+
+        try{
+            DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
+            Connection con = DriverManager.getConnection("jdbc:oracle:thin:@//localhost:1521/xepdb1", "sakankom", "12345678");
+            Statement st = con.createStatement();
+            Statement st2 = con.createStatement();
+
+            String isAcceptedValue = isAccepted.isSelected() ? "1" : "0";
+            String isReserverValue = isReserved.isSelected() ? "1" : "0";
+
+
+            rst1 = st.executeQuery("update house set " +
+                    "HOUSE_ID='" + houseID.getText() + "'," +
+                    " RESIDENCE_ID='" + residenceID.getText() + "'," +
+                    "BEDROOMS_NUMBER='" + bedroomsNumber.getText() + "'," +
+                    "SERVICES='" + services.getText() + "'," +
+                    "PRICE='" + price.getText() + "'," +
+                    "FLOOR_NUMBER='" + floorNumber.getText() + "'," +
+                    "FLAT_NUMBER='" + flatNumber.getText() + "'," +
+                    "CAPACITY='" + capacity.getText() + "'," +
+                    "RESERVED_CAPACITY='" + reservedCapacity.getText() + "'," +
+                    "GENDERS='" + genders.getText() + "'," +
+                    "BALCONY='" + balaconyNumber.getText() + "'," +
+                    "ISVALID='1'," +
+                    "ISACCEPTED='" + isAcceptedValue + "'," +
+                    "ISRESERVED='" + isReserverValue + "'," +
+                    "IMAGE='" + imageName.getText() + "' " +
+                    "WHERE house_id='" + houseID.getText() + "'"
+            );
+            con.close();
+
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Message");
+            alert.setHeaderText(null);
+            alert.setContentText("Update House Successfully :)");
+
+            alert.showAndWait();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

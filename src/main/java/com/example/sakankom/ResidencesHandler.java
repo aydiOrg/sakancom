@@ -3,6 +3,7 @@ package com.example.sakankom;
 import com.example.sakankom.OwnerFiles.House;
 import com.example.sakankom.OwnerFiles.Residence;
 import io.github.palexdev.materialfx.controls.MFXButton;
+import io.github.palexdev.materialfx.controls.MFXScrollPane;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -26,7 +27,8 @@ public class ResidencesHandler implements Initializable {
     private List<House> houses;
     @FXML
     private Label mainLabel;
-
+    @FXML
+    private VBox show;
     private int totalTenants;
 
     @Override
@@ -160,45 +162,29 @@ public class ResidencesHandler implements Initializable {
 
                     residenceContainer.add(floor, 0, row++);
                     GridPane.setMargin(floor, new Insets(10));
-//                            Button selectedButton = (Button) vbox.lookup("#button1");
 
 
-//                    GridPane gridPane = (GridPane) floor.lookup("#floorContainer");
-//
-//                    for(Node node : gridPane.getChildren()){
-//                        if(node instanceof VBox vBox){
-//                            MFXButton button = (MFXButton) vBox.lookup("#btnShow");
-//                            button.setOnAction(event ->{
-//                                showMore();
-//                            });
-//                        }
-//                    }
-
-
-
-//                    for (Node node : floor.getChildren()) {
-//                        if (node instanceof HBox cont1) {
-//                            for(Node node1 : cont1.getChildren()){
-//                                if(node1 instanceof GridPane cont2){
-//                                    for(Node node2 : cont2.getChildren()){
-//                                        if(node2 instanceof VBox cont3){
-//                                            for (Node node3 : cont3.getChildren()){
-//                                                if (node3 instanceof VBox cont4){
-//                                                    for(Node node4 : cont4.getChildren()){
-//                                                        if (node4 instanceof MFXButton button){
-//                                                            button.setOnAction(event -> {
-//                                                                showMore();
-//                                                            });
-//                                                        }
-//                                                    }
-//                                                }
-//                                            }
-//                                        }
-//                                    }
-//                                }
-//                            }
-//                        }
-//                    }
+                    for (Node node : floor.getChildren()) {
+                        if (node instanceof MFXScrollPane scrollPane) {
+                            Node content = scrollPane.getContent();
+                            if(content instanceof HBox hbox) {
+                                for (Node node1 : hbox.getChildren()) {
+                                if(node1 instanceof GridPane gridPane){
+                                    for(Node node2 : gridPane.getChildren()){
+                                        if(node2 instanceof VBox vBox){
+                                            VBox vBox2 = (VBox) vBox.lookup("#labels");
+                                            Label label = (Label) vBox2.lookup("#houseName");
+                                            MFXButton button = (MFXButton) vBox.lookup("#btnShow");
+                                            button.setOnAction(actionEvent -> {
+                                                showMore(label.getText().split(" ")[1]);
+                                            });
+                                        }
+                                    }
+                                }
+                                }
+                            }
+                        }
+                    }
 
 
                     con.close();
@@ -212,7 +198,20 @@ public class ResidencesHandler implements Initializable {
         }
     }
 
-    public void showMore(){
-        System.out.println("Yeeaaahhh");
+    public void showMore(String houseName) {
+        try{
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(getClass().getResource("houseEdit.fxml"));
+            VBox vbox = fxmlLoader.load();
+
+            HouseEditHandler handler = fxmlLoader.getController();
+            handler.setDate(houseName);
+
+            show.getChildren().clear();
+            show.getChildren().addAll(vbox.getChildren());
+
+        }catch (IOException e){
+            System.out.println(e);
+        }
     }
 }
