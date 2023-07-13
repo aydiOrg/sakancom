@@ -36,18 +36,26 @@ public class SignInHandler implements Initializable {
     Stage newStage = new Stage();
     Stage currentStage = new Stage();
     ArrayList<User> users ;
+    ArrayList<User> values;
     public MainPageHandler mainPageHandler;
     public OwnerHandler ownerHandler;
     public boolean isUserLoggedIn , alertShown;
 
 
+
     public ArrayList<User> getUsers(){
         return users;
     }
+
+    public ArrayList<User> getValues() {
+        return values;
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         isUserLoggedIn = false;
         alertShown = false;
+        values = new ArrayList<User>();
         users = new ArrayList<User>();
         ResultSet rst, rst2, rst3;
         try {
@@ -96,6 +104,10 @@ public class SignInHandler implements Initializable {
     void validator(ActionEvent event) {
         String u = username.getText();
         String p = password.getText();
+
+        User tmp = new User();
+        tmp.setPassword(p);tmp.setUsername(u);
+        values.add(tmp);
 
         for (int i=0 ; i< users.size();i++) {
             User user = users.get(i);
