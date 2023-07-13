@@ -1,6 +1,7 @@
 package com.example.sakankom;
 
 import com.example.sakankom.OwnerFiles.House;
+import com.example.sakankom.OwnerFiles.Owner;
 import com.example.sakankom.OwnerFiles.Residence;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXScrollPane;
@@ -21,18 +22,29 @@ import java.sql.*;
 import java.util.*;
 
 public class ResidencesHandler implements Initializable {
+    public HouseEditHandler houseEditHandler;
+    public String houseIDForShowMoreTest;
     @FXML
     private GridPane residenceContainer;
-    private List<Residence> residences;
+    public List<Residence> residences;
     private List<House> houses;
+    public Map<Integer, ArrayList<House>> housesByFloor;
     @FXML
     private Label mainLabel;
     @FXML
     private VBox show;
     private int totalTenants;
+    private int owner_id;
+    public boolean userClickedShowHouses = false;
+    public boolean userCLickedShowMore = false;
+    public String residenceID;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+    }
+
+    public void display(){
         residences = new ArrayList<>();
         int column = 1;
         int row = 1;
@@ -44,7 +56,8 @@ public class ResidencesHandler implements Initializable {
             Statement st = con.createStatement();
             Statement st2 = con.createStatement();
 
-            rst = st.executeQuery("select owner_id, residence_id, residence_name, location from residence where isValid='1'");
+            System.out.println(owner_id);
+            rst = st.executeQuery("select owner_id, residence_id, residence_name, location from residence where isValid='1' and owner_id='" + owner_id + "'");
 
             while (rst.next()) {
                 rst2 = st2.executeQuery("SELECT fname, lname FROM owner WHERE owner_id='" + rst.getString("owner_id") + "'");
@@ -66,12 +79,39 @@ public class ResidencesHandler implements Initializable {
                 ResidenceHandler residenceHandler = fxmlLoader.getController();
                 residenceHandler.setDate(residence);
 
+                housesByFloor = new HashMap<>();
+
                 for (Node node : residenceBox.getChildren()) {
                     if (node instanceof HBox) {
                         for (Node node2 : ((HBox) node).getChildren()) {
                             if(node2 instanceof MFXButton button) {
                                 button.setOnAction(event -> {
                                     showHouses(residence.getResidenceName());
+                                    userClickedShowHouses = true;
+                                    residenceID = residence.getResidenceID();
+
+                                    ResultSet resultSet;
+                                    try {
+                                        DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
+                                        Connection con1 = DriverManager.getConnection("jdbc:oracle:thin:@//localhost:1521/xepdb1", "sakankom", "12345678");
+                                        Statement st3 = con1.createStatement();
+
+                                        resultSet = st3.executeQuery("SELECT * FROM house WHERE isvalid='1' and residence_id='" + residence.getResidenceID() + "'");
+                                        while(resultSet.next()){
+                                            int floor = resultSet.getInt("floor_number");
+
+                                            if (!housesByFloor.containsKey(floor)) {
+                                                housesByFloor.put(floor, new ArrayList<>());
+                                            }
+
+                                            House house = new House(resultSet.getString("house_id"), floor);
+                                            housesByFloor.get(floor).add(house);
+                                        }
+                                        con1.close();
+                                } catch (SQLException e) {
+                                        throw new RuntimeException(e);
+                                    }
+
                                 });
                             }
                         }
@@ -177,6 +217,7 @@ public class ResidencesHandler implements Initializable {
                                             MFXButton button = (MFXButton) vBox.lookup("#btnShow");
                                             button.setOnAction(actionEvent -> {
                                                 showMore(label.getText().split(" ")[1]);
+                                                userCLickedShowMore = true;
                                             });
                                         }
                                     }
@@ -198,14 +239,16 @@ public class ResidencesHandler implements Initializable {
         }
     }
 
-    public void showMore(String houseName) {
+    public void showMore(String houseID) {
         try{
             FXMLLoader fxmlLoader = new FXMLLoader();
             fxmlLoader.setLocation(getClass().getResource("houseEdit.fxml"));
             VBox vbox = fxmlLoader.load();
 
-            HouseEditHandler handler = fxmlLoader.getController();
-            handler.setDate(houseName);
+            houseEditHandler = fxmlLoader.getController();
+            houseEditHandler.setDate(houseID);
+
+            houseIDForShowMoreTest = houseID;
 
             show.getChildren().clear();
             show.getChildren().addAll(vbox.getChildren());
@@ -213,5 +256,10 @@ public class ResidencesHandler implements Initializable {
         }catch (IOException e){
             System.out.println(e);
         }
+    }
+
+    public void setData(Owner owner){
+        this.owner_id = owner.getOwnerId();
+        this.display();
     }
 }

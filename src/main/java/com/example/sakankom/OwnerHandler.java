@@ -1,13 +1,15 @@
 package com.example.sakankom;
 
 import com.example.sakankom.OwnerFiles.House;
-import com.example.sakankom.OwnerFiles.Residence;
+import com.example.sakankom.OwnerFiles.Owner;
+import com.example.sakankom.dataStructures.User;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
+import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -15,10 +17,7 @@ import javafx.scene.layout.VBox;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -28,6 +27,10 @@ public class OwnerHandler implements Initializable{
 
     @FXML
     private MFXButton btnAddHouse;
+    public boolean userClickedAddResidencesBtn = false;
+    public boolean userClickedResidencesBtn = false;
+    @FXML
+    private Label ownerName;
 
     @FXML
     private MFXButton btnAddResidence;
@@ -36,11 +39,14 @@ public class OwnerHandler implements Initializable{
     private MFXButton btnResidences;
     @FXML
     private MFXButton btnMain;
-
+    public ResidencesHandler residencesHandler;
+    public AddHouseHandler addHouseHandler;
+    public AddResidenceHandler addResidenceHandler;
+    public CardHandler cardHandler;
     @FXML
     private HBox cardLayout;
-    private List<House> recentlyAdded;
-    private List<House> recommended;
+    public List<House> recentlyAdded;
+    public List<House> recommended;
 
     private VBox mainBox;
 
@@ -48,20 +54,59 @@ public class OwnerHandler implements Initializable{
     private AnchorPane page;
     @FXML
     private VBox show;
-
     @FXML
     private GridPane houseContainer;
+    User user;
+    Owner owner;
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        mainBox = new VBox();
-        mainBox.getChildren().setAll(show.getChildren());
+    public Owner getOwner() {
+        return owner;
+    }
+
+    public User getUser() {
+        return user;
+    }
+    public void setUser(User user) {
+        this.user = user;
+        ownerName.setText(user.getFullName());
+
+        ResultSet rst;
+        try {
+            DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
+            Connection con = DriverManager.getConnection("jdbc:oracle:thin:@//localhost:1521/xepdb1", "sakankom", "12345678");
+            //jdbc:oracle:thin:@//localhost:1521/xepdb1
+            Statement st = con.createStatement();
+            rst = st.executeQuery("select * from owner where username = '" + user.getUsername() + "'");
+
+            owner = new Owner();
+            if (rst.next()) {
+                owner.setOwnerId(rst.getInt("owner_id"));
+            }
+            con.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
         try {
             mainBtnHandler(new ActionEvent());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+
+//
+    }
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        user = new User();
+
+        mainBox = new VBox();
+        mainBox.getChildren().setAll(show.getChildren());
+
+//        try {
+//            mainBtnHandler(new ActionEvent());
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        }
 
     }
 
@@ -74,35 +119,32 @@ public class OwnerHandler implements Initializable{
             recommended = new ArrayList<>();
             int column = 1;
             int row = 1;
-            ResultSet rst, rst2, rst3, rst4;
+            ResultSet rst, rst2;
 
             try {
                 DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
                 Connection con = DriverManager.getConnection("jdbc:oracle:thin:@//localhost:1521/xepdb1", "sakankom", "12345678");
                 Statement st = con.createStatement();
                 Statement st2 = con.createStatement();
-                Statement st3 = con.createStatement();
-                Statement st4 = con.createStatement();
 
-                rst = st.executeQuery("select house_id, residence_id, image, price from house where isValid='1'");
-
-                while(rst.next()){
-                    rst2 = st2.executeQuery("select residence_name from residence where residence_id = '" + rst.getString("residence_id") + "' and isVAlid='1'");
-                    rst2.next();
-                    recommended.add(new House(
-                            "House " + rst.getString("house_id"),
-                            "/photos/" + rst.getString("image"),
-                            rst.getInt("price"),
-                            rst2.getString("residence_name")
-                    ));
+                rst2 = st2.executeQuery("select residence_name, residence_id from residence where isVAlid='1' and owner_id='" + owner.getOwnerId() + "'");
+                while(rst2.next()){
+                    rst = st.executeQuery("select house_id, residence_id, image, price from house where isValid='1' and residence_id='" + rst2.getInt("residence_id") +"'");
+                    while(rst.next()) {
+                        recommended.add(new House(
+                                "House " + rst.getString("house_id"),
+                                "/photos/" + rst.getString("image"),
+                                rst.getInt("price"),
+                                rst2.getString("residence_name")
+                        ));
+                    }
                 }
-                Collections.reverse(recommended);
                 if (recommended.size() < 4) {
                     recentlyAdded.addAll(recommended);
                 }
                 else {
-                    for (int j = recommended.size() - 1; j >= recommended.size() / 2; j--) {
-                        recentlyAdded.add(recommended.get(recommended.size() - 1 - j));
+                    for (int j = 0; j <= recommended.size() / 2; j++) {
+                        recentlyAdded.add(recommended.get(j));
                     }
                 }
 
@@ -113,7 +155,7 @@ public class OwnerHandler implements Initializable{
                     fxmlLoader.setLocation(getClass().getResource("card.fxml"));
                     HBox cardBox = fxmlLoader.load();
 
-                    CardHandler cardHandler = fxmlLoader.getController();
+                    cardHandler = fxmlLoader.getController();
                     cardHandler.setDate(value);
                     cardLayout.getChildren().add(cardBox);
                 }
@@ -163,6 +205,8 @@ public class OwnerHandler implements Initializable{
             fxmlLoader.setLocation(getClass().getResource("addHouse.fxml"));
             VBox showBox = fxmlLoader.load();
 
+            addHouseHandler = fxmlLoader.getController();
+
             show.getChildren().clear();
             show.getChildren().add(showBox);
 
@@ -178,12 +222,15 @@ public class OwnerHandler implements Initializable{
 
     @FXML
     void addResidenceBtnHandler(ActionEvent event) throws IOException {
+        userClickedAddResidencesBtn = true;
         if (btnAddResidence.getStyleClass().contains("selected")){
             System.out.println("Do nothing");
         } else {
             FXMLLoader fxmlLoader = new FXMLLoader();
             fxmlLoader.setLocation(getClass().getResource("addResidence.fxml"));
             VBox showBox = fxmlLoader.load();
+
+            addResidenceHandler = fxmlLoader.getController();
 
             MFXButton foundButton = (MFXButton) page.lookup(".selected");
             if (foundButton != null) {
@@ -201,6 +248,7 @@ public class OwnerHandler implements Initializable{
 
     @FXML
     void residencesBtnHandler(ActionEvent event) {
+        userClickedResidencesBtn = true;
         if (btnResidences.getStyleClass().contains("selected")) {
             System.out.println("Do nothing");
         } else {
@@ -208,6 +256,9 @@ public class OwnerHandler implements Initializable{
                 FXMLLoader fxmlLoader = new FXMLLoader();
                 fxmlLoader.setLocation(getClass().getResource("Residences.fxml"));
                 VBox showBox = fxmlLoader.load();
+
+                residencesHandler = fxmlLoader.getController();
+                residencesHandler.setData(owner);
 
                 MFXButton foundButton = (MFXButton) page.lookup(".selected");
                 if (foundButton != null) {

@@ -6,7 +6,6 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -129,26 +128,10 @@
          <top>
             <HBox alignment="CENTER_LEFT" prefHeight="60.0" prefWidth="200.0" styleClass="white-background" stylesheets="@../../../OwnerPage.css" BorderPane.alignment="CENTER">
                <children>
-                  <HBox alignment="CENTER" maxHeight="-Infinity" prefHeight="35.0" prefWidth="300.0">
-                     <children>
-                        <TextField prefHeight="38.0" prefWidth="270.0" promptText="Search" styleClass="search" />
-                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../../../photos/ic_search.jpeg" />
-                           </image>
-                           <HBox.margin>
-                              <Insets left="10.0" />
-                           </HBox.margin>
-                        </ImageView>
-                     </children>
-                     <HBox.margin>
-                        <Insets />
-                     </HBox.margin>
-                  </HBox>
                   <Pane prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
-                  <HBox alignment="CENTER" prefHeight="60.0" prefWidth="154.0">
+                  <HBox alignment="CENTER" prefHeight="60.0" prefWidth="190.0">
                      <children>
-                        <Label prefHeight="60.0" prefWidth="97.0" text="My profile">
+                        <Label fx:id="ownerName" prefHeight="60.0" prefWidth="113.0" text="My profile">
                            <font>
                               <Font name="Berlin Sans FB" size="18.0" />
                            </font>
@@ -189,7 +172,7 @@
                               <HBox fx:id="cardLayout" alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="990.0" spacing="20.0" styleClass="transparent" />
                            </content>
                         </MFXScrollPane>
-                        <Label layoutX="30.0" layoutY="30.0" prefHeight="35.0" prefWidth="242.0" text="Recommended for you">
+                        <Label layoutX="30.0" layoutY="30.0" prefHeight="35.0" prefWidth="242.0" text="All Houses Added">
                            <font>
                               <Font name="Berlin Sans FB" size="24.0" />
                            </font>

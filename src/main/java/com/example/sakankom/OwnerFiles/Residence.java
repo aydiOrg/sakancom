@@ -24,6 +24,13 @@ public class Residence {
         this.ownerName = ownerName;
     }
 
+    public Residence(String residenceID, String ownerID, String location, String residenceName) {
+        this.residenceID = residenceID;
+        this.ownerID = ownerID;
+        this.location = location;
+        this.residenceName = residenceName;
+    }
+
     public String getResidenceID() {
         return residenceID;
     }

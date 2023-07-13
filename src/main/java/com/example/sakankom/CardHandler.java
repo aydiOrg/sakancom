@@ -4,6 +4,7 @@ package com.example.sakankom;
 import com.example.sakankom.OwnerFiles.House;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
@@ -15,6 +16,39 @@ import java.util.ResourceBundle;
 public class CardHandler implements Initializable {
     @FXML
     private HBox box;
+
+    public Label getHouseName() {
+        return houseName;
+    }
+
+    public void setHouseName(Label houseName) {
+        this.houseName = houseName;
+    }
+
+    public ImageView getHouseRating() {
+        return houseRating;
+    }
+
+    public void setHouseRating(ImageView houseRating) {
+        this.houseRating = houseRating;
+    }
+
+    public Label getHouseRes() {
+        return houseRes;
+    }
+
+    public void setHouseRes(Label houseRes) {
+        this.houseRes = houseRes;
+    }
+
+    public ImageView getHouseImage() {
+        return houseImage;
+    }
+
+    public void setHouseImage(ImageView houseImage) {
+        this.houseImage = houseImage;
+    }
+
     @FXML
     private javafx.scene.control.Label houseName;
 
