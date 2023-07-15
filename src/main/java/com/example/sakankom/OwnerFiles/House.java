@@ -14,10 +14,18 @@ public class House {
         this.price = price;
         this.res = res;
     }
+    public House(String houseID, int floor){
+        this.houseID = houseID;
+        this.floor = floor;
+    }
     public House() {
     }
 
     private String name;
+    public String houseID;
+    public String getID(){
+        return name.split(" ")[1];
+    }
     private String imageSrc;
     private int price;
 

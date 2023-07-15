@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import io.github.palexdev.materialfx.controls.MFXButton?>
-<?import io.github.palexdev.materialfx.controls.MFXCheckbox?>
 <?import io.github.palexdev.materialfx.controls.MFXTextField?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
@@ -59,12 +59,8 @@
         </HBox>
         <HBox layoutX="10.0" layoutY="330.0" prefHeight="100.0" prefWidth="200.0" spacing="15.0">
             <children>
-                <MFXCheckbox fx:id="isValid" gap="0.0" prefHeight="97.0" prefWidth="190.0" text="Is valid" textAlignment="CENTER">
-                    <font>
-                        <Font size="18.0" />
-                    </font>
-                </MFXCheckbox>
-                <MFXButton fx:id="btnSubmit" onAction="#submitBtnHandler" prefHeight="107.0" prefWidth="159.0" rippleColor="BLACK" style="-fx-background-color: blue;" text="Submit" textAlignment="CENTER" textFill="#0d0000">
+            <Pane prefHeight="100.0" prefWidth="437.0" />
+                <MFXButton fx:id="btnSubmit" buttonType="RAISED" onAction="#submitBtnHandler" prefHeight="107.0" prefWidth="159.0" rippleColor="BLACK" text="Submit" textAlignment="CENTER" textFill="#0d0000">
                     <font>
                         <Font name="Berlin Sans FB" size="24.0" />
                     </font>
