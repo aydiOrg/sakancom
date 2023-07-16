@@ -4,7 +4,6 @@ package com.example.sakankom;
 import com.example.sakankom.OwnerFiles.House;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
@@ -16,52 +15,13 @@ import java.util.ResourceBundle;
 public class CardHandler implements Initializable {
     @FXML
     private HBox box;
-
-    public Label getHouseName() {
-        return houseName;
-    }
-
-    public void setHouseName(Label houseName) {
-        this.houseName = houseName;
-    }
-
-    public ImageView getHouseRating() {
-        return houseRating;
-    }
-
-    public void setHouseRating(ImageView houseRating) {
-        this.houseRating = houseRating;
-    }
-
-    public Label getHouseRes() {
-        return houseRes;
-    }
-
-    public void setHouseRes(Label houseRes) {
-        this.houseRes = houseRes;
-    }
-
-    public ImageView getHouseImage() {
-        return houseImage;
-    }
-
-    public void setHouseImage(ImageView houseImage) {
-        this.houseImage = houseImage;
-    }
-
     @FXML
     private javafx.scene.control.Label houseName;
-
-    @FXML
-    private ImageView houseRating;
-
     @FXML
     private javafx.scene.control.Label houseRes;
-
     @FXML
     private ImageView houseImage;
-
-    private String [] colors = {"B9E5FF", "BDB2FE", "FB9AA8", "FF5056"};
+    private final String [] colors = {":#b9e5ff", ":#bdb2fe", ":#fb9aa8", ":#ff5056"};
 
     public void setDate(House house){
         Image image = new Image(Objects.requireNonNull(getClass().getResourceAsStream(house.getImageSrc())));
@@ -69,14 +29,8 @@ public class CardHandler implements Initializable {
 
         houseName.setText(house.getName());
         houseRes.setText(house.getRes());
-        box.setStyle("-fx-background-color: #" + colors[(int)(Math.random()*colors.length)] + ";" +
-                "-fx-background-radius: 15;" +
-                "-fx-effect: dropShadow(three-pass-box, rgba(0, 0, 0, 0.1), 10, 0, 0, 10)");
-
-
+        box.setStyle("-fx-background-color" + colors[(int)(Math.random()*colors.length)] + "; -fx-background-radius: 15; -fx-effect: dropShadow(three-pass-box, rgba(0, 0, 0, 0.1), 10, 0, 0, 10)");
     }
     @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-
-    }
+    public void initialize(URL url, ResourceBundle resourceBundle) {}
 }

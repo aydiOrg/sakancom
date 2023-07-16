@@ -5,16 +5,13 @@ import com.example.sakankom.OwnerFiles.Owner;
 import com.example.sakankom.OwnerFiles.Residence;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXScrollPane;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
-import oracle.jdbc.OracleConnectionWrapper;
 
 import java.io.IOException;
 import java.net.URL;
@@ -27,13 +24,11 @@ public class ResidencesHandler implements Initializable {
     @FXML
     private GridPane residenceContainer;
     public List<Residence> residences;
-    private List<House> houses;
     public Map<Integer, ArrayList<House>> housesByFloor;
     @FXML
     private Label mainLabel;
     @FXML
     private VBox show;
-    private int totalTenants;
     private int owner_id;
     public boolean userClickedShowHouses = false;
     public boolean userCLickedShowMore = false;
@@ -56,19 +51,12 @@ public class ResidencesHandler implements Initializable {
             Statement st = con.createStatement();
             Statement st2 = con.createStatement();
 
-            System.out.println(owner_id);
             rst = st.executeQuery("select owner_id, residence_id, residence_name, location from residence where isValid='1' and owner_id='" + owner_id + "'");
 
             while (rst.next()) {
                 rst2 = st2.executeQuery("SELECT fname, lname FROM owner WHERE owner_id='" + rst.getString("owner_id") + "'");
                 rst2.next();
-                residences.add(new Residence(
-                        rst.getString("residence_id"),
-                        rst.getString("owner_id"),
-                        rst.getString("location"),
-                        rst.getString("residence_name"),
-                        rst2.getString("fname") + " " + rst2.getString("lname")
-                ));
+                residences.add(new Residence(rst.getString("residence_id"), rst.getString("owner_id"), rst.getString("location"), rst.getString("residence_name"), rst2.getString("fname") + " " + rst2.getString("lname")));
             }
             Collections.reverse(residences);
             for (Residence residence : residences) {
@@ -108,10 +96,7 @@ public class ResidencesHandler implements Initializable {
                                             housesByFloor.get(floor).add(house);
                                         }
                                         con1.close();
-                                } catch (SQLException e) {
-                                        throw new RuntimeException(e);
-                                    }
-
+                                } catch (SQLException e) {throw new RuntimeException(e);}
                                 });
                             }
                         }
@@ -127,14 +112,12 @@ public class ResidencesHandler implements Initializable {
             }
 
             con.close();
-        } catch (Exception e) {
-            System.out.println(e);
-        }
+        } catch (Exception e) {e.printStackTrace();}
     }
     public void showHouses(String residenceName){
         residenceContainer.getChildren().clear();
-        houses = new ArrayList<>();
-        totalTenants = 0;
+        List<House> houses = new ArrayList<>();
+        int totalTenants = 0;
         ResultSet rst, rst2;
 
         try{
@@ -148,26 +131,16 @@ public class ResidencesHandler implements Initializable {
             rst2 = st2.executeQuery("SELECT * FROM house WHERE residence_id='" + rst.getString("residence_id") + "' and isvalid='1'");
 
             while (rst2.next()){
-                houses.add(new House(
-                        "House " + rst2.getString("house_id"),
-                        "/photos/" + rst2.getString("image"),
-                        rst2.getInt("price"),
-                        residenceName,
-                        rst2.getInt("floor_number")
-                ));
-
+                houses.add(new House("House " + rst2.getString("house_id"), "/photos/" + rst2.getString("image"), rst2.getInt("price"), residenceName, rst2.getInt("floor_number")));
                  totalTenants += rst2.getInt("reserved_capacity");
             }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        } catch (SQLException e) {throw new RuntimeException(e);}
 
         mainLabel.setText("All houses of " + residenceName + " . " + houses.size() + " Houses with " + totalTenants + " person reserved.");
 
         try{
             ResultSet rst3, rst4;
             Set<Integer> uniqueFloors = new HashSet<>();
-            int column = 1;
             int row = 1;
             try{
                 DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
@@ -186,10 +159,10 @@ public class ResidencesHandler implements Initializable {
 
                 Arrays.sort(FloorsArray);
 
-                for(int i = 0 ; i < FloorsArray.length ; i++){
+                for (Integer integer : FloorsArray) {
                     List<House> floorHouses = new ArrayList<>();
-                    for(House housee : houses){
-                        if(housee.getFloor() == FloorsArray[i]){
+                    for (House housee : houses) {
+                        if (housee.getFloor() == integer) {
                             floorHouses.add(housee);
                         }
                     }
@@ -198,7 +171,7 @@ public class ResidencesHandler implements Initializable {
                     fxmlLoader1.setLocation(getClass().getResource("showHouses.fxml"));
                     VBox floor = fxmlLoader1.load();
                     ShowHousesHandler Handler2 = fxmlLoader1.getController();
-                    Handler2.setDate(floorHouses, residenceName);
+                    Handler2.setDate(floorHouses);
 
                     residenceContainer.add(floor, 0, row++);
                     GridPane.setMargin(floor, new Insets(10));
@@ -207,21 +180,21 @@ public class ResidencesHandler implements Initializable {
                     for (Node node : floor.getChildren()) {
                         if (node instanceof MFXScrollPane scrollPane) {
                             Node content = scrollPane.getContent();
-                            if(content instanceof HBox hbox) {
+                            if (content instanceof HBox hbox) {
                                 for (Node node1 : hbox.getChildren()) {
-                                if(node1 instanceof GridPane gridPane){
-                                    for(Node node2 : gridPane.getChildren()){
-                                        if(node2 instanceof VBox vBox){
-                                            VBox vBox2 = (VBox) vBox.lookup("#labels");
-                                            Label label = (Label) vBox2.lookup("#houseName");
-                                            MFXButton button = (MFXButton) vBox.lookup("#btnShow");
-                                            button.setOnAction(actionEvent -> {
-                                                showMore(label.getText().split(" ")[1]);
-                                                userCLickedShowMore = true;
-                                            });
+                                    if (node1 instanceof GridPane gridPane) {
+                                        for (Node node2 : gridPane.getChildren()) {
+                                            if (node2 instanceof VBox vBox) {
+                                                VBox vBox2 = (VBox) vBox.lookup("#labels");
+                                                Label label = (Label) vBox2.lookup("#houseName");
+                                                MFXButton button = (MFXButton) vBox.lookup("#btnShow");
+                                                button.setOnAction(actionEvent -> {
+                                                    showMore(label.getText().split(" ")[1]);
+                                                    userCLickedShowMore = true;
+                                                });
+                                            }
                                         }
                                     }
-                                }
                                 }
                             }
                         }
@@ -230,13 +203,9 @@ public class ResidencesHandler implements Initializable {
 
                     con.close();
                 }
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
+            } catch (SQLException e) {throw new RuntimeException(e);}
 
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        } catch (IOException e) {throw new RuntimeException(e);}
     }
 
     public void showMore(String houseID) {
@@ -253,9 +222,7 @@ public class ResidencesHandler implements Initializable {
             show.getChildren().clear();
             show.getChildren().addAll(vbox.getChildren());
 
-        }catch (IOException e){
-            System.out.println(e);
-        }
+        }catch (IOException e){e.printStackTrace();}
     }
 
     public void setData(Owner owner){

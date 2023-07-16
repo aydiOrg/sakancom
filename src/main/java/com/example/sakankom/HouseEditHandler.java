@@ -1,14 +1,10 @@
 package com.example.sakankom;
 
-import io.github.palexdev.materialfx.controls.MFXButton;
-import io.github.palexdev.materialfx.controls.MFXCheckbox;
 import io.github.palexdev.materialfx.controls.MFXTextField;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 
-import javax.swing.*;
 import java.net.URL;
 import java.sql.*;
 import java.util.ResourceBundle;
@@ -48,9 +44,7 @@ public class HouseEditHandler implements Initializable {
         return Integer.parseInt(floorNumber.getText());
     }
 
-    public String getGenders() {
-        return genders.getText();
-    }
+    public String getGenders() {return genders.getText();}
 
     public String getHouseID() {
         return houseID.getText();
@@ -143,48 +137,23 @@ public class HouseEditHandler implements Initializable {
             isReservedValue = rst1.getString("isReserved");
 
             houseID.setEditable(false);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        } catch (SQLException e) {throw new RuntimeException(e);}
     }
     @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-
-    }
+    public void initialize(URL url, ResourceBundle resourceBundle) {}
 
     @FXML
-    void updateBtnHandler(ActionEvent event) {
+    void updateBtnHandler() {
         isClicked = true;
-        ResultSet rst1, rst2;
+        ResultSet rst1;
 
         try{
             DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
             Connection con = DriverManager.getConnection("jdbc:oracle:thin:@//localhost:1521/xepdb1", "sakankom", "12345678");
             Statement st = con.createStatement();
-            Statement st2 = con.createStatement();
 
-
-
-
-            rst1 = st.executeQuery("update house set " +
-                    "HOUSE_ID='" + houseID.getText() + "'," +
-                    " RESIDENCE_ID='" + residenceID.getText() + "'," +
-                    "BEDROOMS_NUMBER='" + bedroomsNumber.getText() + "'," +
-                    "BATHROOMS_NUMBER='" + bathroomsNumber.getText() + "'," +
-                    "SERVICES='" + services.getText() + "'," +
-                    "PRICE='" + price.getText() + "'," +
-                    "FLOOR_NUMBER='" + floorNumber.getText() + "'," +
-                    "FLAT_NUMBER='" + flatNumber.getText() + "'," +
-                    "CAPACITY='" + capacity.getText() + "'," +
-                    "RESERVED_CAPACITY='" + reservedCapacity.getText() + "'," +
-                    "GENDERS='" + genders.getText() + "'," +
-                    "BALCONY='" + balaconyNumber.getText() + "'," +
-                    "ISVALID='1'," +
-                    "ISACCEPTED='" + isAcceptedValue + "'," +
-                    "ISRESERVED='" + isReservedValue + "'," +
-                    "IMAGE='" + imageName.getText() + "' " +
-                    "WHERE house_id='" + houseID.getText() + "'"
-            );
+            rst1 = st.executeQuery("update house set HOUSE_ID='" + houseID.getText() + "'," + "RESIDENCE_ID='" + residenceID.getText() + "', BEDROOMS_NUMBER='" + bedroomsNumber.getText() + "', BATHROOMS_NUMBER='" + bathroomsNumber.getText() + "', SERVICES='" + services.getText() + "', PRICE='" + price.getText() + "', FLOOR_NUMBER='" + floorNumber.getText() + "', FLAT_NUMBER='" + flatNumber.getText() + "', CAPACITY='" + capacity.getText() + "', RESERVED_CAPACITY='" + reservedCapacity.getText() + "', GENDERS='" + genders.getText() + "', BALCONY='" + balaconyNumber.getText() + "', ISVALID='1', ISACCEPTED='" + isAcceptedValue + "', ISRESERVED='" + isReservedValue + "', IMAGE='" + imageName.getText() + "' WHERE house_id='" + houseID.getText() + "'");
+            rst1.close();
             con.close();
 
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -193,8 +162,6 @@ public class HouseEditHandler implements Initializable {
             alert.setContentText("Update House Successfully :)");
 
             alert.showAndWait();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        } catch (SQLException e) {throw new RuntimeException(e);}
     }
 }

@@ -1,9 +1,6 @@
 package com.example.sakankom;
 
-import io.github.palexdev.materialfx.controls.MFXButton;
-import io.github.palexdev.materialfx.controls.MFXCheckbox;
 import io.github.palexdev.materialfx.controls.MFXTextField;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 
@@ -41,16 +38,16 @@ public class AddResidenceHandler {
 
     public boolean isClicked = false;
     @FXML
-    void submitBtnHandler(ActionEvent event) {
+    void submitBtnHandler() {
         isClicked = true;
-        ResultSet rst,rst2;
 
         try{
             DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
             Connection con = DriverManager.getConnection("jdbc:oracle:thin:@//localhost:1521/xepdb1", "sakankom", "12345678");
             Statement st = con.createStatement();
 
-            rst = st.executeQuery("INSERT INTO RESIDENCE VALUES ('" + residenceID.getText() + "','" + ownerID.getText() + "','" + locationField.getText() + "','" + residenceName.getText() + "','1')");
+            ResultSet rst = st.executeQuery("INSERT INTO RESIDENCE VALUES ('" + residenceID.getText() + "','" + ownerID.getText() + "','" + locationField.getText() + "','" + residenceName.getText() + "','1')");
+            rst.close();
             con.close();
 
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -59,9 +56,7 @@ public class AddResidenceHandler {
             alert.setContentText("Add Residence Successfully :)");
 
             alert.showAndWait();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        } catch (SQLException e) {throw new RuntimeException(e);}
     }
 
 }

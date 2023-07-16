@@ -9,11 +9,14 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
@@ -23,8 +26,10 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Collections;
 
-public class OwnerHandler implements Initializable{
+public class OwnerHandler implements Initializable {
 
+    @FXML
+    private AnchorPane mainPane;
     @FXML
     private MFXButton btnAddHouse;
     public boolean userClickedAddResidencesBtn = false;
@@ -51,8 +56,6 @@ public class OwnerHandler implements Initializable{
     private VBox mainBox;
 
     @FXML
-    private AnchorPane page;
-    @FXML
     private VBox show;
     @FXML
     private GridPane houseContainer;
@@ -66,6 +69,7 @@ public class OwnerHandler implements Initializable{
     public User getUser() {
         return user;
     }
+
     public void setUser(User user) {
         this.user = user;
         ownerName.setText(user.getFullName());
@@ -74,7 +78,6 @@ public class OwnerHandler implements Initializable{
         try {
             DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
             Connection con = DriverManager.getConnection("jdbc:oracle:thin:@//localhost:1521/xepdb1", "sakankom", "12345678");
-            //jdbc:oracle:thin:@//localhost:1521/xepdb1
             Statement st = con.createStatement();
             rst = st.executeQuery("select * from owner where username = '" + user.getUsername() + "'");
 
@@ -83,38 +86,26 @@ public class OwnerHandler implements Initializable{
                 owner.setOwnerId(rst.getInt("owner_id"));
             }
             con.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        } catch (SQLException e) {e.printStackTrace();}
 
-        try {
-            mainBtnHandler(new ActionEvent());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        try {mainBtnHandler(new ActionEvent());}
+        catch (IOException e) {throw new RuntimeException(e);}
 
-//
+
     }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         user = new User();
 
         mainBox = new VBox();
         mainBox.getChildren().setAll(show.getChildren());
-
-//        try {
-//            mainBtnHandler(new ActionEvent());
-//        } catch (IOException e) {
-//            throw new RuntimeException(e);
-//        }
-
     }
 
     @FXML
     void mainBtnHandler(ActionEvent event) throws IOException {
-        if (btnMain.getStyleClass().contains("selected")) {
-            System.out.println("Do nothing");
-        } else {
+        if (btnMain.getStyleClass().contains("selected")) {System.out.println("Do nothing");}
+        else {
             recentlyAdded = new ArrayList<>();
             recommended = new ArrayList<>();
             int column = 1;
@@ -128,20 +119,13 @@ public class OwnerHandler implements Initializable{
                 Statement st2 = con.createStatement();
 
                 rst2 = st2.executeQuery("select residence_name, residence_id from residence where isVAlid='1' and owner_id='" + owner.getOwnerId() + "'");
-                while(rst2.next()){
-                    rst = st.executeQuery("select house_id, residence_id, image, price from house where isValid='1' and residence_id='" + rst2.getInt("residence_id") +"'");
-                    while(rst.next()) {
-                        recommended.add(new House(
-                                "House " + rst.getString("house_id"),
-                                "/photos/" + rst.getString("image"),
-                                rst.getInt("price"),
-                                rst2.getString("residence_name")
-                        ));
+                while (rst2.next()) {
+                    rst = st.executeQuery("select house_id, residence_id, image, price from house where isValid='1' and residence_id='" + rst2.getInt("residence_id") + "'");
+                    while (rst.next()) {
+                        recommended.add(new House("House " + rst.getString("house_id"), "/photos/" + rst.getString("image"), rst.getInt("price"), rst2.getString("residence_name")));
                     }
                 }
-                if (recommended.size() < 4) {
-                    recentlyAdded.addAll(recommended);
-                }
+                if (recommended.size() < 4) {recentlyAdded.addAll(recommended);}
                 else {
                     for (int j = 0; j <= recommended.size() / 2; j++) {
                         recentlyAdded.add(recommended.get(j));
@@ -175,13 +159,11 @@ public class OwnerHandler implements Initializable{
                     GridPane.setMargin(houseBox, new Insets(10));
                 }
 
-                MFXButton foundButton = (MFXButton) page.lookup(".selected");
+                MFXButton foundButton = (MFXButton) mainPane.lookup(".selected");
                 if (foundButton != null) {
-                    if (foundButton.getStyleClass().equals(btnAddHouse.getStyleClass()))
-                        btnAddHouse.getStyleClass().remove("selected");
-                    if (foundButton.getStyleClass().equals(btnAddResidence.getStyleClass()))
-                        btnAddResidence.getStyleClass().remove("selected");
-                    if(foundButton.getStyleClass().equals(btnResidences.getStyleClass())) btnResidences.getStyleClass().remove("selected");
+                    if (foundButton.getStyleClass().equals(btnAddHouse.getStyleClass())) btnAddHouse.getStyleClass().remove("selected");
+                    if (foundButton.getStyleClass().equals(btnAddResidence.getStyleClass())) btnAddResidence.getStyleClass().remove("selected");
+                    if (foundButton.getStyleClass().equals(btnResidences.getStyleClass())) btnResidences.getStyleClass().remove("selected");
                 }
 
 
@@ -190,17 +172,14 @@ public class OwnerHandler implements Initializable{
                 btnMain.getStyleClass().add("selected");
 
                 con.close();
-            }catch (Exception e){
-                System.out.println(e);
-            }
+            } catch (Exception e) {e.printStackTrace();}
         }
     }
 
     @FXML
-    void addHouseBtnHandler(ActionEvent event) throws IOException {
-        if (btnAddHouse.getStyleClass().contains("selected")){
-            System.out.println("Do nothing");
-        } else {
+    void addHouseBtnHandler() throws IOException {
+        if (btnAddHouse.getStyleClass().contains("selected")) {System.out.println("Do nothing");}
+        else {
             FXMLLoader fxmlLoader = new FXMLLoader();
             fxmlLoader.setLocation(getClass().getResource("addHouse.fxml"));
             VBox showBox = fxmlLoader.load();
@@ -210,33 +189,32 @@ public class OwnerHandler implements Initializable{
             show.getChildren().clear();
             show.getChildren().add(showBox);
 
-            MFXButton foundButton = (MFXButton) page.lookup(".selected");
+            MFXButton foundButton = (MFXButton) mainPane.lookup(".selected");
             if (foundButton != null) {
-                if(foundButton.getStyleClass().equals(btnMain.getStyleClass())) btnMain.getStyleClass().remove("selected");
-                if(foundButton.getStyleClass().equals(btnAddResidence.getStyleClass())) btnAddResidence.getStyleClass().remove("selected");
-                if(foundButton.getStyleClass().equals(btnResidences.getStyleClass())) btnResidences.getStyleClass().remove("selected");
+                if (foundButton.getStyleClass().equals(btnMain.getStyleClass())) btnMain.getStyleClass().remove("selected");
+                if (foundButton.getStyleClass().equals(btnAddResidence.getStyleClass())) btnAddResidence.getStyleClass().remove("selected");
+                if (foundButton.getStyleClass().equals(btnResidences.getStyleClass())) btnResidences.getStyleClass().remove("selected");
             }
             btnAddHouse.getStyleClass().add("selected");
         }
     }
 
     @FXML
-    void addResidenceBtnHandler(ActionEvent event) throws IOException {
+    void addResidenceBtnHandler() throws IOException {
         userClickedAddResidencesBtn = true;
-        if (btnAddResidence.getStyleClass().contains("selected")){
-            System.out.println("Do nothing");
-        } else {
+        if (btnAddResidence.getStyleClass().contains("selected")) {System.out.println("Do nothing");}
+        else {
             FXMLLoader fxmlLoader = new FXMLLoader();
             fxmlLoader.setLocation(getClass().getResource("addResidence.fxml"));
             VBox showBox = fxmlLoader.load();
 
             addResidenceHandler = fxmlLoader.getController();
 
-            MFXButton foundButton = (MFXButton) page.lookup(".selected");
+            MFXButton foundButton = (MFXButton) mainPane.lookup(".selected");
             if (foundButton != null) {
-                if(foundButton.getStyleClass().equals(btnMain.getStyleClass())) btnMain.getStyleClass().remove("selected");
-                if(foundButton.getStyleClass().equals(btnAddHouse.getStyleClass())) btnAddHouse.getStyleClass().remove("selected");
-                if(foundButton.getStyleClass().equals(btnResidences.getStyleClass())) btnResidences.getStyleClass().remove("selected");
+                if (foundButton.getStyleClass().equals(btnMain.getStyleClass())) btnMain.getStyleClass().remove("selected");
+                if (foundButton.getStyleClass().equals(btnAddHouse.getStyleClass())) btnAddHouse.getStyleClass().remove("selected");
+                if (foundButton.getStyleClass().equals(btnResidences.getStyleClass())) btnResidences.getStyleClass().remove("selected");
             }
 
 
@@ -247,12 +225,11 @@ public class OwnerHandler implements Initializable{
     }
 
     @FXML
-    void residencesBtnHandler(ActionEvent event) {
+    void residencesBtnHandler() {
         userClickedResidencesBtn = true;
-        if (btnResidences.getStyleClass().contains("selected")) {
-            System.out.println("Do nothing");
-        } else {
-            try{
+        if (btnResidences.getStyleClass().contains("selected")) {System.out.println("Do nothing");}
+        else {
+            try {
                 FXMLLoader fxmlLoader = new FXMLLoader();
                 fxmlLoader.setLocation(getClass().getResource("Residences.fxml"));
                 VBox showBox = fxmlLoader.load();
@@ -260,22 +237,33 @@ public class OwnerHandler implements Initializable{
                 residencesHandler = fxmlLoader.getController();
                 residencesHandler.setData(owner);
 
-                MFXButton foundButton = (MFXButton) page.lookup(".selected");
+                MFXButton foundButton = (MFXButton) mainPane.lookup(".selected");
                 if (foundButton != null) {
-                    if (foundButton.getStyleClass().equals(btnAddHouse.getStyleClass()))
-                        btnAddHouse.getStyleClass().remove("selected");
-                    if (foundButton.getStyleClass().equals(btnAddResidence.getStyleClass()))
-                        btnAddResidence.getStyleClass().remove("selected");
-                    if (foundButton.getStyleClass().equals(btnMain.getStyleClass()))
-                        btnMain.getStyleClass().remove("selected");
+                    if (foundButton.getStyleClass().equals(btnAddHouse.getStyleClass())) btnAddHouse.getStyleClass().remove("selected");
+                    if (foundButton.getStyleClass().equals(btnAddResidence.getStyleClass())) btnAddResidence.getStyleClass().remove("selected");
+                    if (foundButton.getStyleClass().equals(btnMain.getStyleClass())) btnMain.getStyleClass().remove("selected");
                 }
 
                 show.getChildren().clear();
                 show.getChildren().add(showBox);
                 btnResidences.getStyleClass().add("selected");
-            }catch (Exception e){
-                System.out.println(e);
-            }
+            } catch (Exception e) {e.printStackTrace();}
         }
+    }
+
+    @FXML
+    void logoutBtnHandler() {
+        Stage stage = (Stage) mainPane.getScene().getWindow();
+        stage.close();
+
+        Stage newStage = new Stage();
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("Sign-In.fxml"));
+            Parent root = loader.load();
+            Scene scene = new Scene(root);
+            newStage.setScene(scene);
+            newStage.show();
+
+        } catch (IOException e) {e.printStackTrace();}
     }
 }

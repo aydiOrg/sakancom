@@ -17,11 +17,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="page" prefHeight="720.0" prefWidth="1280.0" stylesheets="@../../../OwnerPage.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.sakankom.OwnerHandler">
+<AnchorPane fx:id="mainPane" prefHeight="720.0" prefWidth="1280.0" stylesheets="@../../../OwnerPage.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.sakankom.OwnerHandler">
    <children>
       <VBox alignment="TOP_CENTER" prefHeight="720.0" prefWidth="250.0" spacing="5.0" styleClass="sidebar" stylesheets="@../../../OwnerPage.css">
          <children>
-            <VBox prefHeight="607.0" prefWidth="250.0">
+            <VBox prefHeight="720.0" prefWidth="250.0">
                <children>
                   <HBox alignment="CENTER" prefHeight="60.0" prefWidth="226.0">
                      <children>
@@ -112,6 +112,23 @@
                         <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../../../photos/house.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <styleClass>
+                        <String fx:value="btns" />
+                        <String fx:value="mouse-moved" />
+                     </styleClass>
+                  </MFXButton>
+                  <Pane prefHeight="213.0" prefWidth="250.0" />
+                  <MFXButton fx:id="btnLogout" buttonType="RAISED" layoutX="10.0" layoutY="339.0" onAction="#logoutBtnHandler" prefHeight="60.0" prefWidth="250.0" text="Logout" textFill="WHITE">
+                     <font>
+                        <Font name="Berlin Sans FB" size="24.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../photos/arrow.png" />
                            </image>
                         </ImageView>
                      </graphic>
