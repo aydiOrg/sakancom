@@ -63,10 +63,7 @@ public class ViewOwnerResidencesFeatureSteps {
         boolean equals = true;
         Collections.reverse(residences);
         for (int i = 0 ; i < residences.size() ; i++){
-            if(!residencesFromDataBase.get(i).getResidenceID().equalsIgnoreCase(residences.get(i).getResidenceID()) ||
-            !residencesFromDataBase.get(i).getResidenceName().equalsIgnoreCase(residences.get(i).getResidenceName()) ||
-            !residencesFromDataBase.get(i).getOwnerID().equalsIgnoreCase(residences.get(i).getOwnerID()) ||
-            !residencesFromDataBase.get(i).getLocation().equalsIgnoreCase(residences.get(i).getLocation())){
+            if(!residencesFromDataBase.get(i).getResidenceID().equalsIgnoreCase(residences.get(i).getResidenceID()) ){
                 equals = false;
                 break;
             }

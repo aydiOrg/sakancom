@@ -8,6 +8,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 import java.net.URL;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class houseHandler implements Initializable {
@@ -18,9 +19,6 @@ public class houseHandler implements Initializable {
     private Label houseName;
 
     @FXML
-    private ImageView houseRating;
-
-    @FXML
     private Label houseRes;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -28,7 +26,7 @@ public class houseHandler implements Initializable {
     }
 
     public void setDate(House house){
-        Image image = new Image(getClass().getResourceAsStream(house.getImageSrc()));
+        Image image = new Image(Objects.requireNonNull(getClass().getResourceAsStream(house.getImageSrc())));
         houseImage.setImage(image);
         houseName.setText(house.getName());
         houseRes.setText(house.getRes());
