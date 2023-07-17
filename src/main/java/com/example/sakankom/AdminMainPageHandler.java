@@ -1,6 +1,5 @@
 package com.example.sakankom;
 import com.example.sakankom.dataStructures.Apartment;
-import com.example.sakankom.dataStructures.Neigbour;
 import com.example.sakankom.dataStructures.User;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXScrollPane;
@@ -23,9 +22,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.ResourceBundle;
 
 public class AdminMainPageHandler implements Initializable {
@@ -48,6 +45,7 @@ public class AdminMainPageHandler implements Initializable {
         private MFXScrollPane page2;
         User user;
         ArrayList<Apartment> apartments ;
+        AdminReservationsHandler adminReservationsHandler;
 
         @Override
         public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -87,6 +85,11 @@ public class AdminMainPageHandler implements Initializable {
                                 apartments.add(apt);
                         }
 
+                        rst2 = st.executeQuery("select * from reservation , tenant , house , residence , owner where reservation.tenant_id = tenant.tenant_id and reservation.house_id = house.house_id and house.residence_id = residence.residence_id and residence.owner_id = owner.owner_id");
+
+                        while (rst2.next()) {
+
+                        }
 
                         con.close();
                 }
@@ -95,6 +98,17 @@ public class AdminMainPageHandler implements Initializable {
                 }
 
                 generateGUI();
+
+                FXMLLoader loader2 = new FXMLLoader(getClass().getResource("Admin-Reservations.fxml"));
+                try {
+                        Parent root = loader2.load();
+                } catch (IOException e) {
+                        throw new RuntimeException(e);
+                }
+                adminReservationsHandler = loader2.getController();
+
+
+
         }
         @FXML
         void logoutBtnHandler(ActionEvent event) {
