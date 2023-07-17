@@ -39,6 +39,7 @@ public class SignInHandler implements Initializable {
     ArrayList<User> values;
     public MainPageHandler mainPageHandler;
     public OwnerHandler ownerHandler;
+    public AdminMainPageHandler adminMainPageHandler;
     public boolean isUserLoggedIn , alertShown;
 
 
@@ -145,6 +146,18 @@ public class SignInHandler implements Initializable {
                     }
                 }
                 else if (user.getUserType().equals("admin")) {
+                    try {
+                        FXMLLoader loader = new FXMLLoader(getClass().getResource("Admin-MainPage.fxml"));
+                        Parent root = loader.load();
+                        Scene scene = new Scene(root);
+                        newStage.setScene(scene);
+                        newStage.show();
+
+                        adminMainPageHandler = loader.getController();
+                        adminMainPageHandler.setUser(user);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
 
                 }
 

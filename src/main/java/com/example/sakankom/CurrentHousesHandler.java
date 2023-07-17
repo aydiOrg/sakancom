@@ -65,7 +65,7 @@ public class CurrentHousesHandler implements Initializable {
 
     private void generateGUI (){
         //Declaring elements --------------------------------------------------------------------
-        container.setMaxWidth(1030);
+        container.setMaxWidth(920);
 
         //prepare strings and data.
         String name = "";
