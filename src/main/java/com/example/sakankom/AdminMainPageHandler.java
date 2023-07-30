@@ -48,11 +48,21 @@ public class AdminMainPageHandler implements Initializable {
         ArrayList<Apartment> apartments ;
         ArrayList<AdminReservation> adminReservations;
         AdminReservationsHandler adminReservationsHandler;
+        public boolean isReservationsPressed;
+
+        public User getUser() {
+                return user;
+        }
+
+        public ArrayList<AdminReservation> getAdminReservations() {
+                return adminReservations;
+        }
 
         @Override
         public void initialize(URL url, ResourceBundle resourceBundle) {
                 apartments = new ArrayList<Apartment>();
                 adminReservations = new ArrayList<AdminReservation>();
+                isReservationsPressed = false;
 
                 FXMLLoader loader2 = new FXMLLoader(getClass().getResource("Admin-Reservations.fxml"));
                 try {
@@ -210,6 +220,7 @@ public class AdminMainPageHandler implements Initializable {
                         bigPane.getChildren().remove(0);
                 }
                 bigPane.getChildren().add(page2);
+                isReservationsPressed = true;
         }
         public void setUser(User user) {
                 this.user = user;
