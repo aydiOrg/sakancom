@@ -1,6 +1,6 @@
 package com.example.sakankom.dataStructures;
 
-public class Apartment {
+public class Apartment implements Comparable<Apartment>{
     private int houseId;
     private int residenceId;
     private int ownerId;
@@ -192,5 +192,9 @@ public class Apartment {
 
     public String getOwnerPhone() {
         return ownerPhone;
+    }
+    @Override
+    public int compareTo(Apartment o) {
+        return Integer.compare(this.getHouseId(), o.getHouseId());
     }
 }

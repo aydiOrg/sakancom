@@ -81,4 +81,6 @@ public class House {
     public void setPrice(int price) {
         this.price = price;
     }
+
+
 }
