@@ -268,6 +268,7 @@ public class MainPageHandler implements Initializable {
 
                                 reservation.setPayyingDate(dateafter);
                                 reservations.add(reservation);
+
                         }
                         con.close();
                 }

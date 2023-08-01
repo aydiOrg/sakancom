@@ -1,7 +1,6 @@
 package com.example.sakankom;
-import com.example.sakankom.OwnerFiles.Owner;
-import com.example.sakankom.dataStructures.Admin;
 import com.example.sakankom.dataStructures.Apartment;
+import com.example.sakankom.dataStructures.Neigbour;
 import com.example.sakankom.dataStructures.User;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXScrollPane;
@@ -9,6 +8,7 @@ import javafx.beans.binding.Bindings;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -23,7 +23,9 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.ResourceBundle;
 
 public class AdminMainPageHandler implements Initializable {
@@ -44,33 +46,13 @@ public class AdminMainPageHandler implements Initializable {
         @FXML
         private MFXScrollPane page1;
         private MFXScrollPane page2;
-        public boolean userClickedReservationsButton = false;
-        public boolean userClickedAcceptButton = false;
-        public boolean userClickedRejectButton = false;
-
-        public User getUser() {
-                return user;
-        }
-
         User user;
-        public ArrayList<Apartment> apartments ;
+        ArrayList<Apartment> apartments ;
 
-        public Admin getAdmin() {
-                return admin;
-        }
-
-        public void setAdmin(Admin admin) {
-                this.admin = admin;
-        }
-
-        Admin admin;
-        int houseIDTest1;
-        int houseIDTest2;
         @Override
         public void initialize(URL url, ResourceBundle resourceBundle) {
-                apartments = new ArrayList<>();
-                user = new User();
-                ResultSet rst;
+                apartments = new ArrayList<Apartment>();
+                ResultSet rst,rst2;
                 try{
 
                         DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
@@ -112,10 +94,7 @@ public class AdminMainPageHandler implements Initializable {
                         e.printStackTrace();
                 }
 
-
-                viewReservations(new ActionEvent());
-                reservationsBtn.getStyleClass().add("selected");
-
+                generateGUI();
         }
         @FXML
         void logoutBtnHandler(ActionEvent event) {
@@ -225,60 +204,9 @@ public class AdminMainPageHandler implements Initializable {
                                 reserveBtn.setId(Integer.toString(apartments.get(i).getHouseId()));
                                 detailsBtn.setId(Integer.toString(apartments.get(i).getHouseId()));
 
-                                int finalI1 = i;
-                                VBox finalCard = card;
                                 int finalI = i;
-
-                                detailsBtn.setOnAction(event -> {
-                                        userClickedRejectButton = true;
-                                        houseIDTest1 =  apartments.get(finalI).getHouseId();
-                                        MFXButton btn = (MFXButton) event.getSource();
-                                        int i1 = Integer.parseInt(btn.getId());
-
-                                        ResultSet rst;
-
-                                        try{
-                                                DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
-                                                Connection con = DriverManager.getConnection("jdbc:oracle:thin:@//localhost:1521/xepdb1", "sakankom", "12345678");
-                                                Statement st = con.createStatement();
-
-                                                System.out.println("hi");
-                                                rst = st.executeQuery("UPDATE house SET isvalid='0' WHERE house_id='" + Integer.parseInt(Integer.toString(apartments.get(finalI1).getHouseId())) + "'");
-                                                rst.next();
-
-                                                con.close();
-                                        } catch (SQLException e) {
-                                                throw new RuntimeException(e);
-                                        }
-                                        apartments.remove(finalI1);
-
-                                        container.getChildren().remove(finalCard);
-                                });
-                                int finalI2 = i;
-                                reserveBtn.setOnAction(event -> {
-                                        userClickedAcceptButton = true;
-                                        houseIDTest2 =  apartments.get(finalI).getHouseId();
-                                        MFXButton btn = (MFXButton) event.getSource();
-                                        int i2 = Integer.parseInt(btn.getId());
-
-                                        ResultSet rst;
-
-                                        try{
-                                                DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
-                                                Connection con = DriverManager.getConnection("jdbc:oracle:thin:@//localhost:1521/xepdb1", "sakankom", "12345678");
-                                                Statement st = con.createStatement();
-
-                                                rst = st.executeQuery("UPDATE house SET isaccepted='1' WHERE house_id='" + Integer.parseInt(Integer.toString(apartments.get(finalI1).getHouseId())) + "'");
-                                                rst.next();
-
-                                                con.close();
-                                        } catch (SQLException e) {
-                                                throw new RuntimeException(e);
-                                        }
-                                        apartments.remove(finalI1);
-
-                                        container.getChildren().remove(finalCard);
-                                });
+                                detailsBtn.setOnAction(handler);
+                                reserveBtn.setOnAction(handler2);
 
 
                                 //where it ends
@@ -287,6 +215,19 @@ public class AdminMainPageHandler implements Initializable {
 
                 }
         }
+        EventHandler<ActionEvent> handler = event -> {
+                MFXButton btn = (MFXButton) event.getSource();
+                int i = Integer.parseInt(btn.getId());
+
+
+
+        };
+        EventHandler<ActionEvent> handler2 = event -> {
+                MFXButton btn = (MFXButton) event.getSource();
+                String id = btn.getId();
+
+        };
+
         @FXML
         void viewApartments(ActionEvent event) {
                 if(! bigPane.getChildren().isEmpty()){
@@ -297,11 +238,6 @@ public class AdminMainPageHandler implements Initializable {
 
         @FXML
         void viewReservations(ActionEvent event) {
-                userClickedReservationsButton = true;
-                if (reservationsBtn.getStyleClass().contains("selected")) {System.out.println("Do nothing");}
-
-                else generateGUI();
-
 //                if(! bigPane.getChildren().isEmpty()){
 //                        bigPane.getChildren().remove(0);
 //                }
@@ -310,21 +246,5 @@ public class AdminMainPageHandler implements Initializable {
         public void setUser(User user) {
                 this.user = user;
                 name.setText(user.getUsername());
-
-                ResultSet rst;
-                try {
-                        DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
-                        Connection con = DriverManager.getConnection("jdbc:oracle:thin:@//localhost:1521/xepdb1", "sakankom", "12345678");
-                        Statement st = con.createStatement();
-                        rst = st.executeQuery("select * from admin where username = '" + user.getUsername() + "'");
-
-                        admin = new Admin();
-                        if (rst.next()) {
-                                admin.setAdminID(rst.getInt("admin_id"));
-                        }
-                        con.close();
-                } catch (SQLException e) {e.printStackTrace();}
-
         }
-
 }
