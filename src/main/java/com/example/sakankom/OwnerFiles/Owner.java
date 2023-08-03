@@ -1,9 +1,5 @@
 package com.example.sakankom.OwnerFiles;
 
-import com.example.sakankom.dataStructures.User;
-
-import java.sql.*;
-
 public class Owner {
     private int ownerId;
 
