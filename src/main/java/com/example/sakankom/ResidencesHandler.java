@@ -56,7 +56,7 @@ public class ResidencesHandler implements Initializable {
             while (rst.next()) {
                 rst2 = st2.executeQuery("SELECT fname, lname FROM owner WHERE owner_id='" + rst.getString("owner_id") + "'");
                 rst2.next();
-                residences.add(new Residence(rst.getString("residence_id"), rst.getString("owner_id"), rst.getString("location"), rst.getString("residence_name"), rst2.getString("fname") + " " + rst2.getString("lname")));
+                residences.add(new Residence(rst.getString("residence_id"), rst.getString("location"), rst.getString("residence_name"), rst2.getString("fname") + " " + rst2.getString("lname")));
             }
             Collections.reverse(residences);
             for (Residence residence : residences) {

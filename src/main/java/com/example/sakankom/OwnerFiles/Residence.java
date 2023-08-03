@@ -1,50 +1,31 @@
 package com.example.sakankom.OwnerFiles;
 
 public class Residence {
-    private String residenceID;
-    private String ownerID;
+    private final String residenceID;
     private String location;
-    private String residenceName;
+    private final String residenceName;
 
     public String getOwnerName() {
         return ownerName;
     }
 
-    public void setOwnerName(String ownerName) {
-        this.ownerName = ownerName;
-    }
-
     private String ownerName;
 
-    public Residence(String residenceID, String ownerID, String location, String residenceName, String ownerName) {
+    public Residence(String residenceID, String location, String residenceName, String ownerName) {
         this.residenceID = residenceID;
-        this.ownerID = ownerID;
         this.location = location;
         this.residenceName = residenceName;
         this.ownerName = ownerName;
     }
 
-    public Residence(String residenceID, String ownerID, String location, String residenceName) {
+    public Residence(String residenceID, String location, String residenceName) {
         this.residenceID = residenceID;
-        this.ownerID = ownerID;
         this.location = location;
         this.residenceName = residenceName;
     }
 
     public String getResidenceID() {
         return residenceID;
-    }
-
-    public void setResidenceID(String residenceID) {
-        this.residenceID = residenceID;
-    }
-
-    public String getOwnerID() {
-        return ownerID;
-    }
-
-    public void setOwnerID(String ownerID) {
-        this.ownerID = ownerID;
     }
 
     public String getLocation() {
@@ -59,7 +40,4 @@ public class Residence {
         return residenceName;
     }
 
-    public void setResidenceName(String residenceName) {
-        this.residenceName = residenceName;
-    }
 }

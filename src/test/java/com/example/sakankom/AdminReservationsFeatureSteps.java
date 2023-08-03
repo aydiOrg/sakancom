@@ -5,14 +5,13 @@ import com.example.sakankom.dataStructures.Apartment;
 import com.example.sakankom.dataStructures.User;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
-import oracle.jdbc.driver.OracleDriver;
-
-import static junit.framework.TestCase.assertTrue;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import static junit.framework.TestCase.assertTrue;
 
 public class AdminReservationsFeatureSteps {
 
@@ -92,9 +91,11 @@ public class AdminReservationsFeatureSteps {
 
 
 
-        for (int i = 0 ; i < apartmentList.size(); i++){
-            if(apartmentList.get(i).getHouseId() != adminMainPageHandler.apartments.get(i).getHouseId()) firstTest = false;
-            if(!firstTest)break;
+        for (int i = 0 ; i < adminMainPageHandler.apartments.size(); i++){
+            if (apartmentList.get(i).getHouseId() != adminMainPageHandler.apartments.get(i).getHouseId()) {
+                firstTest = false;
+                break;
+            }
         }
         assertTrue(firstTest);
     }

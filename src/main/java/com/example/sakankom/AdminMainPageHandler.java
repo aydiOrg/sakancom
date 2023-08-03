@@ -1,5 +1,5 @@
 package com.example.sakankom;
-import com.example.sakankom.OwnerFiles.Owner;
+
 import com.example.sakankom.dataStructures.Admin;
 import com.example.sakankom.dataStructures.Apartment;
 import com.example.sakankom.dataStructures.User;
@@ -27,8 +27,6 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class AdminMainPageHandler implements Initializable {
-        @FXML
-        private MFXButton apartmentsBtn;
         @FXML
         private AnchorPane bigPane;
         @FXML
@@ -302,10 +300,6 @@ public class AdminMainPageHandler implements Initializable {
 
                 else generateGUI();
 
-//                if(! bigPane.getChildren().isEmpty()){
-//                        bigPane.getChildren().remove(0);
-//                }
-//                bigPane.getChildren().add(page2);
         }
         public void setUser(User user) {
                 this.user = user;
