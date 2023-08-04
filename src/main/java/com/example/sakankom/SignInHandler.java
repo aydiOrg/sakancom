@@ -114,52 +114,50 @@ public class SignInHandler implements Initializable {
             User user = users.get(i);
             if(user.getPassword().equals(p) && user.getUsername().equalsIgnoreCase(u)) {
                 user.setFlag(true);
-                if (user.getUserType().equals("tenant")) {
-                    try {
-                        FXMLLoader loader = new FXMLLoader(getClass().getResource("Main-Page.fxml"));
-                        Parent root = loader.load();
-                        Scene scene = new Scene(root);
+                try {
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("Main-Page.fxml"));
+                    Parent root = loader.load();
+                    Scene scene = new Scene(root);
+                    mainPageHandler = loader.getController();
+                    mainPageHandler.setUser(user);
+
+
+                    if (user.getUserType().equals("tenant")) {
                         newStage.setScene(scene);
                         newStage.show();
-
-                        mainPageHandler = loader.getController();
-                        mainPageHandler.setUser(user);
                         mainPageHandler.setTenantData(user);
                         mainPageHandler.manageReservations();
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
                     }
-
-
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
                 }
-                else if (user.getUserType().equals("owner")) {
-                    try {
-                        FXMLLoader loader2 = new FXMLLoader(getClass().getResource("Owner.fxml"));
-                        Parent root = loader2.load();
-                        Scene scene = new Scene(root);
+                try {
+                    FXMLLoader loader2 = new FXMLLoader(getClass().getResource("Owner.fxml"));
+                    Parent root = loader2.load();
+                    Scene scene = new Scene(root);
+
+                    ownerHandler = loader2.getController();
+                    ownerHandler.setUser(user);
+                    if (user.getUserType().equals("owner")) {
                         newStage.setScene(scene);
                         newStage.show();
-
-                        ownerHandler = loader2.getController();
-                        ownerHandler.setUser(user);
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
                     }
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
                 }
-                else if (user.getUserType().equals("admin")) {
-                    try {
-                        FXMLLoader loader4 = new FXMLLoader(getClass().getResource("Admin-MainPage.fxml"));
-                        Parent root = loader4.load();
-                        Scene scene = new Scene(root);
+                try {
+                    FXMLLoader loader4 = new FXMLLoader(getClass().getResource("Admin-MainPage.fxml"));
+                    Parent root = loader4.load();
+                    Scene scene = new Scene(root);
+
+                    adminMainPageHandler = loader4.getController();
+                    adminMainPageHandler.setUser(user);
+                    if (user.getUserType().equals("admin")) {
                         newStage.setScene(scene);
                         newStage.show();
-
-                        adminMainPageHandler = loader4.getController();
-                        adminMainPageHandler.setUser(user);
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
                     }
-
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
                 }
 
                 isUserLoggedIn = true;
@@ -179,6 +177,7 @@ public class SignInHandler implements Initializable {
 
 
     }
+
 
 
 }

@@ -43,6 +43,7 @@ public class AdminMainPageHandler implements Initializable {
         @FXML
         private MFXScrollPane page1;
         private MFXScrollPane page2;
+        public boolean logoutBtnPressed = false;
         public boolean userClickedReservationsButton = false;
         public boolean userClickedAcceptButton = false;
         public boolean userClickedRejectButton = false;
@@ -77,7 +78,7 @@ public class AdminMainPageHandler implements Initializable {
         }
         @Override
         public void initialize(URL url, ResourceBundle resourceBundle) {
-                apartments = new ArrayList<>();
+
                 user = new User();
                 ResultSet rst;
                 apartments = new ArrayList<Apartment>();
@@ -116,6 +117,7 @@ public class AdminMainPageHandler implements Initializable {
                                 apt.setIsReserved(rst.getString("isreserved"));
                                 apartments.add(apt);
                         }
+                        System.out.println(apartments.size()+"");
 
 
                         con.close();
@@ -153,10 +155,14 @@ public class AdminMainPageHandler implements Initializable {
                 } catch (IOException e) {
                         e.printStackTrace();
                 }
+                logoutBtnPressed = true;
 
         }
 
         public void generateGUI(){
+                if(!container.getChildren().isEmpty()){
+                        container.getChildren().remove(0);
+                }
                 //Declaring elements --------------------------------------------------------------------
                 container.setMaxWidth(920);
                 VBox card ;
