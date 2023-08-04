@@ -130,16 +130,17 @@ public class SignInHandler implements Initializable {
                         throw new RuntimeException(e);
                     }
 
+
                 }
                 else if (user.getUserType().equals("owner")) {
                     try {
-                        FXMLLoader loader = new FXMLLoader(getClass().getResource("Owner.fxml"));
-                        Parent root = loader.load();
+                        FXMLLoader loader2 = new FXMLLoader(getClass().getResource("Owner.fxml"));
+                        Parent root = loader2.load();
                         Scene scene = new Scene(root);
                         newStage.setScene(scene);
                         newStage.show();
 
-                        ownerHandler = loader.getController();
+                        ownerHandler = loader2.getController();
                         ownerHandler.setUser(user);
                     } catch (IOException e) {
                         throw new RuntimeException(e);
@@ -147,13 +148,13 @@ public class SignInHandler implements Initializable {
                 }
                 else if (user.getUserType().equals("admin")) {
                     try {
-                        FXMLLoader loader = new FXMLLoader(getClass().getResource("Admin-MainPage.fxml"));
-                        Parent root = loader.load();
+                        FXMLLoader loader4 = new FXMLLoader(getClass().getResource("Admin-MainPage.fxml"));
+                        Parent root = loader4.load();
                         Scene scene = new Scene(root);
                         newStage.setScene(scene);
                         newStage.show();
 
-                        adminMainPageHandler = loader.getController();
+                        adminMainPageHandler = loader4.getController();
                         adminMainPageHandler.setUser(user);
                     } catch (IOException e) {
                         throw new RuntimeException(e);
@@ -178,9 +179,6 @@ public class SignInHandler implements Initializable {
 
 
     }
-
-
-
 
 
 }
