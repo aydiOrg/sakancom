@@ -18,8 +18,7 @@ public class House {
         this.houseID = houseID;
         this.floor = floor;
     }
-    public House() {
-    }
+    public House() {}
 
     private String name;
     public String houseID;
@@ -29,33 +28,16 @@ public class House {
     private String imageSrc;
     private int price;
 
-    public String getResName() {
-        return resName;
-    }
-
-    public void setResName(String resName) {
-        this.resName = resName;
-    }
-
     public int getFloor() {
         return floor;
     }
 
-    public void setFloor(int floor) {
-        this.floor = floor;
-    }
-
     private String res;
-    private String resName;
     private int floor;
 
 
     public String getRes() {
         return res;
-    }
-
-    public void setRes(String res) {
-        this.res = res;
     }
 
     public String getName() {
@@ -70,10 +52,6 @@ public class House {
         return imageSrc;
     }
 
-    public void setImageSrc(String imageSrc) {
-        this.imageSrc = imageSrc;
-    }
-
     public int getPrice() {
         return price;
     }
@@ -81,4 +59,6 @@ public class House {
     public void setPrice(int price) {
         this.price = price;
     }
+
+
 }
