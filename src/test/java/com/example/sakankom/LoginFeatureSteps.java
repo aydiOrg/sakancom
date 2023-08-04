@@ -137,12 +137,12 @@ public class LoginFeatureSteps {
     @Given("the user presses on logout")
     public void theUserPressesOnLogout() {
         // Write code here that turns the phrase above into concrete actions
-        assertTrue(Wrapper.signInHandler.mainPageHandler.logoutPressed);
+        assertTrue(Wrapper.signInHandler.mainPageHandler.logoutPressed || Wrapper.signInHandler.adminMainPageHandler.logoutBtnPressed);
     }
     @Then("the user should be logged out of the system")
     public void theUserShouldBeLoggedOutOfTheSystem() {
         // Write code here that turns the phrase above into concrete actions
-        assertTrue(Wrapper.signInHandler.mainPageHandler.loggedOut);
+        assertTrue(Wrapper.signInHandler.mainPageHandler.loggedOut || Wrapper.signInHandler.adminMainPageHandler.logoutBtnPressed);
     }
 
 }

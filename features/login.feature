@@ -8,7 +8,9 @@ Feature: user login
     And the username is equal to <username> and the username is equal to <password>
       | username | password |
       | aydi     | 123      |
-      | bara     | 123       |
+      | bara     | 123      |
+      | bara     | baraa    |
+
 
     Then the user should log in to the system
     And the user type is determined
@@ -19,6 +21,8 @@ Feature: user login
       | username | password |
       | aydi     | 123      |
       | bara     | 123      |
+      | bara     | baraa    |
+
 
     Then show a message indicating that the entered data is false
 
