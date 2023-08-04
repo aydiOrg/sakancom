@@ -1,9 +1,8 @@
 package com.example.sakankom;
+
 import com.example.sakankom.dataStructures.User;
-import io.github.palexdev.materialfx.controls.MFXButton;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
 import io.github.palexdev.materialfx.controls.MFXTextField;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
@@ -12,15 +11,10 @@ import javafx.scene.control.Alert;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.ResourceBundle;
-
-
-import javax.sql.StatementEvent;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class SignInHandler implements Initializable {
@@ -30,8 +24,6 @@ public class SignInHandler implements Initializable {
     private AnchorPane mainPane;
     @FXML
     public MFXTextField username;
-    @FXML
-    private MFXButton signBtn;
 
     Stage newStage = new Stage();
     Stage currentStage = new Stage();
@@ -41,6 +33,7 @@ public class SignInHandler implements Initializable {
     public OwnerHandler ownerHandler;
     public AdminMainPageHandler adminMainPageHandler;
     public boolean isUserLoggedIn , alertShown;
+    public boolean loginPageClosed = false;
 
 
 
@@ -56,8 +49,8 @@ public class SignInHandler implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         isUserLoggedIn = false;
         alertShown = false;
-        values = new ArrayList<User>();
-        users = new ArrayList<User>();
+        values = new ArrayList<>();
+        users = new ArrayList<>();
         ResultSet rst, rst2, rst3;
         try {
             DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
@@ -76,12 +69,7 @@ public class SignInHandler implements Initializable {
             //bringing owners
             while (rst2.next()) {
                 System.out.println(rst2.getString("username"));
-                users.add(new User(
-                        rst2.getString("username"),
-                        rst2.getString("pass"),
-                        "owner",
-                        false,
-                        rst2.getString("fname") + " " + rst2.getString("lname")));
+                users.add(new User( rst2.getString("username"),  rst2.getString("pass"),  "owner",  false,  rst2.getString("fname") + " " + rst2.getString("lname")));
             }
             rst3 = st.executeQuery("select username, pass from admin ");
             //bringing admins
@@ -91,18 +79,12 @@ public class SignInHandler implements Initializable {
             }
             con.close();
 
-        }catch (SQLException e){
-            e.printStackTrace();
-        }
-
-
-        //loading the fxml pages
-
+        }catch (SQLException e){ e.printStackTrace(); }
 
 
     }
     @FXML
-    void validator(ActionEvent event) {
+    void validator() {
         String u = username.getText();
         String p = password.getText();
 
@@ -110,9 +92,8 @@ public class SignInHandler implements Initializable {
         tmp.setPassword(p);tmp.setUsername(u);
         values.add(tmp);
 
-        for (int i=0 ; i< users.size();i++) {
-            User user = users.get(i);
-            if(user.getPassword().equals(p) && user.getUsername().equalsIgnoreCase(u)) {
+        for (User user : users) {
+            if (user.getPassword().equals(p) && user.getUsername().equalsIgnoreCase(u)) {
                 user.setFlag(true);
                 try {
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("Main-Page.fxml"));
@@ -128,9 +109,8 @@ public class SignInHandler implements Initializable {
                         mainPageHandler.setTenantData(user);
                         mainPageHandler.manageReservations();
                     }
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
+                } catch (IOException e) { throw new RuntimeException(e); }
+
                 try {
                     FXMLLoader loader2 = new FXMLLoader(getClass().getResource("Owner.fxml"));
                     Parent root = loader2.load();
@@ -142,9 +122,8 @@ public class SignInHandler implements Initializable {
                         newStage.setScene(scene);
                         newStage.show();
                     }
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
+                } catch (IOException e) { throw new RuntimeException(e); }
+
                 try {
                     FXMLLoader loader4 = new FXMLLoader(getClass().getResource("Admin-MainPage.fxml"));
                     Parent root = loader4.load();
@@ -156,9 +135,7 @@ public class SignInHandler implements Initializable {
                         newStage.setScene(scene);
                         newStage.show();
                     }
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
+                } catch (IOException e) { throw new RuntimeException(e); }
 
                 isUserLoggedIn = true;
                 //closing the current stage
@@ -167,17 +144,16 @@ public class SignInHandler implements Initializable {
             }
 
         }
-            if (!isUserLoggedIn) {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setContentText("Invalid data");
-                alert.setHeaderText("Invalid input, check the inserted data and try again");
-                alert.show();
-                alertShown = true;
-            }
-
+        if (!isUserLoggedIn) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("Invalid data");
+            alert.setHeaderText("Invalid input, check the inserted data and try again");
+            alert.show();
+            alertShown = true;
+        }
 
     }
 
-
+    public void setCloseLoginPage(boolean b) { loginPageClosed = b; }
 
 }

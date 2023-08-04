@@ -22,9 +22,7 @@ public class ShowHouseHandler implements Initializable {
     private Label houseRes;
 
     @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-
-    }
+    public void initialize(URL url, ResourceBundle resourceBundle) { }
     public void setDate(House house){
         Image image = new Image(Objects.requireNonNull(getClass().getResourceAsStream(house.getImageSrc())));
         houseImage.setImage(image);

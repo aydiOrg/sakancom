@@ -4,7 +4,6 @@ import com.example.sakankom.OwnerFiles.House;
 import com.example.sakankom.OwnerFiles.Owner;
 import com.example.sakankom.dataStructures.User;
 import io.github.palexdev.materialfx.controls.MFXButton;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -22,9 +21,9 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.Collections;
 
 public class OwnerHandler implements Initializable {
 
@@ -82,14 +81,11 @@ public class OwnerHandler implements Initializable {
             rst = st.executeQuery("select * from owner where username = '" + user.getUsername() + "'");
 
             owner = new Owner();
-            if (rst.next()) {
-                owner.setOwnerId(rst.getInt("owner_id"));
-            }
+            if (rst.next()) { owner.setOwnerId(rst.getInt("owner_id")); }
             con.close();
-        } catch (SQLException e) {e.printStackTrace();}
+        } catch (SQLException e) { e.printStackTrace(); }
 
-        try {mainBtnHandler(new ActionEvent());}
-        catch (IOException e) {throw new RuntimeException(e);}
+        try { mainBtnHandler(); }  catch (IOException e) { throw new RuntimeException(e); }
 
 
     }
@@ -103,8 +99,8 @@ public class OwnerHandler implements Initializable {
     }
 
     @FXML
-    void mainBtnHandler(ActionEvent event) throws IOException {
-        if (btnMain.getStyleClass().contains("selected")) {System.out.println("Do nothing");}
+    void mainBtnHandler() throws IOException {
+        if (btnMain.getStyleClass().contains("selected")) { System.out.println("Do nothing"); }
         else {
             recentlyAdded = new ArrayList<>();
             recommended = new ArrayList<>();
@@ -121,15 +117,11 @@ public class OwnerHandler implements Initializable {
                 rst2 = st2.executeQuery("select residence_name, residence_id from residence where isVAlid='1' and owner_id='" + owner.getOwnerId() + "'");
                 while (rst2.next()) {
                     rst = st.executeQuery("select house_id, residence_id, image, price from house where isValid='1' and residence_id='" + rst2.getInt("residence_id") + "'");
-                    while (rst.next()) {
-                        recommended.add(new House("House " + rst.getString("house_id"), "/photos/" + rst.getString("image"), rst.getInt("price"), rst2.getString("residence_name")));
-                    }
+                    while (rst.next()) { recommended.add(new House("House " + rst.getString("house_id"), "/photos/" + rst.getString("image"), rst.getInt("price"), rst2.getString("residence_name"))); }
                 }
-                if (recommended.size() < 4) {recentlyAdded.addAll(recommended);}
+                if (recommended.size() < 4) { recentlyAdded.addAll(recommended); }
                 else {
-                    for (int j = 0; j <= recommended.size() / 2; j++) {
-                        recentlyAdded.add(recommended.get(j));
-                    }
+                    for (int j = 0; j <= recommended.size() / 2; j++) { recentlyAdded.add(recommended.get(j)); }
                 }
 
                 cardLayout.getChildren().clear();
@@ -172,13 +164,13 @@ public class OwnerHandler implements Initializable {
                 btnMain.getStyleClass().add("selected");
 
                 con.close();
-            } catch (Exception e) {e.printStackTrace();}
+            } catch (Exception e) { e.printStackTrace(); }
         }
     }
 
     @FXML
     void addHouseBtnHandler() throws IOException {
-        if (btnAddHouse.getStyleClass().contains("selected")) {System.out.println("Do nothing");}
+        if (btnAddHouse.getStyleClass().contains("selected")) { System.out.println("Do nothing"); }
         else {
             FXMLLoader fxmlLoader = new FXMLLoader();
             fxmlLoader.setLocation(getClass().getResource("addHouse.fxml"));
@@ -202,7 +194,7 @@ public class OwnerHandler implements Initializable {
     @FXML
     void addResidenceBtnHandler() throws IOException {
         userClickedAddResidencesBtn = true;
-        if (btnAddResidence.getStyleClass().contains("selected")) {System.out.println("Do nothing");}
+        if (btnAddResidence.getStyleClass().contains("selected")) { System.out.println("Do nothing"); }
         else {
             FXMLLoader fxmlLoader = new FXMLLoader();
             fxmlLoader.setLocation(getClass().getResource("addResidence.fxml"));
@@ -227,7 +219,7 @@ public class OwnerHandler implements Initializable {
     @FXML
     void residencesBtnHandler() {
         userClickedResidencesBtn = true;
-        if (btnResidences.getStyleClass().contains("selected")) {System.out.println("Do nothing");}
+        if (btnResidences.getStyleClass().contains("selected")) { System.out.println("Do nothing"); }
         else {
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader();
@@ -247,7 +239,7 @@ public class OwnerHandler implements Initializable {
                 show.getChildren().clear();
                 show.getChildren().add(showBox);
                 btnResidences.getStyleClass().add("selected");
-            } catch (Exception e) {e.printStackTrace();}
+            } catch (Exception e) { e.printStackTrace(); }
         }
     }
 
@@ -264,6 +256,6 @@ public class OwnerHandler implements Initializable {
             newStage.setScene(scene);
             newStage.show();
 
-        } catch (IOException e) {e.printStackTrace();}
+        } catch (IOException e) { e.printStackTrace(); }
     }
 }

@@ -31,8 +31,6 @@ public class AdminMainPageHandler implements Initializable {
         @FXML
         private AnchorPane bigPane;
         @FXML
-        private MFXButton btnLogout;
-        @FXML
         private AnchorPane mainPane;
         @FXML
         private Label name;
@@ -47,8 +45,6 @@ public class AdminMainPageHandler implements Initializable {
         public boolean userClickedReservationsButton = false;
         public boolean userClickedAcceptButton = false;
         public boolean userClickedRejectButton = false;
-        int i = 0;
-
 
 
         User user;
@@ -56,10 +52,6 @@ public class AdminMainPageHandler implements Initializable {
 
         public Admin getAdmin() {
                 return admin;
-        }
-
-        public void setAdmin(Admin admin) {
-                this.admin = admin;
         }
 
         Admin admin;
@@ -81,8 +73,8 @@ public class AdminMainPageHandler implements Initializable {
 
                 user = new User();
                 ResultSet rst;
-                apartments = new ArrayList<Apartment>();
-                adminReservations = new ArrayList<AdminReservation>();
+                apartments = new ArrayList<>();
+                adminReservations = new ArrayList<>();
                 isReservationsPressed = false;
                 try{
 
@@ -122,25 +114,22 @@ public class AdminMainPageHandler implements Initializable {
 
                         con.close();
                 }
-                catch (SQLException e){
-                        e.printStackTrace();
-                }
+                catch (SQLException e){ e.printStackTrace(); }
 
 
 
                 reservationsBtn.getStyleClass().add("selected");
 
                 FXMLLoader loader2 = new FXMLLoader(getClass().getResource("Admin-Reservations.fxml"));
-                try {
-                        Parent root = loader2.load();
-                } catch (IOException e) {
-                        throw new RuntimeException(e);}
+
+                try { Parent root = loader2.load(); } catch (IOException e) { throw new RuntimeException(e); }
+
                 adminReservationsHandler = loader2.getController();
                 page2 = adminReservationsHandler.getMainPane();
 
         }
         @FXML
-        void logoutBtnHandler(ActionEvent event) {
+        void logoutBtnHandler() {
                 Stage stage = (Stage) mainPane.getScene().getWindow();
                 stage.close();
 
@@ -152,17 +141,14 @@ public class AdminMainPageHandler implements Initializable {
                         newStage.setScene(scene);
                         newStage.show();
 
-                } catch (IOException e) {
-                        e.printStackTrace();
-                }
+                } catch (IOException e) { e.printStackTrace(); }
                 logoutBtnPressed = true;
 
         }
 
         public void generateGUI(){
-                if(!container.getChildren().isEmpty()){
-                        container.getChildren().remove(0);
-                }
+                if(!container.getChildren().isEmpty()) container.getChildren().remove(0);
+
                 //Declaring elements --------------------------------------------------------------------
                 container.setMaxWidth(920);
                 VBox card ;
@@ -172,11 +158,11 @@ public class AdminMainPageHandler implements Initializable {
                 Label l5; MFXButton reserveBtn , detailsBtn;
 
                 //prepare strings and data.
-                String name = "";
-                String owner = "";
-                String type = "";
-                String address = "";
-                String price = "";
+                String name;
+                String owner;
+                String type;
+                String address;
+                String price;
 
 
                 for(int i= 0; i<apartments.size();i++) {
@@ -190,7 +176,6 @@ public class AdminMainPageHandler implements Initializable {
                                 price = Double.toString(apartments.get(i).getPrice());
 
                                 //generating elements
-                                //where it starts
 
                                 card = new VBox();
                                 card.setMaxWidth(950);
@@ -259,8 +244,6 @@ public class AdminMainPageHandler implements Initializable {
                                 detailsBtn.setOnAction(event -> {
                                         userClickedRejectButton = true;
                                         houseIDTest1 =  apartments.get(finalI).getHouseId();
-                                        MFXButton btn = (MFXButton) event.getSource();
-                                        int i1 = Integer.parseInt(btn.getId());
 
                                         ResultSet rst;
 
@@ -269,24 +252,19 @@ public class AdminMainPageHandler implements Initializable {
                                                 Connection con = DriverManager.getConnection("jdbc:oracle:thin:@//localhost:1521/xepdb1", "sakankom", "12345678");
                                                 Statement st = con.createStatement();
 
-                                                System.out.println("hi");
                                                 rst = st.executeQuery("UPDATE house SET isvalid='0' WHERE house_id='" + Integer.parseInt(Integer.toString(apartments.get(finalI1).getHouseId())) + "'");
                                                 rst.next();
 
                                                 con.close();
-                                        } catch (SQLException e) {
-                                                throw new RuntimeException(e);
-                                        }
+                                        } catch (SQLException e) { throw new RuntimeException(e); }
+
                                         apartments.remove(finalI1);
 
                                         container.getChildren().remove(finalCard);
                                 });
-                                int finalI2 = i;
                                 reserveBtn.setOnAction(event -> {
                                         userClickedAcceptButton = true;
                                         houseIDTest2 =  apartments.get(finalI).getHouseId();
-                                        MFXButton btn = (MFXButton) event.getSource();
-                                        int i2 = Integer.parseInt(btn.getId());
 
                                         ResultSet rst;
 
@@ -299,9 +277,8 @@ public class AdminMainPageHandler implements Initializable {
                                                 rst.next();
 
                                                 con.close();
-                                        } catch (SQLException e) {
-                                                throw new RuntimeException(e);
-                                        }
+
+                                        } catch (SQLException e) {throw new RuntimeException(e);}
                                         apartments.remove(finalI1);
 
                                         container.getChildren().remove(finalCard);
@@ -315,22 +292,20 @@ public class AdminMainPageHandler implements Initializable {
                 }
         }
         @FXML
-        void viewApartments(ActionEvent event) {
-                if(! bigPane.getChildren().isEmpty()){
-                        bigPane.getChildren().remove(0);
-                }
+        void viewApartments() {
+                if(! bigPane.getChildren().isEmpty()) bigPane.getChildren().remove(0);
+
                 bigPane.getChildren().add(page1);
         }
 
         @FXML
-        void viewReservations(ActionEvent event) {
-                if(! bigPane.getChildren().isEmpty()){
-                        bigPane.getChildren().remove(0);
-                }
+        void viewReservations() {
+                if(! bigPane.getChildren().isEmpty()) bigPane.getChildren().remove(0);
+
                 bigPane.getChildren().add(page2);
                 isReservationsPressed = true;
                 userClickedReservationsButton = true;
-                if (reservationsBtn.getStyleClass().contains("selected")) {System.out.println("Do nothing");}
+                if (reservationsBtn.getStyleClass().contains("selected")) System.out.println("Do nothing");
 
                 else generateGUI();
 
@@ -350,7 +325,7 @@ public class AdminMainPageHandler implements Initializable {
                                 apt.setOwnerEmail(rst.getString("email"));
                                 apt.setOwnerPhone(rst.getString("phone_number"));
                                 apt.setAddress(rst.getString("location"));
-                                apt.setOwnerName(rst.getString("fname") + " " + rst.getString("lname"));
+                                apt.setOwnerName(rst.getString("fName") + " " + rst.getString("lName"));
                                 apt.setAptName(rst.getString("residence_name"));
                                 apt.setHouseId(rst.getInt("house_id"));
                                 apt.setResidenceId(rst.getInt("residence_id"));
@@ -365,9 +340,9 @@ public class AdminMainPageHandler implements Initializable {
                                 apt.setResCapacity(rst.getInt("reserved_capacity"));
                                 apt.setGender(rst.getString("genders"));
                                 apt.setBalcony(rst.getString("balcony"));
-                                apt.setIsValid(rst.getString("isvalid"));
-                                apt.setIsAccepted(rst.getString("isaccepted"));
-                                apt.setIsReserved(rst.getString("isreserved"));
+                                apt.setIsValid(rst.getString("isValid"));
+                                apt.setIsAccepted(rst.getString("isAccepted"));
+                                apt.setIsReserved(rst.getString("isReserved"));
                                 apartments.add(apt);
                         }
 
@@ -390,11 +365,11 @@ public class AdminMainPageHandler implements Initializable {
                         rst.close();
                         rst = st.executeQuery("select * from owner");
                         while(rst.next()) {
-                                for (int i =0;i<adminReservations.size();i++) {
-                                        if(adminReservations.get(i).getOwnerId() == rst.getInt("owner_id")) {
-                                                adminReservations.get(i).setOwnerName(rst.getString("fname") + " " + rst.getString("lname"));
-                                                adminReservations.get(i).setOwnerPhone(rst.getString("phone_number"));
-                                                adminReservations.get(i).setOwnerEmail(rst.getString("email"));
+                                for (AdminReservation adminReservation : adminReservations) {
+                                        if (adminReservation.getOwnerId() == rst.getInt("owner_id")) {
+                                                adminReservation.setOwnerName(rst.getString("fname") + " " + rst.getString("lname"));
+                                                adminReservation.setOwnerPhone(rst.getString("phone_number"));
+                                                adminReservation.setOwnerEmail(rst.getString("email"));
                                         }
                                 }
                         }
@@ -402,11 +377,11 @@ public class AdminMainPageHandler implements Initializable {
 
                         rst = st.executeQuery("select * from tenant");
                         while(rst.next()) {
-                                for (int i =0;i<adminReservations.size();i++) {
-                                        if(adminReservations.get(i).getTenantId() == rst.getInt("tenant_id")) {
-                                                adminReservations.get(i).setTenantName(rst.getString("fname") + " " + rst.getString("lname"));
-                                                adminReservations.get(i).setTenantPhone(rst.getString("phone_number"));
-                                                adminReservations.get(i).setTenantEmail(rst.getString("email"));
+                                for (AdminReservation adminReservation : adminReservations) {
+                                        if (adminReservation.getTenantId() == rst.getInt("tenant_id")) {
+                                                adminReservation.setTenantName(rst.getString("fname") + " " + rst.getString("lname"));
+                                                adminReservation.setTenantPhone(rst.getString("phone_number"));
+                                                adminReservation.setTenantEmail(rst.getString("email"));
                                         }
                                 }
                         }
@@ -414,9 +389,8 @@ public class AdminMainPageHandler implements Initializable {
 
                         con.close();
                 }
-                catch (SQLException e){
-                        e.printStackTrace();
-                }
+                catch (SQLException e){ e.printStackTrace(); }
+
                 adminReservationsHandler.setUser(user);
                 adminReservationsHandler.setAdminReservations(adminReservations);
                 generateGUI();
@@ -437,7 +411,9 @@ public class AdminMainPageHandler implements Initializable {
                                 admin.setAdminID(rst.getInt("admin_id"));
                         }
                         con.close();
+
                 } catch (SQLException e) {e.printStackTrace();}
+
                 fetchData();
 
         }

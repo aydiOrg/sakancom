@@ -88,15 +88,13 @@ public class ResidencesHandler implements Initializable {
                                         while(resultSet.next()){
                                             int floor = resultSet.getInt("floor_number");
 
-                                            if (!housesByFloor.containsKey(floor)) {
-                                                housesByFloor.put(floor, new ArrayList<>());
-                                            }
+                                            if (!housesByFloor.containsKey(floor)) { housesByFloor.put(floor, new ArrayList<>()); }
 
                                             House house = new House(resultSet.getString("house_id"), floor);
                                             housesByFloor.get(floor).add(house);
                                         }
                                         con1.close();
-                                } catch (SQLException e) {throw new RuntimeException(e);}
+                                } catch (SQLException e) { throw new RuntimeException(e); }
                                 });
                             }
                         }
@@ -112,7 +110,7 @@ public class ResidencesHandler implements Initializable {
             }
 
             con.close();
-        } catch (Exception e) {e.printStackTrace();}
+        } catch (Exception e) { e.printStackTrace(); }
     }
     public void showHouses(String residenceName){
         residenceContainer.getChildren().clear();
@@ -134,7 +132,7 @@ public class ResidencesHandler implements Initializable {
                 houses.add(new House("House " + rst2.getString("house_id"), "/photos/" + rst2.getString("image"), rst2.getInt("price"), residenceName, rst2.getInt("floor_number")));
                  totalTenants += rst2.getInt("reserved_capacity");
             }
-        } catch (SQLException e) {throw new RuntimeException(e);}
+        } catch (SQLException e) { throw new RuntimeException(e); }
 
         mainLabel.setText("All houses of " + residenceName + " . " + houses.size() + " Houses with " + totalTenants + " person reserved.");
 
@@ -152,19 +150,15 @@ public class ResidencesHandler implements Initializable {
                 rst3.next();
                 rst4 = st.executeQuery("SELECT floor_number FROM house WHERE isvalid='1' and residence_id='" + rst3.getString("residence_id") + "'");
 
-                while (rst4.next()) {
-                    uniqueFloors.add(rst4.getInt("floor_number"));
-                }
-                Integer[] FloorsArray = uniqueFloors.toArray(new Integer[0]);
+                while (rst4.next()) { uniqueFloors.add(rst4.getInt("floor_number")); }
 
+                Integer[] FloorsArray = uniqueFloors.toArray(new Integer[0]);
                 Arrays.sort(FloorsArray);
 
                 for (Integer integer : FloorsArray) {
                     List<House> floorHouses = new ArrayList<>();
                     for (House housee : houses) {
-                        if (housee.getFloor() == integer) {
-                            floorHouses.add(housee);
-                        }
+                        if (housee.getFloor() == integer) { floorHouses.add(housee); }
                     }
 
                     FXMLLoader fxmlLoader1 = new FXMLLoader();
@@ -203,9 +197,9 @@ public class ResidencesHandler implements Initializable {
 
                     con.close();
                 }
-            } catch (SQLException e) {throw new RuntimeException(e);}
+            } catch (SQLException e) { throw new RuntimeException(e); }
 
-        } catch (IOException e) {throw new RuntimeException(e);}
+        } catch (IOException e) { throw new RuntimeException(e); }
     }
 
     public void showMore(String houseID) {
@@ -222,7 +216,7 @@ public class ResidencesHandler implements Initializable {
             show.getChildren().clear();
             show.getChildren().addAll(vbox.getChildren());
 
-        }catch (IOException e){e.printStackTrace();}
+        }catch (IOException e){ e.printStackTrace(); }
     }
 
     public void setData(Owner owner){

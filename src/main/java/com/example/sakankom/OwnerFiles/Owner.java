@@ -11,7 +11,5 @@ public class Owner {
         this.ownerId = ownerId;
     }
 
-    public Owner(){
-
-    }
+    public Owner(){ }
 }
