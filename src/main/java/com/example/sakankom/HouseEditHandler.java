@@ -137,7 +137,7 @@ public class HouseEditHandler implements Initializable {
             isReservedValue = rst1.getString("isReserved");
 
             houseID.setEditable(false);
-        } catch (SQLException e) {throw new RuntimeException(e);}
+        } catch (SQLException e) { throw new RuntimeException(e); }
     }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {}
@@ -162,6 +162,6 @@ public class HouseEditHandler implements Initializable {
             alert.setContentText("Update House Successfully :)");
 
             alert.showAndWait();
-        } catch (SQLException e) {throw new RuntimeException(e);}
+        } catch (SQLException e) { throw new RuntimeException(e); }
     }
 }

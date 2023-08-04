@@ -31,7 +31,7 @@ public class FurnitureSteps {
             assertTrue(true);
         }
         else
-        assertTrue(user.getFlag() && user.getUserType().equalsIgnoreCase("tenant"));
+            assertTrue(user.getFlag() && user.getUserType().equalsIgnoreCase("tenant"));
     }
     @Given("the tenant presses on the furniture button")
     public void theTenantPressesOnTheFurnitureButton() {
@@ -42,7 +42,7 @@ public class FurnitureSteps {
             assertTrue(true);
         }
         else
-        assertTrue(Wrapper.signInHandler.mainPageHandler.isFurniturePressed);
+            assertTrue(Wrapper.signInHandler.mainPageHandler.isFurniturePressed);
     }
     @Then("all furniture that are published should be shown")
     public void allFurnitureThatArePublishedShouldBeShown() {
@@ -130,7 +130,7 @@ public class FurnitureSteps {
             assertTrue(true);
         }
         else
-        assertTrue( Wrapper.signInHandler.mainPageHandler.furnitureHandler.buyPressed);
+            assertTrue( Wrapper.signInHandler.mainPageHandler.furnitureHandler.buyPressed);
     }
     @Then("the piece of furniture that he chose should be sold to him")
     public void thePieceOfFurnitureThatHeChoseShouldBeSoldToHim() {
@@ -179,7 +179,7 @@ public class FurnitureSteps {
             assertTrue(true);
         }
         else
-        assertTrue(user.getFlag() && user.getUserType().equalsIgnoreCase("tenant"));
+            assertTrue(user.getFlag() && user.getUserType().equalsIgnoreCase("tenant"));
     }
     @Given("presses on add new")
     public void pressesOnAddNew() {
@@ -190,7 +190,7 @@ public class FurnitureSteps {
             assertTrue(true);
         }
         else
-        assertTrue(Wrapper.signInHandler.mainPageHandler.furnitureHandler.addPressed);
+            assertTrue(Wrapper.signInHandler.mainPageHandler.furnitureHandler.addPressed);
     }
     @Given("the tenant fills all the required fields")
     public void theTenantFillsAllTheRequiredFields() {
@@ -259,7 +259,7 @@ public class FurnitureSteps {
             assertTrue(true);
         }
         else
-        assertTrue(user.getFlag() && user.getUserType().equalsIgnoreCase("tenant"));
+            assertTrue(user.getFlag() && user.getUserType().equalsIgnoreCase("tenant"));
     }
     @Given("the tenant presses on add new")
     public void theTenantPressesOnAddNew() {
@@ -270,7 +270,7 @@ public class FurnitureSteps {
             assertTrue(true);
         }
         else
-        assertTrue(Wrapper.signInHandler.mainPageHandler.furnitureHandler.addPressed);
+            assertTrue(Wrapper.signInHandler.mainPageHandler.furnitureHandler.addPressed);
     }
     @Given("the tenant does not fill all the required fields")
     public void theTenantDoesNotFillAllTheRequiredFields() {
@@ -281,7 +281,7 @@ public class FurnitureSteps {
             assertTrue(true);
         }
         else
-        assertTrue(Wrapper.signInHandler.mainPageHandler.furnitureHandler.newFurnitureHandler.valuesInvalid);
+            assertTrue(Wrapper.signInHandler.mainPageHandler.furnitureHandler.newFurnitureHandler.valuesInvalid);
     }
     @Given("the tenant presses on sell")
     public void theTenantPressesOnSell() {
@@ -305,7 +305,7 @@ public class FurnitureSteps {
             assertTrue(true);
         }
         else
-        assertTrue(Wrapper.signInHandler.mainPageHandler.furnitureHandler.newFurnitureHandler.valuesInvalid);
+            assertTrue(Wrapper.signInHandler.mainPageHandler.furnitureHandler.newFurnitureHandler.valuesInvalid);
     }
 
 

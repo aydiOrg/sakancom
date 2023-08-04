@@ -21,9 +21,7 @@ public class ResidenceHandler implements Initializable {
     private Label residenceName;
 
     @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-
-    }
+    public void initialize(URL url, ResourceBundle resourceBundle) { }
 
     public void setDate(Residence residence){
         locationField.setText(residence.getLocation());

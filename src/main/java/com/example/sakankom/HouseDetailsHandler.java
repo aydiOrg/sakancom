@@ -75,10 +75,8 @@ public class HouseDetailsHandler implements Initializable {
                 uaptnumber.setText(Integer.toString(apartment.getAptNumber()));
 
                 int count = 0;
-                for (int i=0;i<apartments.size();i++){
-                        if(apartments.get(i).getHouseId() != apartment.getHouseId() && apartments.get(i).getResidenceId() == apartment.getResidenceId() && apartments.get(i).getFloor() == apartment.getFloor()) {
-                                count++;
-                        }
+                for (Apartment value : apartments) {
+                        if (value.getHouseId() != apartment.getHouseId() && value.getResidenceId() == apartment.getResidenceId() && value.getFloor() == apartment.getFloor()) { count++; }
                 }
 
                 uaptcount.setText("" + count); // needs query
@@ -101,13 +99,13 @@ public class HouseDetailsHandler implements Initializable {
         }
 
         public void generateGUI(){
-                String name= "";
-                String job = "";
+                String name;
+                String job;
 
-                for (int i = 0;i<neigbours.size();i++) {
-                        if(neigbours.get(i).getHouseID() == apartment.getHouseId()) {
-                                name = neigbours.get(i).getName();
-                                job = neigbours.get(i).getJob();
+                for (Neigbour neigbour : neigbours) {
+                        if (neigbour.getHouseID() == apartment.getHouseId()) {
+                                name = neigbour.getName();
+                                job = neigbour.getJob();
                                 //filling the reservations
                                 VBox card;
                                 Label l1, l2;
@@ -152,6 +150,6 @@ public class HouseDetailsHandler implements Initializable {
 
         @Override
         public void initialize(URL url, ResourceBundle resourceBundle) {
-                neigbours = new ArrayList<Neigbour>();
+                neigbours = new ArrayList<>();
         }
 }

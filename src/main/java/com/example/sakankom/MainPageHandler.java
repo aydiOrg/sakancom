@@ -1,4 +1,5 @@
 package com.example.sakankom;
+
 import com.example.sakankom.dataStructures.Apartment;
 import com.example.sakankom.dataStructures.Reservation;
 import com.example.sakankom.dataStructures.Tenant;
@@ -9,7 +10,6 @@ import io.github.palexdev.materialfx.controls.MFXTextField;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -29,9 +29,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.ResourceBundle;
-import java.util.Stack;
-
-import static javafx.application.Platform.exit;
 
 public class MainPageHandler implements Initializable {
         //data from the sign in
@@ -81,8 +78,6 @@ public class MainPageHandler implements Initializable {
         @FXML
         private Button btn3;
         @FXML
-        private Button logoutBtn;
-        @FXML
         private AnchorPane mainPane;
         @FXML
         private MFXButton editBtn;
@@ -103,39 +98,29 @@ public class MainPageHandler implements Initializable {
                 isApartementsPressed = false;
                 buttons[0] = btn1;buttons[1] = btn2;buttons[2] = btn3;
                 uEmail.setEditable(false); uUsername.setEditable(false); uPassword.setEditable(false); uGender.setEditable(false); uJob.setEditable(false); uPhone.setEditable(false);uBdate.setEditable(false);uName.setEditable(false);
-                reservations =new ArrayList<Reservation>();
+                reservations = new ArrayList<>();
 
                 //loading my pages
                 FXMLLoader loader1 = new FXMLLoader(getClass().getResource("Current-Houses.fxml"));
-                try {
-                        Parent root1 = loader1.load();
-                } catch (IOException e) {
-                        throw new RuntimeException(e);
-                }
+
+                try { Parent root1 = loader1.load(); } catch (IOException e) { throw new RuntimeException(e); }
+
                 currentHousesHandler = loader1.getController();
                 page3 = currentHousesHandler.getMainPane();
                 apartments = currentHousesHandler.getApartments();
 
-                FXMLLoader loader2= new FXMLLoader(getClass().getResource("Furniture.fxml"));
+                FXMLLoader loader2 = new FXMLLoader(getClass().getResource("Furniture.fxml"));
 
-                try{
-                        Parent root2 = loader2.load();
-                }catch (IOException e) {
-                        e.printStackTrace();
-                }
+                try{ Parent root2 = loader2.load(); } catch (IOException e) { e.printStackTrace(); }
+
                 furnitureHandler = loader2.getController();
                 page2 = furnitureHandler.getMainPane();
-
-
-
-
-
 
 
         }
 
         @FXML
-        public void editData(ActionEvent event) {
+        public void editData() {
                if(editBtn.getText().equalsIgnoreCase("edit")){
                        tenant.setUpdated(true);
                        //setting the fields to be editable
@@ -171,15 +156,9 @@ public class MainPageHandler implements Initializable {
                                 con.setAutoCommit(false);
                                 con.commit();
                                 con.close();
-                        } catch (Exception e)
-                        {
-                                e.printStackTrace();
-                        }
-                       String s ="";
-                       for(int i =0;i<tenant.getPassword().length();i++) {
-                               s += "*";
-                       }
-                       uPassword.setText(s);
+                        } catch (Exception e) { e.printStackTrace(); }
+
+                       uPassword.setText("*".repeat(tenant.getPassword().length()));
                        isSavePressed = true;
                 }
 
@@ -213,9 +192,7 @@ public class MainPageHandler implements Initializable {
                         }
                         con.close();
                 }
-                catch (SQLException e) {
-                        e.printStackTrace();
-                }
+                catch (SQLException e) { e.printStackTrace(); }
 
                 //send the tenant data to currentHousesHandler
                 currentHousesHandler.setTenant(tenant);
@@ -229,11 +206,8 @@ public class MainPageHandler implements Initializable {
                 uEmail.setText(tenant.getEmail());
                 uGender.setText(tenant.getGender());
                 uUsername.setText(tenant.getUsername());
-                String s ="";
-                for(int i =0;i<tenant.getPassword().length();i++) {
-                        s += "*";
-                }
-                uPassword.setText(s);
+
+                uPassword.setText("*".repeat(tenant.getPassword().length()));
         }
         public void manageReservations() {
                 //page1 special ----------------------------------------------------------------
@@ -271,9 +245,8 @@ public class MainPageHandler implements Initializable {
                         }
                         con.close();
                 }
-                catch (SQLException e){
-                        e.printStackTrace();
-                }
+                catch (SQLException e){ e.printStackTrace(); }
+
                 String name = "22";
                 String address = "22";
                 String owner = "33";
@@ -281,27 +254,29 @@ public class MainPageHandler implements Initializable {
                 String email = "55";
                 String phone = "66";
 
-                for (int i =0;i<reservations.size();i++) {
-                        for (int k=0;k<apartments.size();k++) {
-                                if (apartments.get(k).getHouseId() == reservations.get(i).getHouse_id()) {
-                                        name = apartments.get(k).getAptName();
-                                        address = apartments.get(k).getAddress();
-                                        owner = apartments.get(k).getOwnerName();
-                                        payDate = reservations.get(i).getPayyingDate();
-                                        email = apartments.get(k).getOwnerEmail();
-                                        phone = apartments.get(k).getOwnerPhone();
+                for (Reservation reservation : reservations) {
+                        for (Apartment apartment : apartments) {
+                                if (apartment.getHouseId() == reservation.getHouse_id()) {
+                                        name = apartment.getAptName();
+                                        address = apartment.getAddress();
+                                        owner = apartment.getOwnerName();
+                                        payDate = reservation.getPayyingDate();
+                                        email = apartment.getOwnerEmail();
+                                        phone = apartment.getOwnerPhone();
                                         break;
                                 }
                         }
 
                         //filling the reservations
                         VBox card;
-                        Label l1, l2, l3,l4,l5,l6;
-                        HBox h1,h2,h3,h4,h5,h6;
+                        Label l1, l2, l3, l4, l5, l6;
+                        HBox h1, h2, h3, h4, h5, h6;
 
                         //generating elements
                         card = new VBox();
-                        card.setMaxWidth(250); card.setPrefWidth(250);card.setMinWidth(250);
+                        card.setMaxWidth(250);
+                        card.setPrefWidth(250);
+                        card.setMinWidth(250);
 
                         h1 = new HBox();
                         h2 = new HBox();
@@ -312,7 +287,7 @@ public class MainPageHandler implements Initializable {
 
                         l1 = new Label(name);
                         l2 = new Label(address);
-                        l3= new Label(owner);
+                        l3 = new Label(owner);
                         l4 = new Label(payDate);
                         l5 = new Label(phone);
                         l6 = new Label(email);
@@ -320,7 +295,11 @@ public class MainPageHandler implements Initializable {
                         DoubleProperty fontSize = new SimpleDoubleProperty(16);
                         l1.styleProperty().bind(Bindings.format("-fx-font-size: %.2fpt;", fontSize));
                         DoubleProperty fontSize2 = new SimpleDoubleProperty(13);
-                        l2.styleProperty().bind(Bindings.format("-fx-font-size: %.2fpt;", fontSize2)); l3.styleProperty().bind(Bindings.format("-fx-font-size: %.2fpt;", fontSize2));l4.styleProperty().bind(Bindings.format("-fx-font-size: %.2fpt;", fontSize2));l5.styleProperty().bind(Bindings.format("-fx-font-size: %.2fpt;", fontSize2));l6.styleProperty().bind(Bindings.format("-fx-font-size: %.2fpt;", fontSize2));
+                        l2.styleProperty().bind(Bindings.format("-fx-font-size: %.2fpt;", fontSize2));
+                        l3.styleProperty().bind(Bindings.format("-fx-font-size: %.2fpt;", fontSize2));
+                        l4.styleProperty().bind(Bindings.format("-fx-font-size: %.2fpt;", fontSize2));
+                        l5.styleProperty().bind(Bindings.format("-fx-font-size: %.2fpt;", fontSize2));
+                        l6.styleProperty().bind(Bindings.format("-fx-font-size: %.2fpt;", fontSize2));
                         card.getStyleClass().add("hbox");
                         card.getStylesheets().add("mainPageHandler.css");
                         l1.getStyleClass().add("l1");
@@ -337,8 +316,12 @@ public class MainPageHandler implements Initializable {
                         l6.getStylesheets().add("mainPageHandler.css");
 
 
-
-                        h1.getChildren().add(l1);h2.getChildren().add(l2);h3.getChildren().add(l3);h4.getChildren().add(l4);h5.getChildren().add(l5);h6.getChildren().add(l6);
+                        h1.getChildren().add(l1);
+                        h2.getChildren().add(l2);
+                        h3.getChildren().add(l3);
+                        h4.getChildren().add(l4);
+                        h5.getChildren().add(l5);
+                        h6.getChildren().add(l6);
                         card.getChildren().add(h1);
                         card.getChildren().add(h2);
                         card.getChildren().add(h3);
@@ -354,63 +337,55 @@ public class MainPageHandler implements Initializable {
         }
 
         @FXML
-        void showPage1(ActionEvent event) {
-                if(! mainPane.getChildren().isEmpty()){
-                        mainPane.getChildren().remove(0);
-                }
+        void showPage1() {
+                if(! mainPane.getChildren().isEmpty()){ mainPane.getChildren().remove(0); }
                 mainPane.getChildren().add(page1);
 
                 for(int i=0 ; i<3;i++) {
-                        if(!buttons[i].getStylesheets().isEmpty())
-                        buttons[i].getStylesheets().remove(0);
+                        if(!buttons[i].getStylesheets().isEmpty())  buttons[i].getStylesheets().remove(0);
+
                         buttons[i].getStylesheets().add("mainPageButtonsUnselected.css");
                 }
-                if(!btn1.getStylesheets().isEmpty())
-                        btn1.getStylesheets().remove(0);
+                if(!btn1.getStylesheets().isEmpty())  btn1.getStylesheets().remove(0);
+
                 btn1.getStylesheets().add("mainPageButtons.css");
         }
 
         @FXML
-        void showPage2(ActionEvent event) {
-                if(! mainPane.getChildren().isEmpty()){
-                        mainPane.getChildren().remove(0);
-                }
+        void showPage2() {
+                if(! mainPane.getChildren().isEmpty()){ mainPane.getChildren().remove(0); }
                 mainPane.getChildren().add(page2);
 
                 for(int i=0 ; i<3;i++) {
-                        if(!buttons[i].getStylesheets().isEmpty())
-                                buttons[i].getStylesheets().remove(0);
+                        if(!buttons[i].getStylesheets().isEmpty())  buttons[i].getStylesheets().remove(0);
+
                         buttons[i].getStylesheets().add("mainPageButtonsUnselected.css");
                 }
-                if(!btn2.getStylesheets().isEmpty())
-                        btn2.getStylesheets().remove(0);
-                btn2.getStylesheets().add("mainPageButtons.css");
+                if(!btn2.getStylesheets().isEmpty())  btn2.getStylesheets().remove(0);
 
+                btn2.getStylesheets().add("mainPageButtons.css");
                 isFurniturePressed = true;
         }
 
         @FXML
-        void showPage3(ActionEvent event) {
-                if(! mainPane.getChildren().isEmpty()){
-                        mainPane.getChildren().remove(0);
-                }
-                mainPane.getChildren().add(page3);
+        void showPage3() {
+                if(! mainPane.getChildren().isEmpty()){ mainPane.getChildren().remove(0); }
 
+                mainPane.getChildren().add(page3);
                 for(int i=0 ; i<3;i++) {
-                        if(!buttons[i].getStylesheets().isEmpty())
-                                buttons[i].getStylesheets().remove(0);
+                        if(!buttons[i].getStylesheets().isEmpty())  buttons[i].getStylesheets().remove(0);
+
                         buttons[i].getStylesheets().add("mainPageButtonsUnselected.css");
                 }
-                if(!btn3.getStylesheets().isEmpty())
-                        btn3.getStylesheets().remove(0);
-                btn3.getStylesheets().add("mainPageButtons.css");
+                if(!btn3.getStylesheets().isEmpty())  btn3.getStylesheets().remove(0);
 
+                btn3.getStylesheets().add("mainPageButtons.css");
                 isApartementsPressed = true;
         }
 
 
         @FXML
-        void logout(ActionEvent event) {
+        void logout() {
                 Stage stage = (Stage) mainPane.getScene().getWindow();
                 stage.close();
                 loggedOut =true;

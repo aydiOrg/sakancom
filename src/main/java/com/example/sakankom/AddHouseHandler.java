@@ -32,9 +32,7 @@ public class AddHouseHandler {
     @FXML
     private MFXTextField houseID;
     public boolean isClicked = false;
-    public int getPrice() {
-        return Integer.parseInt(price.getText());
-    }
+    public int getPrice() { return Integer.parseInt(price.getText()); }
     @FXML
     private MFXTextField price;
     @FXML
@@ -57,9 +55,9 @@ public class AddHouseHandler {
             residenceName = rst.getString("residence_name");
 
             con.close();
-        } catch (SQLException e) {e.printStackTrace();}
-        return residenceName;
+        } catch (SQLException e) { e.printStackTrace(); }
 
+        return residenceName;
     }
 
     @FXML
@@ -81,6 +79,6 @@ public class AddHouseHandler {
             alert.setContentText("Add House Successfully :)");
 
             alert.showAndWait();
-        } catch (SQLException e) {throw new RuntimeException(e);}
+        } catch (SQLException e) { throw new RuntimeException(e); }
     }
 }
