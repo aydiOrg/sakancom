@@ -1,4 +1,5 @@
 package com.example.sakankom;
+
 import com.example.sakankom.dataStructures.Apartment;
 import com.example.sakankom.dataStructures.Neigbour;
 import com.example.sakankom.dataStructures.Tenant;
@@ -14,17 +15,11 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.Background;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Paint;
-import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
-import javax.swing.*;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
@@ -68,30 +63,31 @@ public class CurrentHousesHandler implements Initializable {
         container.setMaxWidth(920);
 
         //prepare strings and data.
-        String name = "";
-        String owner = "";
-        String type = "";
-        String address = "";
-        String price = "";
+        String name;
+        String owner;
+        String type;
+        String address;
+        String price;
 
 
-        for(int i= 0; i<apartments.size();i++) {
+        for (Apartment apartment : apartments) {
             boolean checkTenant = false;
-            for (int f=0;f<neigbours.size();f++) {
-                if(neigbours.get(f).getTenantID() == tenant.getTenantID() && neigbours.get(f).getHouseID() == apartments.get(i).getHouseId()){
+            for (Neigbour neigbour : neigbours) {
+                if (neigbour.getTenantID() == tenant.getTenantID() && neigbour.getHouseID() == apartment.getHouseId()) {
                     checkTenant = true;
+                    break;
                 }
             }
             if (checkTenant)
                 continue;
 
-            if(apartments.get(i).getIsValid().equals("1") && apartments.get(i).getIsAccepted().equals("1") && apartments.get(i).getIsReserved().equalsIgnoreCase("0")){
+            if (apartment.getIsValid().equals("1") && apartment.getIsAccepted().equals("1") && apartment.getIsReserved().equalsIgnoreCase("0")) {
                 //data
-                name = apartments.get(i).getAptName();
-                owner = apartments.get(i).getOwnerName();
-                type = (apartments.get(i).getCapacity() > 1) ? "shared" : "solo";
-                address = apartments.get(i).getAddress();
-                price = Double.toString(apartments.get(i).getPrice());
+                name = apartment.getAptName();
+                owner = apartment.getOwnerName();
+                type = (apartment.getCapacity() > 1) ? "shared" : "solo";
+                address = apartment.getAddress();
+                price = Double.toString(apartment.getPrice());
 
                 //generating elements
                 //where it starts
@@ -153,10 +149,9 @@ public class CurrentHousesHandler implements Initializable {
 
                 container.getChildren().add(card);
 
-                reserveBtn.setId(Integer.toString(apartments.get(i).getHouseId()));
-                detailsBtn.setId(Integer.toString(apartments.get(i).getHouseId()));
+                reserveBtn.setId(Integer.toString(apartment.getHouseId()));
+                detailsBtn.setId(Integer.toString(apartment.getHouseId()));
 
-                int finalI = i;
                 detailsBtn.setOnAction(handler);
                 reserveBtn.setOnAction(handler2);
 
@@ -170,15 +165,14 @@ public class CurrentHousesHandler implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         detailsPressed = false; reservePressed = false;
-        apartments = new ArrayList<Apartment>();
-        neigbours = new ArrayList<Neigbour>();
+        apartments = new ArrayList<>();
+        neigbours = new ArrayList<>();
         //retrieve the data from database
         ResultSet rst,rst2;
         try{
 
             DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
             Connection con = DriverManager.getConnection("jdbc:oracle:thin:@//localhost:1521/xepdb1", "sakankom", "12345678");
-            //jdbc:oracle:thin:@//localhost:1521/xepdb1
             Statement st = con.createStatement();
             rst = st.executeQuery("select * from house,owner,residence where house.residence_id = residence.residence_id and residence.owner_id = owner.owner_id and house.isvalid = '1' and house.isaccepted = '1'");
 
@@ -225,9 +219,7 @@ public class CurrentHousesHandler implements Initializable {
 
             con.close();
         }
-        catch (SQLException e){
-            e.printStackTrace();
-        }
+        catch (SQLException e){ e.printStackTrace(); }
 
 
 
@@ -240,20 +232,17 @@ public class CurrentHousesHandler implements Initializable {
         Stage newStage = new Stage();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("House-Details.fxml"));
         Parent root = null;
-        try {
-            root = loader.load();
-        } catch (IOException e) {
 
-        }
+        try { root = loader.load(); } catch (IOException e) { e.printStackTrace(); }
+
         Scene scene = new Scene(root,800,600);
         newStage.setScene(scene);
         newStage.show();
 
-         houseDetailsHandler = loader.getController();
+        houseDetailsHandler = loader.getController();
+
         for(int k= 0;k<apartments.size();k++){
-            if(apartments.get(k).getHouseId() == i){
-                houseDetailsHandler.valuesSetter(apartments.get(k),apartments,neigbours);
-            }
+            if(apartments.get(k).getHouseId() == i){ houseDetailsHandler.valuesSetter(apartments.get(k),apartments,neigbours); }
         }
         detailsPressed = true;
 
@@ -263,17 +252,14 @@ public class CurrentHousesHandler implements Initializable {
         String id = btn.getId();
 
          myApartment = new Apartment();
-        for(int i =0;i<apartments.size();i++) {
-            if(Integer.toString(apartments.get(i).getHouseId()).equalsIgnoreCase(id)) {
-                myApartment = apartments.get(i);
-            }
+        for (Apartment apartment : apartments) {
+            if (Integer.toString(apartment.getHouseId()).equalsIgnoreCase(id)) { myApartment = apartment; }
         }
 
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
             Date date = new Date();
             String currDate = formatter.format(date);
-            ResultSet rst;
-            try {
+        try {
 
                 DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
                 Connection con = DriverManager.getConnection("jdbc:oracle:thin:@//localhost:1521/xepdb1", "sakankom", "12345678");
@@ -287,8 +273,7 @@ public class CurrentHousesHandler implements Initializable {
                 neigbour.setTenantID(tenant.getTenantID());
                 neigbours.add(neigbour);
 
-                boolean flag = false;
-                myApartment.setResCapacity(myApartment.getResCapacity() + 1);
+            myApartment.setResCapacity(myApartment.getResCapacity() + 1);
                 st.executeUpdate("update house set reserved_capacity ="+ myApartment.getResCapacity() +" where house_id = " + myApartment.getHouseId() );
                 if(myApartment.getResCapacity() == myApartment.getCapacity()) {
                     myApartment.setIsReserved("1");
@@ -297,14 +282,11 @@ public class CurrentHousesHandler implements Initializable {
 
                 con.close();
             }
-            catch (SQLException e) {
-                e.printStackTrace();
-            }
+            catch (SQLException e) { e.printStackTrace(); }
 
-            while(!container.getChildren().isEmpty())
-                container.getChildren().remove(0);
+            while(!container.getChildren().isEmpty())  container.getChildren().remove(0);
+
             generateGUI();
-
             reservePressed = true;
     };
 

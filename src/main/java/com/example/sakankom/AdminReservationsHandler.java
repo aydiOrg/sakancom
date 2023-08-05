@@ -1,7 +1,7 @@
 package com.example.sakankom;
+
 import com.example.sakankom.dataStructures.AdminReservation;
 import com.example.sakankom.dataStructures.User;
-import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXScrollPane;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.DoubleProperty;
@@ -26,7 +26,7 @@ public class AdminReservationsHandler implements Initializable {
     ArrayList<AdminReservation> adminReservations;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        adminReservations = new ArrayList<AdminReservation>();
+        adminReservations = new ArrayList<>();
 
     }
     public void generateGUI(){
@@ -38,32 +38,31 @@ public class AdminReservationsHandler implements Initializable {
         Label l3,l4,l5,l6,l7,l8,l9;
 
         //prepare strings and data.
-        String tenant = "";
-        String owner = "";
-        String price = "";
-        String address = "";
-        String resName = "";
+        String tenant;
+        String owner;
+        String price;
+        String address;
+        String resName;
 
-        String temail = "";
-        String tphone = "";
-        String oemail = "";
-        String ophone = "";
+        String temail;
+        String tphone;
+        String oemail;
+        String ophone;
 
 
-        for(int i= 0; i<adminReservations.size();i++) {
+        for (AdminReservation adminReservation : adminReservations) {
             //data
-            tenant = adminReservations.get(i).getTenantName();
-            owner = adminReservations.get(i).getOwnerName();
-            resName = adminReservations.get(i).getResidenceName();
-            price = Integer.toString(adminReservations.get(i).getPrice());
-            address = adminReservations.get(i).getAddress();
-            temail = adminReservations.get(i).getTenantEmail();
-            tphone = adminReservations.get(i).getTenantPhone();
-            oemail = adminReservations.get(i).getOwnerEmail();
-            ophone = adminReservations.get(i).getOwnerPhone();
+            tenant = adminReservation.getTenantName();
+            owner = adminReservation.getOwnerName();
+            resName = adminReservation.getResidenceName();
+            price = Integer.toString(adminReservation.getPrice());
+            address = adminReservation.getAddress();
+            temail = adminReservation.getTenantEmail();
+            tphone = adminReservation.getTenantPhone();
+            oemail = adminReservation.getOwnerEmail();
+            ophone = adminReservation.getOwnerPhone();
 
             //generating elements
-            //where it starts
 
             card = new VBox();
             card.setMaxWidth(950);
@@ -79,7 +78,6 @@ public class AdminReservationsHandler implements Initializable {
             l7 = new Label("Owner-phone: " + ophone);
             l8 = new Label("Tenant-email: " + temail);
             l9 = new Label("Tenant-phone: " + tphone);
-
 
 
             cont = new HBox();
@@ -124,14 +122,8 @@ public class AdminReservationsHandler implements Initializable {
 
             container.getChildren().add(card);
 
-
-
-
-
             //where it ends
-
         }
-
 
     }
 

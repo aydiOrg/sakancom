@@ -1,14 +1,12 @@
 package com.example.sakankom;
+
 import com.example.sakankom.dataStructures.Furniture;
 import com.example.sakankom.dataStructures.Tenant;
-import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXTextField;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.VBox;
 
 import java.net.URL;
 import java.sql.*;
@@ -16,10 +14,8 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class NewFurnitureHandler implements Initializable {
-        @FXML
-        private MFXButton sellBtn;
 
-        @FXML
+    @FXML
         private AnchorPane mainPane;
 
         @FXML
@@ -32,18 +28,14 @@ public class NewFurnitureHandler implements Initializable {
         private MFXTextField uprice;
         Tenant tenant;
         ArrayList<Furniture> furnitures;
-        VBox container;
-        FurnitureHandler furnitureHandler;
+    FurnitureHandler furnitureHandler;
         public boolean savePressed;
         public boolean valuesInvalid;
         int insertedId;
         public void setFurnitures(ArrayList<Furniture> furnitures){
             this.furnitures = furnitures;
         }
-        public void setTenant(Tenant t){
-            this.tenant = t;
-
-        }
+        public void setTenant(Tenant t){ this.tenant = t; }
         public void setFurnitureHandler(FurnitureHandler t){
             this.furnitureHandler = t;
         }
@@ -51,7 +43,7 @@ public class NewFurnitureHandler implements Initializable {
             return mainPane;
         }
         @FXML
-        void sellItem(ActionEvent event) {
+        void sellItem() {
                  if (uname.getText().isEmpty() || uprice.getText().isEmpty() || udescription.getText().isEmpty()){
                     valuesInvalid =true;
 
@@ -84,8 +76,9 @@ public class NewFurnitureHandler implements Initializable {
                          furniture.setPrice(Integer.parseInt(price));
                          furniture.setOwnerName(tenant.getFname() + " " + tenant.getLname());
                          rst = st.executeQuery("select * from furniture order by furniture_id desc");
-                         if(rst.next())
-                         furniture.setFurnitureId(rst.getInt("furniture_id"));
+
+                         if(rst.next())  furniture.setFurnitureId(rst.getInt("furniture_id"));
+
                          furniture.setTenantId(tenant.getTenantID());
                          furniture.setIsSold("0");
                          furniture.setIsValid("1");
@@ -94,9 +87,7 @@ public class NewFurnitureHandler implements Initializable {
                          furnitures.add(furniture);
 
                         con.close();
-                 }catch (SQLException e) {
-                         e.printStackTrace();
-                 }
+                 }catch (SQLException e) { e.printStackTrace(); }
                  furnitureHandler.generateGUI();
                  savePressed = true;
 

@@ -11,18 +11,9 @@ public class Residence {
 
     private String ownerName;
 
-    public Residence(String residenceID, String location, String residenceName, String ownerName) {
-        this.residenceID = residenceID;
-        this.location = location;
-        this.residenceName = residenceName;
-        this.ownerName = ownerName;
-    }
+    public Residence(String residenceID, String location, String residenceName, String ownerName) { this.residenceID = residenceID; this.location = location; this.residenceName = residenceName; this.ownerName = ownerName; }
 
-    public Residence(String residenceID, String location, String residenceName) {
-        this.residenceID = residenceID;
-        this.location = location;
-        this.residenceName = residenceName;
-    }
+    public Residence(String residenceID, String location, String residenceName) { this.residenceID = residenceID; this.location = location; this.residenceName = residenceName; }
 
     public String getResidenceID() {
         return residenceID;

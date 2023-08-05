@@ -32,7 +32,7 @@ public class AdminReservationsFeatureSteps {
             assertTrue(true);
         }
         else
-        assertTrue(user.getFlag() && user.getUserType().equalsIgnoreCase("admin"));
+            assertTrue(user.getFlag() && user.getUserType().equalsIgnoreCase("admin"));
     }
 
     @Given("user clicked reservations button")
@@ -42,7 +42,7 @@ public class AdminReservationsFeatureSteps {
             assertTrue(true);
         }
         else
-        assertTrue(adminMainPageHandler.userClickedReservationsButton);
+            assertTrue(adminMainPageHandler.userClickedReservationsButton);
     }
 
     @Then("the reservations should shown successfully")
@@ -119,7 +119,7 @@ public class AdminReservationsFeatureSteps {
             assertTrue(true);
         }
         else
-        assertTrue(adminMainPageHandler.userClickedAcceptButton);
+            assertTrue(adminMainPageHandler.userClickedAcceptButton);
     }
 
     @Then("the house will be accepted")
@@ -149,7 +149,7 @@ public class AdminReservationsFeatureSteps {
             assertTrue(true);
         }
         else
-        assertTrue(adminMainPageHandler.userClickedRejectButton);
+            assertTrue(adminMainPageHandler.userClickedRejectButton);
     }
 
     @Then("the house will be rejected")
