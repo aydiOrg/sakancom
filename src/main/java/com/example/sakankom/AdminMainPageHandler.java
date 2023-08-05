@@ -41,11 +41,26 @@ public class AdminMainPageHandler implements Initializable {
         @FXML
         private MFXScrollPane page1;
         private MFXScrollPane page2;
-        public boolean logoutBtnPressed = false;
-        public boolean userClickedReservationsButton = false;
-        public boolean userClickedAcceptButton = false;
-        public boolean userClickedRejectButton = false;
+        private boolean logoutBtnPressed = false;
+        private boolean userClickedReservationsButton = false;
+        private boolean userClickedAcceptButton = false;
+        private boolean userClickedRejectButton = false;
 
+        public boolean isLogoutBtnPressed() {
+                return logoutBtnPressed;
+        }
+
+        public boolean isUserClickedReservationsButton() {
+                return userClickedReservationsButton;
+        }
+
+        public boolean isUserClickedAcceptButton() {
+                return userClickedAcceptButton;
+        }
+
+        public boolean isUserClickedRejectButton() {
+                return userClickedRejectButton;
+        }
 
         User user;
         public ArrayList<Apartment> apartments ;
