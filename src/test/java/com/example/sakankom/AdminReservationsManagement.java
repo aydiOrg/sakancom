@@ -43,7 +43,7 @@ public class AdminReservationsManagement {
         }
         else {
             // Write code here that turns the phrase above into concrete actions
-            assertTrue(adminMainPageHandler.isReservationsPressed);
+            assertTrue(adminMainPageHandler.isReservationsPressed());
         }
     }
 

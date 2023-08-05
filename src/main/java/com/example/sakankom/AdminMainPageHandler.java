@@ -63,7 +63,7 @@ public class AdminMainPageHandler implements Initializable {
         }
 
         User user;
-        public ArrayList<Apartment> apartments ;
+        private ArrayList<Apartment> apartments ;
 
         public Admin getAdmin() {
                 return admin;
@@ -74,7 +74,11 @@ public class AdminMainPageHandler implements Initializable {
         int houseIDTest2;
         ArrayList<AdminReservation> adminReservations;
         AdminReservationsHandler adminReservationsHandler;
-        public boolean isReservationsPressed;
+        private boolean isReservationsPressed;
+
+        public boolean isReservationsPressed() {
+                return isReservationsPressed;
+        }
 
         public User getUser() {
                 return user;
@@ -137,7 +141,7 @@ public class AdminMainPageHandler implements Initializable {
 
                 FXMLLoader loader2 = new FXMLLoader(getClass().getResource("Admin-Reservations.fxml"));
 
-                try { Parent root = loader2.load(); } catch (IOException e) { throw new RuntimeException(e); }
+                try { loader2.load(); } catch (IOException e) { throw new RuntimeException(e); }
 
                 adminReservationsHandler = loader2.getController();
                 page2 = adminReservationsHandler.getMainPane();

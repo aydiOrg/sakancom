@@ -111,7 +111,7 @@ public class OwnerHousesFeatureSteps {
         }
         else {
             AddHouseHandler addHouseHandler = Wrapper.signInHandler.ownerHandler.addHouseHandler;
-            assertTrue(addHouseHandler.isClicked);
+            assertTrue(addHouseHandler.isClicked());
         }
     }
 
