@@ -9,6 +9,8 @@ import io.github.palexdev.materialfx.controls.MFXScrollPane;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -276,26 +278,9 @@ public class AdminMainPageHandler implements Initializable {
                                 VBox finalCard = card;
                                 int finalI = i;
 
+                                detailsBtn.setOnAction(hanlder);
                                 detailsBtn.setOnAction(event -> {
-                                        userClickedRejectButton = true;
-                                        houseIDTest1 =  apartments.get(finalI).getHouseId();
 
-                                        ResultSet rst;
-
-                                        try{
-                                                DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
-                                                Connection con = DriverManager.getConnection(JDBX, SAKANKOM, PASSWORD);
-                                                Statement st = con.createStatement();
-
-                                                rst = st.executeQuery("UPDATE house SET isvalid='0' WHERE house_id='" + Integer.parseInt(Integer.toString(apartments.get(finalI1).getHouseId())) + "'");
-                                                rst.next();
-
-                                                con.close();
-                                        } catch (SQLException e) { throw new RuntimeException(e); }
-
-                                        apartments.remove(finalI1);
-
-                                        container.getChildren().remove(finalCard);
                                 });
                                 reserveBtn.setOnAction(event -> {
                                         userClickedAcceptButton = true;
@@ -326,6 +311,32 @@ public class AdminMainPageHandler implements Initializable {
 
                 }
         }
+
+        EventHandler<ActionEvent> hanlder = event -> {
+                userClickedRejectButton = true;
+                MFXButton b =  (MFXButton) event.getSource();
+                houseIDTest1 = Integer.parseInt(b.getId());
+                ResultSet rst;
+
+                try{
+                        DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
+                        Connection con = DriverManager.getConnection(JDBX, SAKANKOM, PASSWORD);
+                        Statement st = con.createStatement();
+
+                        rst = st.executeQuery("UPDATE house SET isvalid='0' WHERE house_id='" + Integer.parseInt(Integer.toString(houseIDTest1)) + "'");
+                        rst.next();
+
+                        con.close();
+                } catch (SQLException e) { throw new RuntimeException(e); }
+
+                for (int i =0;i<apartments.size();i++) {
+                        if(apartments.get(i).getHouseId() == houseIDTest1) {
+                                apartments.remove(i);
+                                break;
+                        }
+                }
+                generateGUI();
+        };
         @FXML
         void viewApartments() {
                 if(! bigPane.getChildren().isEmpty()) bigPane.getChildren().remove(0);
