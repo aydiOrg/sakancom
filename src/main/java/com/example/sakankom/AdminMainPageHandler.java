@@ -41,12 +41,26 @@ public class AdminMainPageHandler implements Initializable {
         @FXML
         private MFXScrollPane page1;
         private MFXScrollPane page2;
-        public boolean logoutBtnPressed = false;
-        public boolean userClickedReservationsButton = false;
-        public boolean userClickedAcceptButton = false;
-        public boolean userClickedRejectButton = false;
-        private final String password = "12345678";
+        private boolean logoutBtnPressed = false;
+        private boolean userClickedReservationsButton = false;
+        private boolean userClickedAcceptButton = false;
+        private boolean userClickedRejectButton = false;
 
+        public boolean isLogoutBtnPressed() {
+                return logoutBtnPressed;
+        }
+
+        public boolean isUserClickedReservationsButton() {
+                return userClickedReservationsButton;
+        }
+
+        public boolean isUserClickedAcceptButton() {
+                return userClickedAcceptButton;
+        }
+
+        public boolean isUserClickedRejectButton() {
+                return userClickedRejectButton;
+        }
 
         User user;
         public ArrayList<Apartment> apartments ;
@@ -80,7 +94,7 @@ public class AdminMainPageHandler implements Initializable {
                 try{
 
                         DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
-                        Connection con = DriverManager.getConnection("jdbc:oracle:thin:@//localhost:1521/xepdb1", "sakankom", password);
+                        Connection con = DriverManager.getConnection("jdbc:oracle:thin:@//localhost:1521/xepdb1", "sakankom", "12345678");
                         Statement st = con.createStatement();
                         rst = st.executeQuery("select * from house,owner,residence where house.residence_id = residence.residence_id and residence.owner_id = owner.owner_id and house.isvalid = '1' and house.isaccepted = '0'");
 
@@ -250,7 +264,7 @@ public class AdminMainPageHandler implements Initializable {
 
                                         try{
                                                 DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
-                                                Connection con = DriverManager.getConnection("jdbc:oracle:thin:@//localhost:1521/xepdb1", "sakankom", password);
+                                                Connection con = DriverManager.getConnection("jdbc:oracle:thin:@//localhost:1521/xepdb1", "sakankom", "12345678");
                                                 Statement st = con.createStatement();
 
                                                 rst = st.executeQuery("UPDATE house SET isvalid='0' WHERE house_id='" + Integer.parseInt(Integer.toString(apartments.get(finalI1).getHouseId())) + "'");
@@ -271,7 +285,7 @@ public class AdminMainPageHandler implements Initializable {
 
                                         try{
                                                 DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
-                                                Connection con = DriverManager.getConnection("jdbc:oracle:thin:@//localhost:1521/xepdb1", "sakankom", password);
+                                                Connection con = DriverManager.getConnection("jdbc:oracle:thin:@//localhost:1521/xepdb1", "sakankom", "12345678");
                                                 Statement st = con.createStatement();
 
                                                 rst = st.executeQuery("UPDATE house SET isaccepted='1' WHERE house_id='" + Integer.parseInt(Integer.toString(apartments.get(finalI1).getHouseId())) + "'");
@@ -316,7 +330,7 @@ public class AdminMainPageHandler implements Initializable {
                 try{
 
                         DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
-                        Connection con = DriverManager.getConnection("jdbc:oracle:thin:@//localhost:1521/xepdb1", "sakankom", password);
+                        Connection con = DriverManager.getConnection("jdbc:oracle:thin:@//localhost:1521/xepdb1", "sakankom", "12345678");
                         Statement st = con.createStatement();
                         rst = st.executeQuery("select * from house,owner,residence where house.residence_id = residence.residence_id and residence.owner_id = owner.owner_id and house.isvalid = '1' and house.isaccepted = '0'");
 
@@ -403,7 +417,7 @@ public class AdminMainPageHandler implements Initializable {
                 ResultSet rst;
                 try {
                         DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
-                        Connection con = DriverManager.getConnection("jdbc:oracle:thin:@//localhost:1521/xepdb1", "sakankom", password);
+                        Connection con = DriverManager.getConnection("jdbc:oracle:thin:@//localhost:1521/xepdb1", "sakankom", "12345678");
                         Statement st = con.createStatement();
                         rst = st.executeQuery("select * from admin where username = '" + user.getUsername() + "'");
 

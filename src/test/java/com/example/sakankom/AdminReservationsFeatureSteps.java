@@ -42,7 +42,7 @@ public class AdminReservationsFeatureSteps {
             assertTrue(true);
         }
         else
-            assertTrue(adminMainPageHandler.userClickedReservationsButton);
+            assertTrue(adminMainPageHandler.isUserClickedReservationsButton());
     }
 
     @Then("the reservations should shown successfully")
@@ -119,7 +119,7 @@ public class AdminReservationsFeatureSteps {
             assertTrue(true);
         }
         else
-            assertTrue(adminMainPageHandler.userClickedAcceptButton);
+            assertTrue(adminMainPageHandler.isUserClickedAcceptButton());
     }
 
     @Then("the house will be accepted")
@@ -129,7 +129,7 @@ public class AdminReservationsFeatureSteps {
             assertTrue(true);
         }
         else {
-            if (!adminMainPageHandler.userClickedAcceptButton) assertTrue(true);
+            if (!adminMainPageHandler.isUserClickedAcceptButton()) assertTrue(true);
 
             boolean notFound = true;
             for (Apartment apartment : adminMainPageHandler.apartments) {
@@ -149,7 +149,7 @@ public class AdminReservationsFeatureSteps {
             assertTrue(true);
         }
         else
-            assertTrue(adminMainPageHandler.userClickedRejectButton);
+            assertTrue(adminMainPageHandler.isUserClickedRejectButton());
     }
 
     @Then("the house will be rejected")
@@ -158,7 +158,7 @@ public class AdminReservationsFeatureSteps {
         if (!user.getUserType().equalsIgnoreCase("admin")) {
             assertTrue(true);
         } else {
-            if (!adminMainPageHandler.userClickedRejectButton) assertTrue(true);
+            if (!adminMainPageHandler.isUserClickedRejectButton()) assertTrue(true);
 
             boolean notFound = true;
             for (Apartment apartment : adminMainPageHandler.apartments) {
