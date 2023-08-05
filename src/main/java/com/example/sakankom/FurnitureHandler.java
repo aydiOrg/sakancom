@@ -25,6 +25,9 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class FurnitureHandler implements Initializable {
+    private static final String TENANTHOUSES = "TenantHouses.css";
+    private static final String FONTSIZE = "-fx-font-size: %.2fpt;";
+
         Tenant tenant;
     @FXML
         private VBox container;
@@ -110,7 +113,7 @@ public class FurnitureHandler implements Initializable {
 
                      card = new VBox();
                      card.setMaxWidth(950);
-                     card.getStylesheets().add("TenantHouses.css");
+                     card.getStylesheets().add(TENANTHOUSES);
                      card.getStyleClass().add("vbox");
 
                      l1 = new Label(name);
@@ -121,17 +124,17 @@ public class FurnitureHandler implements Initializable {
                      btn = new MFXButton("buy");
                      //setting the styles
 
-                     l1.getStylesheets().add("TenantHouses.css");
+                     l1.getStylesheets().add(TENANTHOUSES);
                      l1.getStyleClass().add("l1");
 
 
                      DoubleProperty fontSize = new SimpleDoubleProperty(18);
-                     l1.styleProperty().bind(Bindings.format("-fx-font-size: %.2fpt;", fontSize));
+                     l1.styleProperty().bind(Bindings.format(FONTSIZE, fontSize));
                      DoubleProperty fontSize2 = new SimpleDoubleProperty(12);
-                     l2.styleProperty().bind(Bindings.format("-fx-font-size: %.2fpt;", fontSize2));
-                     l3.styleProperty().bind(Bindings.format("-fx-font-size: %.2fpt;", fontSize2));
-                     l4.styleProperty().bind(Bindings.format("-fx-font-size: %.2fpt;", fontSize2));
-                     btn.getStylesheets().add("TenantHouses.css");
+                     l2.styleProperty().bind(Bindings.format(FONTSIZE, fontSize2));
+                     l3.styleProperty().bind(Bindings.format(FONTSIZE, fontSize2));
+                     l4.styleProperty().bind(Bindings.format(FONTSIZE, fontSize2));
+                     btn.getStylesheets().add(TENANTHOUSES);
                      btn.getStyleClass().add("myBtn");
 
                      //adding elements to card

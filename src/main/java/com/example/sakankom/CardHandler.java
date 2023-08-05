@@ -12,7 +12,7 @@ import java.net.URL;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
-public class CardHandler implements Initializable {
+public class CardHandler  {
     @FXML
     private HBox box;
     @FXML
@@ -31,6 +31,5 @@ public class CardHandler implements Initializable {
         houseRes.setText(house.getRes());
         box.setStyle("-fx-background-color" + colors[(int)(Math.random()*colors.length)] + "; -fx-background-radius: 15; -fx-effect: dropShadow(three-pass-box, rgba(0, 0, 0, 0.1), 10, 0, 0, 10)");
     }
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {}
+
 }

@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class HouseDetailsHandler implements Initializable {
+        private static final String MAINPAGEHANDLER = "mainPageHandler.css";
         public Apartment apartment;
         public ArrayList<Neigbour> neigbours;
         @FXML
@@ -130,12 +131,12 @@ public class HouseDetailsHandler implements Initializable {
                                 DoubleProperty fontSize2 = new SimpleDoubleProperty(13);
                                 l2.styleProperty().bind(Bindings.format("-fx-font-size: %.2fpt;", fontSize2));
                                 card.getStyleClass().add("hbox");
-                                card.getStylesheets().add("mainPageHandler.css");
+                                card.getStylesheets().add(MAINPAGEHANDLER);
 
                                 l1.getStyleClass().add("l1");
                                 l2.getStyleClass().add("l2");
-                                l1.getStylesheets().add("mainPageHandler.css");
-                                l2.getStylesheets().add("mainPageHandler.css");
+                                l1.getStylesheets().add(MAINPAGEHANDLER);
+                                l2.getStylesheets().add(MAINPAGEHANDLER);
 
                                 h1.getChildren().add(l1);
                                 h2.getChildren().add(l2);

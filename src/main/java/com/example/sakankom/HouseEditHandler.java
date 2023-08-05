@@ -9,7 +9,7 @@ import java.net.URL;
 import java.sql.*;
 import java.util.ResourceBundle;
 
-public class HouseEditHandler implements Initializable {
+public class HouseEditHandler   {
     public boolean isClicked = false;
     @FXML
     private MFXTextField balaconyNumber;
@@ -139,8 +139,6 @@ public class HouseEditHandler implements Initializable {
             houseID.setEditable(false);
         } catch (SQLException e) { throw new RuntimeException(e); }
     }
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {}
 
     @FXML
     void updateBtnHandler() {
