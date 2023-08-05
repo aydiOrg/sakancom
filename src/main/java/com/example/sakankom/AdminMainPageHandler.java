@@ -29,17 +29,17 @@ import java.util.ResourceBundle;
 public class AdminMainPageHandler implements Initializable {
         private final static String SAKANKOM = "sakankom";
         private final static String JDBX = "jdbc:oracle:thin:@//localhost:1521/xepdb1";
-        private final static String PASSWORD = "12345678";
-        private final static String EMAIL = "email";
-        private final static String PHONE = "phone_number";
-        private final static String LOCATION = "location";
-        private final static String FNAME = "fname";
-        private final static String LNAME = "lname";
-        private final static String RESIDENCE_NAME = "residence_name";
-        private final static String RESIDENCE_ID = "residence_id";
-        private final static String HOUSE_ID = "house_id";
-        private final static String OWNER_ID = "owner_id";
-        private final static String PRICE = "price";
+        private static final String PASSWORD = "12345678";
+        private static final String EMAIL = "email";
+        private static final String PHONE = "phone_number";
+        private static final String LOCATION = "location";
+        private static final String FNAME = "fname";
+        private static final String LNAME = "lname";
+        private static final String RESIDENCE_NAME = "residence_name";
+        private static final String RESIDENCE_ID = "residence_id";
+        private static final String HOUSE_ID = "house_id";
+        private static final String OWNER_ID = "owner_id";
+        private static final String PRICE = "price";
         @FXML
         private AnchorPane bigPane;
         @FXML
