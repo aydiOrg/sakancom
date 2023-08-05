@@ -39,7 +39,7 @@ public class AddResidenceFeatureSteps {
         }
         else {
             AddResidenceHandler addResidenceHandler = Wrapper.signInHandler.ownerHandler.addResidenceHandler;
-            assertTrue(addResidenceHandler.isClicked);
+            assertTrue(addResidenceHandler.isClicked());
         }
     }
 

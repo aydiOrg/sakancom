@@ -36,7 +36,12 @@ public class AddResidenceHandler {
     @FXML
     private MFXTextField residenceName;
 
-    public boolean isClicked = false;
+    private boolean isClicked = false;
+
+    public boolean isClicked() {
+        return isClicked;
+    }
+
     @FXML
     void submitBtnHandler() {
         isClicked = true;

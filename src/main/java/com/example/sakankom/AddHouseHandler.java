@@ -31,7 +31,12 @@ public class AddHouseHandler {
     }
     @FXML
     private MFXTextField houseID;
-    public boolean isClicked = false;
+    private boolean isClicked = false;
+
+    public boolean isClicked() {
+        return isClicked;
+    }
+
     public int getPrice() { return Integer.parseInt(price.getText()); }
     @FXML
     private MFXTextField price;
