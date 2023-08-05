@@ -10,7 +10,6 @@ import io.cucumber.java.en.Then;
 import java.sql.*;
 import java.util.*;
 
-import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertTrue;
 
 public class ViewOwnerResidencesFeatureSteps {
@@ -106,7 +105,7 @@ public class ViewOwnerResidencesFeatureSteps {
             assertTrue(true);
         }
         else
-        assertTrue(Wrapper.signInHandler.ownerHandler.residencesHandler.userClickedShowHouses);
+            assertTrue(Wrapper.signInHandler.ownerHandler.residencesHandler.userClickedShowHouses);
     }
 
     @Then("all available floors in this residence should be shown with the houses inside it")
@@ -172,7 +171,7 @@ public class ViewOwnerResidencesFeatureSteps {
             assertTrue(true);
         }
         else
-        assertTrue(Wrapper.signInHandler.ownerHandler.residencesHandler.userClickedShowHouses);
+            assertTrue(Wrapper.signInHandler.ownerHandler.residencesHandler.userClickedShowHouses);
     }
 
     @Given("user clicked show more button of one house")
@@ -181,7 +180,7 @@ public class ViewOwnerResidencesFeatureSteps {
             assertTrue(true);
         }
         else
-        assertTrue(Wrapper.signInHandler.ownerHandler.residencesHandler.userCLickedShowMore);
+            assertTrue(Wrapper.signInHandler.ownerHandler.residencesHandler.userCLickedShowMore);
     }
 
     @Then("All information about this house should be shown")
@@ -236,7 +235,7 @@ public class ViewOwnerResidencesFeatureSteps {
             assertTrue(true);
         }
         else
-        assertTrue(Wrapper.signInHandler.ownerHandler.residencesHandler.userCLickedShowMore);
+            assertTrue(Wrapper.signInHandler.ownerHandler.residencesHandler.userCLickedShowMore);
     }
 
     @Given("user clicked update button of the update house pane")
@@ -245,7 +244,7 @@ public class ViewOwnerResidencesFeatureSteps {
             assertTrue(true);
         }
         else
-        assertTrue(Wrapper.signInHandler.ownerHandler.residencesHandler.houseEditHandler.isClicked);
+            assertTrue(Wrapper.signInHandler.ownerHandler.residencesHandler.houseEditHandler.isClicked());
     }
 
     @Then("The information of this house should be updated according to the data that the user puts")

@@ -12,12 +12,18 @@ import javafx.scene.layout.VBox;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class HouseDetailsHandler implements Initializable {
         private static final String MAINPAGEHANDLER = "mainPageHandler.css";
-        public Apartment apartment;
-        public ArrayList<Neigbour> neigbours;
+
+        public Apartment getApartment() {
+                return apartment;
+        }
+
+        private Apartment apartment;
+        private List<Neigbour> neigbours;
         @FXML
         public HBox container1;
 
@@ -109,8 +115,10 @@ public class HouseDetailsHandler implements Initializable {
                                 job = neigbour.getJob();
                                 //filling the reservations
                                 VBox card;
-                                Label l1, l2;
-                                HBox h1, h2;
+                                Label l1;
+                                Label l2;
+                                HBox h1;
+                                HBox h2;
 
                                 //generating elements
                                 card = new VBox();

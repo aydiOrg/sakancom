@@ -192,10 +192,15 @@ public class AdminMainPageHandler implements Initializable {
                 //Declaring elements --------------------------------------------------------------------
                 container.setMaxWidth(920);
                 VBox card ;
-                Label l1, l2;
-                HBox cont , cont2;
-                Label l3,l4;
-                Label l5; MFXButton reserveBtn , detailsBtn;
+                Label l1;
+                Label l2;
+                HBox cont ;
+                HBox cont2;
+                Label l3;
+                Label l4;
+                Label l5;
+                MFXButton reserveBtn ;
+                MFXButton detailsBtn;
 
                 //prepare strings and data.
                 String name;
@@ -360,7 +365,8 @@ public class AdminMainPageHandler implements Initializable {
 
         }
         public void fetchData(){
-                ResultSet rst,rst2;
+                ResultSet rst;
+                ResultSet rst2;
                 try{
 
                         DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());

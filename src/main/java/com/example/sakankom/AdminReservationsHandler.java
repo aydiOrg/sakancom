@@ -36,9 +36,17 @@ public class AdminReservationsHandler implements Initializable {
         //Declaring elements --------------------------------------------------------------------
         container.setMaxWidth(920);
         VBox card ;
-        Label l1, l2;
-        HBox cont , cont2;
-        Label l3,l4,l5,l6,l7,l8,l9;
+        Label l1;
+        Label l2;
+        HBox cont ;
+        HBox cont2;
+        Label l3;
+        Label l4;
+        Label l5;
+        Label l6;
+        Label l7;
+        Label l8;
+        Label l9;
 
         //prepare strings and data.
         String tenant;

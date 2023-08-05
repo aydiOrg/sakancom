@@ -109,11 +109,11 @@ public class LoginFeatureSteps {
     //3rd Scenario
     @Given("the user presses on logout")
     public void theUserPressesOnLogout() {
-        assertTrue(Wrapper.signInHandler.mainPageHandler.logoutPressed || Wrapper.signInHandler.adminMainPageHandler. isLogoutBtnPressed());
+        assertTrue(Wrapper.signInHandler.mainPageHandler.isLogoutPressed() || Wrapper.signInHandler.adminMainPageHandler. isLogoutBtnPressed());
     }
     @Then("the user should be logged out of the system")
     public void theUserShouldBeLoggedOutOfTheSystem() {
-        assertTrue(Wrapper.signInHandler.mainPageHandler.loggedOut || Wrapper.signInHandler.adminMainPageHandler. isLogoutBtnPressed());
+        assertTrue(Wrapper.signInHandler.mainPageHandler.isLoggedOut() || Wrapper.signInHandler.adminMainPageHandler. isLogoutBtnPressed());
     }
 
 }

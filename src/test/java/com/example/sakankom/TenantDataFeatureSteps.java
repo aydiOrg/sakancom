@@ -91,14 +91,14 @@ public class TenantDataFeatureSteps {
         MainPageHandler mainPageHandler = Wrapper.signInHandler.mainPageHandler;
         user = mainPageHandler.getUser();
         if(!user.getUserType().equalsIgnoreCase("tenant")){ assertTrue(true); }
-        else assertTrue(user.getFlag() && user.getUserType().equalsIgnoreCase("tenant") && mainPageHandler.isEditPressed);
+        else assertTrue(user.getFlag() && user.getUserType().equalsIgnoreCase("tenant") && mainPageHandler.isEditPressed());
     }
     @Given("user presses save after editing the data")
     public void userPressesSaveAfterEditingTheData() {
         MainPageHandler mainPageHandler = Wrapper.signInHandler.mainPageHandler;
         user = mainPageHandler.getUser();
         if(!user.getUserType().equalsIgnoreCase("tenant")){ assertTrue(true); }
-        else assertTrue(mainPageHandler.isSavePressed);
+        else assertTrue(mainPageHandler.isSavePressed());
     }
     @Then("his data should be updated")
     public void hisDataShouldBeUpdated() {

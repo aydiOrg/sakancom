@@ -2,15 +2,12 @@ package com.example.sakankom;
 
 import io.github.palexdev.materialfx.controls.MFXTextField;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 
-import java.net.URL;
 import java.sql.*;
-import java.util.ResourceBundle;
 
 public class HouseEditHandler   {
-    public boolean isClicked = false;
+    private boolean isClicked = false;
     @FXML
     private MFXTextField balaconyNumber;
 
@@ -161,5 +158,9 @@ public class HouseEditHandler   {
 
             alert.showAndWait();
         } catch (SQLException e) { throw new RuntimeException(e); }
+    }
+
+    public boolean isClicked() {
+        return isClicked;
     }
 }

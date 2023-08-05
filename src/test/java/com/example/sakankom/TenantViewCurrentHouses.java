@@ -22,8 +22,8 @@ public class TenantViewCurrentHouses {
     public TenantViewCurrentHouses (User user, Tenant tenant){
         this.user = user;
         this.tenant = tenant;
-        apartments = new ArrayList<Apartment>();
-        neigbours = new ArrayList<Neigbour>();
+        apartments = new ArrayList<>();
+        neigbours = new ArrayList<>();
     }
 
     @Given("the tenant is logged in to the system")
@@ -49,7 +49,7 @@ public class TenantViewCurrentHouses {
             assertTrue(true);
         }
         else
-            assertTrue(mainPageHandler.isApartementsPressed);
+            assertTrue(mainPageHandler.isApartementsPressed());
     }
 
     @Then("all available apartments should be displayed")
@@ -60,8 +60,8 @@ public class TenantViewCurrentHouses {
             assertTrue(true);
         }
         else {
-            ArrayList<Apartment> realApartments = Wrapper.signInHandler.mainPageHandler.currentHousesHandler.apartments;
-            neigbours = Wrapper.signInHandler.mainPageHandler.currentHousesHandler.neigbours;
+            ArrayList<Apartment> realApartments = Wrapper.signInHandler.mainPageHandler.getCurrentHousesHandler().apartments;
+            neigbours = Wrapper.signInHandler.mainPageHandler.getCurrentHousesHandler().neigbours;
             // Write code here that turns the phrase above into concrete actions
             ResultSet rst;
             try {
@@ -131,7 +131,7 @@ public class TenantViewCurrentHouses {
 //                }
 //            }
 
-            if (Wrapper.signInHandler.mainPageHandler.currentHousesHandler.container.getChildren().size() == counter) {
+            if (Wrapper.signInHandler.mainPageHandler.getCurrentHousesHandler().container.getChildren().size() == counter) {
                 dataGenerated = true;
             }
             System.out.println(sizeMatches + " " + dataMatches + " " + dataGenerated);
@@ -151,7 +151,7 @@ public class TenantViewCurrentHouses {
         }
         else {
             tenant = mainPageHandler.getTenant();
-            assertTrue(user.getFlag() && user.getUserType().equalsIgnoreCase("tenant") && mainPageHandler.isApartementsPressed);
+            assertTrue(user.getFlag() && user.getUserType().equalsIgnoreCase("tenant") && mainPageHandler.isApartementsPressed());
         }
     }
     @Given("the tenant presses on details of a specific house")
@@ -163,8 +163,8 @@ public class TenantViewCurrentHouses {
         }
         else {
             // Write code here that turns the phrase above into concrete actions
-            CurrentHousesHandler currentHousesHandler = Wrapper.signInHandler.mainPageHandler.currentHousesHandler;
-            assertTrue(currentHousesHandler.detailsPressed);
+            CurrentHousesHandler currentHousesHandler = Wrapper.signInHandler.mainPageHandler.getCurrentHousesHandler();
+            assertTrue(currentHousesHandler.isDetailsPressed());
         }
     }
     @Then("the details of the house are shown")
@@ -176,9 +176,9 @@ public class TenantViewCurrentHouses {
             assertTrue(true);
         }
         else {
-            Apartment apartment = Wrapper.signInHandler.mainPageHandler.currentHousesHandler.houseDetailsHandler.apartment;
-            HouseDetailsHandler houseDetailsHandler = Wrapper.signInHandler.mainPageHandler.currentHousesHandler.houseDetailsHandler;
-            neigbours = Wrapper.signInHandler.mainPageHandler.currentHousesHandler.neigbours;
+            Apartment apartment = Wrapper.signInHandler.mainPageHandler.getCurrentHousesHandler().houseDetailsHandler.getApartment();
+            HouseDetailsHandler houseDetailsHandler = Wrapper.signInHandler.mainPageHandler.getCurrentHousesHandler().houseDetailsHandler;
+            neigbours = Wrapper.signInHandler.mainPageHandler.getCurrentHousesHandler().neigbours;
             ResultSet rst, rst2;
             try {
 
@@ -237,14 +237,15 @@ public class TenantViewCurrentHouses {
             boolean apartmentExists = false;
             boolean neigboursExist = false;
 
-            for (int i = 0; i < apartments.size(); i++) {
-                if (apartments.get(i).getHouseId() == apartment.getHouseId() && apartments.get(i).getResidenceId() == apartment.getResidenceId() && apartments.get(i).getOwnerId() == apartment.getOwnerId()) {
+            for (Apartment value : apartments) {
+                if (value.getHouseId() == apartment.getHouseId() && value.getResidenceId() == apartment.getResidenceId() && value.getOwnerId() == apartment.getOwnerId()) {
                     apartmentExists = true;
+                    break;
                 }
             }
             int counter = 0;
-            for (int i = 0; i < neigbours.size(); i++) {
-                if (neigbours.get(i).getHouseID() == apartment.getHouseId() && neigbours.get(i).getTenantID() != tenant.getTenantID()) {
+            for (Neigbour neigbour : neigbours) {
+                if (neigbour.getHouseID() == apartment.getHouseId() && neigbour.getTenantID() != tenant.getTenantID()) {
                     counter++;
                 }
             }
@@ -269,7 +270,7 @@ public class TenantViewCurrentHouses {
         }
         else {
             tenant = mainPageHandler.getTenant();
-            assertTrue(user.getFlag() && user.getUserType().equalsIgnoreCase("tenant") && mainPageHandler.isApartementsPressed);
+            assertTrue(user.getFlag() && user.getUserType().equalsIgnoreCase("tenant") && mainPageHandler.isApartementsPressed());
         }
     }
     @Given("the tenant presses on the reserve button of any house")
@@ -281,8 +282,8 @@ public class TenantViewCurrentHouses {
             assertTrue(true);
         }
         else {
-            CurrentHousesHandler currentHousesHandler = Wrapper.signInHandler.mainPageHandler.currentHousesHandler;
-            assertTrue(currentHousesHandler.reservePressed);
+            CurrentHousesHandler currentHousesHandler = Wrapper.signInHandler.mainPageHandler.getCurrentHousesHandler();
+            assertTrue(currentHousesHandler.isReservePressed());
         }
     }
     @Then("a reservation is created")
@@ -294,7 +295,7 @@ public class TenantViewCurrentHouses {
             assertTrue(true);
         }
         else {
-            CurrentHousesHandler currentHousesHandler = Wrapper.signInHandler.mainPageHandler.currentHousesHandler;
+            CurrentHousesHandler currentHousesHandler = Wrapper.signInHandler.mainPageHandler.getCurrentHousesHandler();
             Apartment myApartment = currentHousesHandler.myApartment;
             boolean reservationExists = false;
 
