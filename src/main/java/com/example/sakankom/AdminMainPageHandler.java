@@ -28,6 +28,9 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class AdminMainPageHandler implements Initializable {
+        private final String sakankom = "sakankom";
+        private final String jdbc = "jdbc:oracle:thin:@//localhost:1521/xepdb1";
+        private final String password = "12345678";
         @FXML
         private AnchorPane bigPane;
         @FXML
@@ -98,7 +101,7 @@ public class AdminMainPageHandler implements Initializable {
                 try{
 
                         DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
-                        Connection con = DriverManager.getConnection("jdbc:oracle:thin:@//localhost:1521/xepdb1", "sakankom", "12345678");
+                        Connection con = DriverManager.getConnection(jdbc, sakankom, password);
                         Statement st = con.createStatement();
                         rst = st.executeQuery("select * from house,owner,residence where house.residence_id = residence.residence_id and residence.owner_id = owner.owner_id and house.isvalid = '1' and house.isaccepted = '0'");
 
@@ -268,7 +271,7 @@ public class AdminMainPageHandler implements Initializable {
 
                                         try{
                                                 DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
-                                                Connection con = DriverManager.getConnection("jdbc:oracle:thin:@//localhost:1521/xepdb1", "sakankom", "12345678");
+                                                Connection con = DriverManager.getConnection(jdbc, sakankom, password);
                                                 Statement st = con.createStatement();
 
                                                 rst = st.executeQuery("UPDATE house SET isvalid='0' WHERE house_id='" + Integer.parseInt(Integer.toString(apartments.get(finalI1).getHouseId())) + "'");
@@ -289,7 +292,7 @@ public class AdminMainPageHandler implements Initializable {
 
                                         try{
                                                 DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
-                                                Connection con = DriverManager.getConnection("jdbc:oracle:thin:@//localhost:1521/xepdb1", "sakankom", "12345678");
+                                                Connection con = DriverManager.getConnection(jdbc, sakankom, password);
                                                 Statement st = con.createStatement();
 
                                                 rst = st.executeQuery("UPDATE house SET isaccepted='1' WHERE house_id='" + Integer.parseInt(Integer.toString(apartments.get(finalI1).getHouseId())) + "'");
@@ -334,7 +337,7 @@ public class AdminMainPageHandler implements Initializable {
                 try{
 
                         DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
-                        Connection con = DriverManager.getConnection("jdbc:oracle:thin:@//localhost:1521/xepdb1", "sakankom", "12345678");
+                        Connection con = DriverManager.getConnection(jdbc, sakankom, password);
                         Statement st = con.createStatement();
                         rst = st.executeQuery("select * from house,owner,residence where house.residence_id = residence.residence_id and residence.owner_id = owner.owner_id and house.isvalid = '1' and house.isaccepted = '0'");
 
@@ -421,7 +424,7 @@ public class AdminMainPageHandler implements Initializable {
                 ResultSet rst;
                 try {
                         DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
-                        Connection con = DriverManager.getConnection("jdbc:oracle:thin:@//localhost:1521/xepdb1", "sakankom", "12345678");
+                        Connection con = DriverManager.getConnection(jdbc, sakankom, password);
                         Statement st = con.createStatement();
                         rst = st.executeQuery("select * from admin where username = '" + user.getUsername() + "'");
 
