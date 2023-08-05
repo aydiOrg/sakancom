@@ -99,11 +99,11 @@ public class AdminReservationsFeatureSteps {
 
 
             Collections.sort(apartmentList);
-            Collections.sort(adminMainPageHandler.apartments);
+            Collections.sort(adminMainPageHandler.getApartments());
 
 
-            for (int i = 0; i < adminMainPageHandler.apartments.size(); i++) {
-                if (apartmentList.get(i).getHouseId() != adminMainPageHandler.apartments.get(i).getHouseId()) {
+            for (int i = 0; i < adminMainPageHandler.getApartments().size(); i++) {
+                if (apartmentList.get(i).getHouseId() != adminMainPageHandler.getApartments().get(i).getHouseId()) {
                     firstTest = false;
                     break;
                 }
@@ -132,7 +132,7 @@ public class AdminReservationsFeatureSteps {
             if (!adminMainPageHandler.isUserClickedAcceptButton()) assertTrue(true);
 
             boolean notFound = true;
-            for (Apartment apartment : adminMainPageHandler.apartments) {
+            for (Apartment apartment : adminMainPageHandler.getApartments()) {
                 if (apartment.getHouseId() == adminMainPageHandler.houseIDTest1) {
                     notFound = false;
                     break;
@@ -161,7 +161,7 @@ public class AdminReservationsFeatureSteps {
             if (!adminMainPageHandler.isUserClickedRejectButton()) assertTrue(true);
 
             boolean notFound = true;
-            for (Apartment apartment : adminMainPageHandler.apartments) {
+            for (Apartment apartment : adminMainPageHandler.getApartments()) {
                 if (apartment.getHouseId() == adminMainPageHandler.houseIDTest2) {
                     notFound = false;
                     break;

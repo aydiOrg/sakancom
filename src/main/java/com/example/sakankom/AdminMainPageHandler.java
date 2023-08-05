@@ -28,9 +28,19 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class AdminMainPageHandler implements Initializable {
-        private final String sakankom = "sakankom";
-        private final String jdbc = "jdbc:oracle:thin:@//localhost:1521/xepdb1";
-        private final String password = "12345678";
+        private final static String sakankom = "sakankom";
+        private final static String jdbc = "jdbc:oracle:thin:@//localhost:1521/xepdb1";
+        private final static String password = "12345678";
+        private final static String email = "email";
+        private final static String phone = "phone_number";
+        private final static String location = "location";
+        private final static String fname = "fname";
+        private final static String lname = "lname";
+        private final static String residence_name = "residence_name";
+        private final static String residence_id = "residence_id";
+        private final static String house_id = "house_id";
+        private final static String owner_id = "owner_id";
+        private final static String price = "price";
         @FXML
         private AnchorPane bigPane;
         @FXML
@@ -67,6 +77,10 @@ public class AdminMainPageHandler implements Initializable {
 
         User user;
         private ArrayList<Apartment> apartments ;
+
+        public ArrayList<Apartment> getApartments() {
+                return apartments;
+        }
 
         public Admin getAdmin() {
                 return admin;
@@ -108,18 +122,18 @@ public class AdminMainPageHandler implements Initializable {
                         Apartment apt;
                         while(rst.next()) {
                                 apt = new Apartment();
-                                apt.setOwnerEmail(rst.getString("email"));
-                                apt.setOwnerPhone(rst.getString("phone_number"));
-                                apt.setAddress(rst.getString("location"));
-                                apt.setOwnerName(rst.getString("fname") + " " + rst.getString("lname"));
-                                apt.setAptName(rst.getString("residence_name"));
-                                apt.setHouseId(rst.getInt("house_id"));
-                                apt.setResidenceId(rst.getInt("residence_id"));
-                                apt.setOwnerId(rst.getInt("owner_id"));
+                                apt.setOwnerEmail(rst.getString(email));
+                                apt.setOwnerPhone(rst.getString(phone));
+                                apt.setAddress(rst.getString(location));
+                                apt.setOwnerName(rst.getString(fname) + " " + rst.getString(lname));
+                                apt.setAptName(rst.getString(residence_name));
+                                apt.setHouseId(rst.getInt(house_id));
+                                apt.setResidenceId(rst.getInt(residence_id));
+                                apt.setOwnerId(rst.getInt(owner_id));
                                 apt.setBathsN(rst.getInt("bathrooms_number"));
                                 apt.setBedsN(rst.getInt("bedrooms_number"));
                                 apt.setServices(rst.getString("services"));
-                                apt.setPrice(rst.getDouble("price"));
+                                apt.setPrice(rst.getDouble(price));
                                 apt.setFloor(rst.getInt("floor_number"));
                                 apt.setAptNumber(rst.getInt("flat_number"));
                                 apt.setCapacity(rst.getInt("capacity"));
@@ -344,18 +358,18 @@ public class AdminMainPageHandler implements Initializable {
                         Apartment apt;
                         while(rst.next()) {
                                 apt = new Apartment();
-                                apt.setOwnerEmail(rst.getString("email"));
-                                apt.setOwnerPhone(rst.getString("phone_number"));
-                                apt.setAddress(rst.getString("location"));
-                                apt.setOwnerName(rst.getString("fName") + " " + rst.getString("lName"));
-                                apt.setAptName(rst.getString("residence_name"));
-                                apt.setHouseId(rst.getInt("house_id"));
-                                apt.setResidenceId(rst.getInt("residence_id"));
-                                apt.setOwnerId(rst.getInt("owner_id"));
+                                apt.setOwnerEmail(rst.getString(email));
+                                apt.setOwnerPhone(rst.getString(phone));
+                                apt.setAddress(rst.getString(location));
+                                apt.setOwnerName(rst.getString(fname) + " " + rst.getString(lname));
+                                apt.setAptName(rst.getString(residence_name));
+                                apt.setHouseId(rst.getInt(house_id));
+                                apt.setResidenceId(rst.getInt(residence_id));
+                                apt.setOwnerId(rst.getInt(owner_id));
                                 apt.setBathsN(rst.getInt("bathrooms_number"));
                                 apt.setBedsN(rst.getInt("bedrooms_number"));
                                 apt.setServices(rst.getString("services"));
-                                apt.setPrice(rst.getDouble("price"));
+                                apt.setPrice(rst.getDouble(price));
                                 apt.setFloor(rst.getInt("floor_number"));
                                 apt.setAptNumber(rst.getInt("flat_number"));
                                 apt.setCapacity(rst.getInt("capacity"));
@@ -373,14 +387,14 @@ public class AdminMainPageHandler implements Initializable {
                         AdminReservation rs;
                         while (rst2.next()) {
                                 rs = new AdminReservation();
-                                rs.setResidenceID(rst2.getInt("residence_id"));
-                                rs.setHouseId(rst2.getInt("house_id"));
-                                rs.setOwnerId(rst2.getInt("owner_id"));
+                                rs.setResidenceID(rst2.getInt(residence_id));
+                                rs.setHouseId(rst2.getInt(house_id));
+                                rs.setOwnerId(rst2.getInt(owner_id));
                                 rs.setTenantId(rst2.getInt("tenant_id"));
 
-                                rs.setResidenceName(rst2.getString("residence_name"));
-                                rs.setPrice(rst2.getInt("price"));
-                                rs.setAddress(rst2.getString("location"));
+                                rs.setResidenceName(rst2.getString(residence_name));
+                                rs.setPrice(rst2.getInt(price));
+                                rs.setAddress(rst2.getString(location));
                                 adminReservations.add(rs);
                         }
 
@@ -388,10 +402,10 @@ public class AdminMainPageHandler implements Initializable {
                         rst = st.executeQuery("select * from owner");
                         while(rst.next()) {
                                 for (AdminReservation adminReservation : adminReservations) {
-                                        if (adminReservation.getOwnerId() == rst.getInt("owner_id")) {
-                                                adminReservation.setOwnerName(rst.getString("fname") + " " + rst.getString("lname"));
-                                                adminReservation.setOwnerPhone(rst.getString("phone_number"));
-                                                adminReservation.setOwnerEmail(rst.getString("email"));
+                                        if (adminReservation.getOwnerId() == rst.getInt(owner_id)) {
+                                                adminReservation.setOwnerName(rst.getString(fname) + " " + rst.getString(lname));
+                                                adminReservation.setOwnerPhone(rst.getString(phone));
+                                                adminReservation.setOwnerEmail(rst.getString(email));
                                         }
                                 }
                         }
@@ -401,9 +415,9 @@ public class AdminMainPageHandler implements Initializable {
                         while(rst.next()) {
                                 for (AdminReservation adminReservation : adminReservations) {
                                         if (adminReservation.getTenantId() == rst.getInt("tenant_id")) {
-                                                adminReservation.setTenantName(rst.getString("fname") + " " + rst.getString("lname"));
-                                                adminReservation.setTenantPhone(rst.getString("phone_number"));
-                                                adminReservation.setTenantEmail(rst.getString("email"));
+                                                adminReservation.setTenantName(rst.getString(fname) + " " + rst.getString(lname));
+                                                adminReservation.setTenantPhone(rst.getString(phone));
+                                                adminReservation.setTenantEmail(rst.getString(email));
                                         }
                                 }
                         }
