@@ -9,7 +9,6 @@ import io.github.palexdev.materialfx.controls.MFXScrollPane;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -28,19 +27,19 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class AdminMainPageHandler implements Initializable {
-        private final static String sakankom = "sakankom";
-        private final static String jdbc = "jdbc:oracle:thin:@//localhost:1521/xepdb1";
-        private final static String password = "12345678";
-        private final static String email = "email";
-        private final static String phone = "phone_number";
-        private final static String location = "location";
-        private final static String fname = "fname";
-        private final static String lname = "lname";
-        private final static String residence_name = "residence_name";
-        private final static String residence_id = "residence_id";
-        private final static String house_id = "house_id";
-        private final static String owner_id = "owner_id";
-        private final static String price = "price";
+        private final static String SAKANKOM = "sakankom";
+        private final static String JDBX = "jdbc:oracle:thin:@//localhost:1521/xepdb1";
+        private final static String PASSWORD = "12345678";
+        private final static String EMAIL = "email";
+        private final static String PHONE = "phone_number";
+        private final static String LOCATION = "location";
+        private final static String FNAME = "fname";
+        private final static String LNAME = "lname";
+        private final static String RESIDENCE_NAME = "residence_name";
+        private final static String RESIDENCE_ID = "residence_id";
+        private final static String HOUSE_ID = "house_id";
+        private final static String OWNER_ID = "owner_id";
+        private final static String PRICE = "price";
         @FXML
         private AnchorPane bigPane;
         @FXML
@@ -115,25 +114,25 @@ public class AdminMainPageHandler implements Initializable {
                 try{
 
                         DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
-                        Connection con = DriverManager.getConnection(jdbc, sakankom, password);
+                        Connection con = DriverManager.getConnection(JDBX, SAKANKOM, PASSWORD);
                         Statement st = con.createStatement();
                         rst = st.executeQuery("select * from house,owner,residence where house.residence_id = residence.residence_id and residence.owner_id = owner.owner_id and house.isvalid = '1' and house.isaccepted = '0'");
 
                         Apartment apt;
                         while(rst.next()) {
                                 apt = new Apartment();
-                                apt.setOwnerEmail(rst.getString(email));
-                                apt.setOwnerPhone(rst.getString(phone));
-                                apt.setAddress(rst.getString(location));
-                                apt.setOwnerName(rst.getString(fname) + " " + rst.getString(lname));
-                                apt.setAptName(rst.getString(residence_name));
-                                apt.setHouseId(rst.getInt(house_id));
-                                apt.setResidenceId(rst.getInt(residence_id));
-                                apt.setOwnerId(rst.getInt(owner_id));
+                                apt.setOwnerEmail(rst.getString(EMAIL));
+                                apt.setOwnerPhone(rst.getString(PHONE));
+                                apt.setAddress(rst.getString(LOCATION));
+                                apt.setOwnerName(rst.getString(FNAME) + " " + rst.getString(LNAME));
+                                apt.setAptName(rst.getString(RESIDENCE_NAME));
+                                apt.setHouseId(rst.getInt(HOUSE_ID));
+                                apt.setResidenceId(rst.getInt(RESIDENCE_ID));
+                                apt.setOwnerId(rst.getInt(OWNER_ID));
                                 apt.setBathsN(rst.getInt("bathrooms_number"));
                                 apt.setBedsN(rst.getInt("bedrooms_number"));
                                 apt.setServices(rst.getString("services"));
-                                apt.setPrice(rst.getDouble(price));
+                                apt.setPrice(rst.getDouble(PRICE));
                                 apt.setFloor(rst.getInt("floor_number"));
                                 apt.setAptNumber(rst.getInt("flat_number"));
                                 apt.setCapacity(rst.getInt("capacity"));
@@ -285,7 +284,7 @@ public class AdminMainPageHandler implements Initializable {
 
                                         try{
                                                 DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
-                                                Connection con = DriverManager.getConnection(jdbc, sakankom, password);
+                                                Connection con = DriverManager.getConnection(JDBX, SAKANKOM, PASSWORD);
                                                 Statement st = con.createStatement();
 
                                                 rst = st.executeQuery("UPDATE house SET isvalid='0' WHERE house_id='" + Integer.parseInt(Integer.toString(apartments.get(finalI1).getHouseId())) + "'");
@@ -306,7 +305,7 @@ public class AdminMainPageHandler implements Initializable {
 
                                         try{
                                                 DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
-                                                Connection con = DriverManager.getConnection(jdbc, sakankom, password);
+                                                Connection con = DriverManager.getConnection(JDBX, SAKANKOM, PASSWORD);
                                                 Statement st = con.createStatement();
 
                                                 rst = st.executeQuery("UPDATE house SET isaccepted='1' WHERE house_id='" + Integer.parseInt(Integer.toString(apartments.get(finalI1).getHouseId())) + "'");
@@ -351,25 +350,25 @@ public class AdminMainPageHandler implements Initializable {
                 try{
 
                         DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
-                        Connection con = DriverManager.getConnection(jdbc, sakankom, password);
+                        Connection con = DriverManager.getConnection(JDBX, SAKANKOM, PASSWORD);
                         Statement st = con.createStatement();
                         rst = st.executeQuery("select * from house,owner,residence where house.residence_id = residence.residence_id and residence.owner_id = owner.owner_id and house.isvalid = '1' and house.isaccepted = '0'");
 
                         Apartment apt;
                         while(rst.next()) {
                                 apt = new Apartment();
-                                apt.setOwnerEmail(rst.getString(email));
-                                apt.setOwnerPhone(rst.getString(phone));
-                                apt.setAddress(rst.getString(location));
-                                apt.setOwnerName(rst.getString(fname) + " " + rst.getString(lname));
-                                apt.setAptName(rst.getString(residence_name));
-                                apt.setHouseId(rst.getInt(house_id));
-                                apt.setResidenceId(rst.getInt(residence_id));
-                                apt.setOwnerId(rst.getInt(owner_id));
+                                apt.setOwnerEmail(rst.getString(EMAIL));
+                                apt.setOwnerPhone(rst.getString(PHONE));
+                                apt.setAddress(rst.getString(LOCATION));
+                                apt.setOwnerName(rst.getString(FNAME) + " " + rst.getString(LNAME));
+                                apt.setAptName(rst.getString(RESIDENCE_NAME));
+                                apt.setHouseId(rst.getInt(HOUSE_ID));
+                                apt.setResidenceId(rst.getInt(RESIDENCE_ID));
+                                apt.setOwnerId(rst.getInt(OWNER_ID));
                                 apt.setBathsN(rst.getInt("bathrooms_number"));
                                 apt.setBedsN(rst.getInt("bedrooms_number"));
                                 apt.setServices(rst.getString("services"));
-                                apt.setPrice(rst.getDouble(price));
+                                apt.setPrice(rst.getDouble(PRICE));
                                 apt.setFloor(rst.getInt("floor_number"));
                                 apt.setAptNumber(rst.getInt("flat_number"));
                                 apt.setCapacity(rst.getInt("capacity"));
@@ -387,14 +386,14 @@ public class AdminMainPageHandler implements Initializable {
                         AdminReservation rs;
                         while (rst2.next()) {
                                 rs = new AdminReservation();
-                                rs.setResidenceID(rst2.getInt(residence_id));
-                                rs.setHouseId(rst2.getInt(house_id));
-                                rs.setOwnerId(rst2.getInt(owner_id));
+                                rs.setResidenceID(rst2.getInt(RESIDENCE_ID));
+                                rs.setHouseId(rst2.getInt(HOUSE_ID));
+                                rs.setOwnerId(rst2.getInt(OWNER_ID));
                                 rs.setTenantId(rst2.getInt("tenant_id"));
 
-                                rs.setResidenceName(rst2.getString(residence_name));
-                                rs.setPrice(rst2.getInt(price));
-                                rs.setAddress(rst2.getString(location));
+                                rs.setResidenceName(rst2.getString(RESIDENCE_NAME));
+                                rs.setPrice(rst2.getInt(PRICE));
+                                rs.setAddress(rst2.getString(LOCATION));
                                 adminReservations.add(rs);
                         }
 
@@ -402,10 +401,10 @@ public class AdminMainPageHandler implements Initializable {
                         rst = st.executeQuery("select * from owner");
                         while(rst.next()) {
                                 for (AdminReservation adminReservation : adminReservations) {
-                                        if (adminReservation.getOwnerId() == rst.getInt(owner_id)) {
-                                                adminReservation.setOwnerName(rst.getString(fname) + " " + rst.getString(lname));
-                                                adminReservation.setOwnerPhone(rst.getString(phone));
-                                                adminReservation.setOwnerEmail(rst.getString(email));
+                                        if (adminReservation.getOwnerId() == rst.getInt(OWNER_ID)) {
+                                                adminReservation.setOwnerName(rst.getString(FNAME) + " " + rst.getString(LNAME));
+                                                adminReservation.setOwnerPhone(rst.getString(PHONE));
+                                                adminReservation.setOwnerEmail(rst.getString(EMAIL));
                                         }
                                 }
                         }
@@ -415,9 +414,9 @@ public class AdminMainPageHandler implements Initializable {
                         while(rst.next()) {
                                 for (AdminReservation adminReservation : adminReservations) {
                                         if (adminReservation.getTenantId() == rst.getInt("tenant_id")) {
-                                                adminReservation.setTenantName(rst.getString(fname) + " " + rst.getString(lname));
-                                                adminReservation.setTenantPhone(rst.getString(phone));
-                                                adminReservation.setTenantEmail(rst.getString(email));
+                                                adminReservation.setTenantName(rst.getString(FNAME) + " " + rst.getString(LNAME));
+                                                adminReservation.setTenantPhone(rst.getString(PHONE));
+                                                adminReservation.setTenantEmail(rst.getString(EMAIL));
                                         }
                                 }
                         }
@@ -438,7 +437,7 @@ public class AdminMainPageHandler implements Initializable {
                 ResultSet rst;
                 try {
                         DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
-                        Connection con = DriverManager.getConnection(jdbc, sakankom, password);
+                        Connection con = DriverManager.getConnection(JDBX, SAKANKOM, PASSWORD);
                         Statement st = con.createStatement();
                         rst = st.executeQuery("select * from admin where username = '" + user.getUsername() + "'");
 
