@@ -29,8 +29,8 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class AdminMainPageHandler implements Initializable {
-        private final static String SAKANKOM = "sakankom";
-        private final static String JDBX = "jdbc:oracle:thin:@//localhost:1521/xepdb1";
+        private static final String SAKANKOM = "sakankom";
+        private static final String JDBX = "jdbc:oracle:thin:@//localhost:1521/xepdb1";
         private static final String PASSWORD = "12345678";
         private static final String EMAIL = "email";
         private static final String PHONE = "phone_number";

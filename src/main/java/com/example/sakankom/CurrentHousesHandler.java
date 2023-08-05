@@ -29,6 +29,8 @@ import java.util.Date;
 import java.util.ResourceBundle;
 
 public class CurrentHousesHandler implements Initializable {
+    private static final String TENANTHOUSES = "TenantHouses.css";
+    private static final String FONTSIZE = "-fx-font-size: %.2fpt;";
     @FXML
     public VBox container;
     @FXML
@@ -94,7 +96,7 @@ public class CurrentHousesHandler implements Initializable {
 
                 card = new VBox();
                 card.setMaxWidth(950);
-                card.getStylesheets().add("TenantHouses.css");
+                card.getStylesheets().add(TENANTHOUSES);
                 card.getStyleClass().add("vbox");
 
                 l1 = new Label(name);
@@ -113,27 +115,27 @@ public class CurrentHousesHandler implements Initializable {
 
 
                 //setting the styles
-                reserveBtn.getStylesheets().add("TenantHouses.css");
+                reserveBtn.getStylesheets().add(TENANTHOUSES);
                 reserveBtn.getStyleClass().add("myBtn");
-                detailsBtn.getStylesheets().add("TenantHouses.css");
+                detailsBtn.getStylesheets().add(TENANTHOUSES);
                 detailsBtn.getStyleClass().add("myBtn");
-                l1.getStylesheets().add("TenantHouses.css");
+                l1.getStylesheets().add(TENANTHOUSES);
                 l1.getStyleClass().add("l1");
 
-                cont2.getStylesheets().add("TenantHouses.css");
+                cont2.getStylesheets().add(TENANTHOUSES);
                 cont2.getStyleClass().add("cont2");
 
-                cont.getStylesheets().add("TenantHouses.css");
+                cont.getStylesheets().add(TENANTHOUSES);
                 cont.getStyleClass().add("cont");
 
 
                 DoubleProperty fontSize = new SimpleDoubleProperty(18);
-                l1.styleProperty().bind(Bindings.format("-fx-font-size: %.2fpt;", fontSize));
+                l1.styleProperty().bind(Bindings.format(FONTSIZE, fontSize));
                 DoubleProperty fontSize2 = new SimpleDoubleProperty(12);
-                l2.styleProperty().bind(Bindings.format("-fx-font-size: %.2fpt;", fontSize2));
-                l3.styleProperty().bind(Bindings.format("-fx-font-size: %.2fpt;", fontSize2));
-                l4.styleProperty().bind(Bindings.format("-fx-font-size: %.2fpt;", fontSize2));
-                l5.styleProperty().bind(Bindings.format("-fx-font-size: %.2fpt;", fontSize2));
+                l2.styleProperty().bind(Bindings.format(FONTSIZE, fontSize2));
+                l3.styleProperty().bind(Bindings.format(FONTSIZE, fontSize2));
+                l4.styleProperty().bind(Bindings.format(FONTSIZE, fontSize2));
+                l5.styleProperty().bind(Bindings.format(FONTSIZE, fontSize2));
 
 
                 //adding elements to card
