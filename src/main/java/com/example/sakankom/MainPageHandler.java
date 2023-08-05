@@ -31,6 +31,13 @@ import java.util.Calendar;
 import java.util.ResourceBundle;
 
 public class MainPageHandler implements Initializable {
+        private static final String SAKANKOM = "sakankom";
+        private static final String JDB = "jdbc:oracle:thin:@//localhost:1521/xepdb1";
+        private static final String PASSWORD = "12345678";
+        private static final String FONTSIZE = "-fx-font-size: %.2fpt;";
+        private static final String MAINPAGEHANDLERCSS = "mainPageHandler.css";
+        private static final String MAINPAGEBUTTONSUNSELECTED = "mainPageButtonsUnselected.css";
+        private static final String MAINPAGEBUTTONS = "mainPageButtons.css";
         //data from the sign in
         User user;
         ArrayList<Apartment> apartments;
@@ -148,7 +155,7 @@ public class MainPageHandler implements Initializable {
 
                         try{
                                 DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
-                                Connection con = DriverManager.getConnection("jdbc:oracle:thin:@//localhost:1521/xepdb1", "sakankom", "12345678");
+                                Connection con = DriverManager.getConnection(JDB, SAKANKOM, PASSWORD);
                                 //jdbc:oracle:thin:@//localhost:1521/xepdb1
                                 Statement st = con.createStatement();
                                 st.executeUpdate("update tenant set fname= '" + name[0] + "' , lname = '" + name[1] + "' , birthdate = to_date('" + bdate + "','yyyy-mm-dd') , phone_number = '" + pnumber + "' , email = '" + email + "', job = '" + job+ "' , gender = '" + gender + "', username = '" +username+ "', pass = '" +password + "' where username = '" + tenant.getUsername() + "'" );
@@ -171,7 +178,7 @@ public class MainPageHandler implements Initializable {
                 ResultSet rst;
                 try {
                         DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
-                        Connection con = DriverManager.getConnection("jdbc:oracle:thin:@//localhost:1521/xepdb1", "sakankom", "12345678");
+                        Connection con = DriverManager.getConnection(JDB, SAKANKOM, PASSWORD);
                         //jdbc:oracle:thin:@//localhost:1521/xepdb1
                         Statement st = con.createStatement();
                         rst = st.executeQuery("select * from tenant where username = '" + user.getUsername() + "'");
@@ -215,7 +222,7 @@ public class MainPageHandler implements Initializable {
                 ResultSet rst;
                 try {
                         DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
-                        Connection con = DriverManager.getConnection("jdbc:oracle:thin:@//localhost:1521/xepdb1", "sakankom", "12345678");
+                        Connection con = DriverManager.getConnection(JDB, SAKANKOM, PASSWORD);
                         //jdbc:oracle:thin:@//localhost:1521/xepdb1
                         Statement st = con.createStatement();
                         rst = st.executeQuery("select * from reservation , tenant where isvalid = '1' and reservation.tenant_id = tenant.tenant_id and tenant.tenant_id = '" + tenant.getTenantID() +"'");
@@ -293,27 +300,27 @@ public class MainPageHandler implements Initializable {
                         l6 = new Label(email);
 
                         DoubleProperty fontSize = new SimpleDoubleProperty(16);
-                        l1.styleProperty().bind(Bindings.format("-fx-font-size: %.2fpt;", fontSize));
+                        l1.styleProperty().bind(Bindings.format(FONTSIZE, fontSize));
                         DoubleProperty fontSize2 = new SimpleDoubleProperty(13);
-                        l2.styleProperty().bind(Bindings.format("-fx-font-size: %.2fpt;", fontSize2));
-                        l3.styleProperty().bind(Bindings.format("-fx-font-size: %.2fpt;", fontSize2));
-                        l4.styleProperty().bind(Bindings.format("-fx-font-size: %.2fpt;", fontSize2));
-                        l5.styleProperty().bind(Bindings.format("-fx-font-size: %.2fpt;", fontSize2));
-                        l6.styleProperty().bind(Bindings.format("-fx-font-size: %.2fpt;", fontSize2));
+                        l2.styleProperty().bind(Bindings.format(FONTSIZE, fontSize2));
+                        l3.styleProperty().bind(Bindings.format(FONTSIZE, fontSize2));
+                        l4.styleProperty().bind(Bindings.format(FONTSIZE, fontSize2));
+                        l5.styleProperty().bind(Bindings.format(FONTSIZE, fontSize2));
+                        l6.styleProperty().bind(Bindings.format(FONTSIZE, fontSize2));
                         card.getStyleClass().add("hbox");
-                        card.getStylesheets().add("mainPageHandler.css");
+                        card.getStylesheets().add(MAINPAGEHANDLERCSS);
                         l1.getStyleClass().add("l1");
                         l2.getStyleClass().add("l2");
                         l3.getStyleClass().add("l3");
                         l4.getStyleClass().add("l4");
                         l5.getStyleClass().add("l5");
                         l6.getStyleClass().add("l6");
-                        l1.getStylesheets().add("mainPageHandler.css");
-                        l2.getStylesheets().add("mainPageHandler.css");
-                        l3.getStylesheets().add("mainPageHandler.css");
-                        l4.getStylesheets().add("mainPageHandler.css");
-                        l5.getStylesheets().add("mainPageHandler.css");
-                        l6.getStylesheets().add("mainPageHandler.css");
+                        l1.getStylesheets().add(MAINPAGEHANDLERCSS);
+                        l2.getStylesheets().add(MAINPAGEHANDLERCSS);
+                        l3.getStylesheets().add(MAINPAGEHANDLERCSS);
+                        l4.getStylesheets().add(MAINPAGEHANDLERCSS);
+                        l5.getStylesheets().add(MAINPAGEHANDLERCSS);
+                        l6.getStylesheets().add(MAINPAGEHANDLERCSS);
 
 
                         h1.getChildren().add(l1);
@@ -344,11 +351,11 @@ public class MainPageHandler implements Initializable {
                 for(int i=0 ; i<3;i++) {
                         if(!buttons[i].getStylesheets().isEmpty())  buttons[i].getStylesheets().remove(0);
 
-                        buttons[i].getStylesheets().add("mainPageButtonsUnselected.css");
+                        buttons[i].getStylesheets().add(MAINPAGEBUTTONSUNSELECTED);
                 }
                 if(!btn1.getStylesheets().isEmpty())  btn1.getStylesheets().remove(0);
 
-                btn1.getStylesheets().add("mainPageButtons.css");
+                btn1.getStylesheets().add(MAINPAGEBUTTONS);
         }
 
         @FXML
@@ -359,11 +366,11 @@ public class MainPageHandler implements Initializable {
                 for(int i=0 ; i<3;i++) {
                         if(!buttons[i].getStylesheets().isEmpty())  buttons[i].getStylesheets().remove(0);
 
-                        buttons[i].getStylesheets().add("mainPageButtonsUnselected.css");
+                        buttons[i].getStylesheets().add(MAINPAGEBUTTONSUNSELECTED);
                 }
                 if(!btn2.getStylesheets().isEmpty())  btn2.getStylesheets().remove(0);
 
-                btn2.getStylesheets().add("mainPageButtons.css");
+                btn2.getStylesheets().add(MAINPAGEBUTTONS);
                 isFurniturePressed = true;
         }
 
@@ -375,11 +382,11 @@ public class MainPageHandler implements Initializable {
                 for(int i=0 ; i<3;i++) {
                         if(!buttons[i].getStylesheets().isEmpty())  buttons[i].getStylesheets().remove(0);
 
-                        buttons[i].getStylesheets().add("mainPageButtonsUnselected.css");
+                        buttons[i].getStylesheets().add(MAINPAGEBUTTONSUNSELECTED);
                 }
                 if(!btn3.getStylesheets().isEmpty())  btn3.getStylesheets().remove(0);
 
-                btn3.getStylesheets().add("mainPageButtons.css");
+                btn3.getStylesheets().add(MAINPAGEBUTTONS);
                 isApartementsPressed = true;
         }
 
