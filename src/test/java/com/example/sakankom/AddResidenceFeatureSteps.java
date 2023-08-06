@@ -1,8 +1,5 @@
 package com.example.sakankom;
 
-import com.example.sakankom.OwnerFiles.Owner;
-import com.example.sakankom.OwnerFiles.Residence;
-import com.example.sakankom.dataStructures.User;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 
@@ -22,14 +19,14 @@ public class AddResidenceFeatureSteps {
 
     @Given("user clicked addResidence button")
     public void user_clicked_add_residence_button() {
-        OwnerHandler ownerHandler = Wrapper.signInHandler.ownerHandler;
+        OwnerHandler ownerHandler = Wrapper.signInHandler.getOwnerHandler();
         user = ownerHandler.getUser();
         owner = ownerHandler.getOwner();
         if(!user.getUserType().equalsIgnoreCase("owner")){
             assertTrue(true);
         }
         else
-        assertTrue(ownerHandler.userClickedAddResidencesBtn);
+            assertTrue(ownerHandler.isUserClickedAddResidencesBtn());
     }
 
     @Given("user filled all fields with valid residence information and clicked add")
@@ -38,7 +35,7 @@ public class AddResidenceFeatureSteps {
             assertTrue(true);
         }
         else {
-            AddResidenceHandler addResidenceHandler = Wrapper.signInHandler.ownerHandler.addResidenceHandler;
+            AddResidenceHandler addResidenceHandler = Wrapper.signInHandler.getOwnerHandler().getAddResidenceHandler();
             assertTrue(addResidenceHandler.isClicked());
         }
     }
@@ -49,7 +46,7 @@ public class AddResidenceFeatureSteps {
             assertTrue(true);
         }
         else {
-            AddResidenceHandler addResidenceHandler = Wrapper.signInHandler.ownerHandler.addResidenceHandler;
+            AddResidenceHandler addResidenceHandler = Wrapper.signInHandler.getOwnerHandler().getAddResidenceHandler();
 
             Residence residence = new Residence(
                     addResidenceHandler.getResidenceID(),

@@ -1,8 +1,5 @@
 package com.example.sakankom;
 
-import com.example.sakankom.OwnerFiles.House;
-import com.example.sakankom.OwnerFiles.Owner;
-import com.example.sakankom.dataStructures.User;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -24,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.logging.Logger;
 
 public class OwnerHandler implements Initializable {
 
@@ -31,8 +29,8 @@ public class OwnerHandler implements Initializable {
     private AnchorPane mainPane;
     @FXML
     private MFXButton btnAddHouse;
-    public boolean userClickedAddResidencesBtn = false;
-    public boolean userClickedResidencesBtn = false;
+    private boolean userClickedAddResidencesBtn = false;
+    private boolean userClickedResidencesBtn = false;
     @FXML
     private Label ownerName;
 
@@ -43,14 +41,36 @@ public class OwnerHandler implements Initializable {
     private MFXButton btnResidences;
     @FXML
     private MFXButton btnMain;
-    public ResidencesHandler residencesHandler;
-    public AddHouseHandler addHouseHandler;
-    public AddResidenceHandler addResidenceHandler;
-    public CardHandler cardHandler;
+
+    public ResidencesHandler getResidencesHandler() {
+        return residencesHandler;
+    }
+
+    public AddHouseHandler getAddHouseHandler() {
+        return addHouseHandler;
+    }
+
+    public AddResidenceHandler getAddResidenceHandler() {
+        return addResidenceHandler;
+    }
+
+    public List<House> getRecentlyAdded() {
+        return recentlyAdded;
+    }
+
+    public List<House> getRecommended() {
+        return recommended;
+    }
+
+    private ResidencesHandler residencesHandler;
+    private AddHouseHandler addHouseHandler;
+    private AddResidenceHandler addResidenceHandler;
+    private static final Logger logger = Logger.getLogger(OwnerHandler.class.getName());
+
     @FXML
     private HBox cardLayout;
-    public List<House> recentlyAdded;
-    public List<House> recommended;
+    private List<House> recentlyAdded;
+    private List<House> recommended;
 
     private VBox mainBox;
 
@@ -85,7 +105,7 @@ public class OwnerHandler implements Initializable {
             con.close();
         } catch (SQLException e) { e.printStackTrace(); }
 
-        try { mainBtnHandler(); }  catch (IOException e) { throw new RuntimeException(e); }
+        try { mainBtnHandler(); }  catch (IOException e) { e.printStackTrace(); }
 
 
     }
@@ -100,13 +120,14 @@ public class OwnerHandler implements Initializable {
 
     @FXML
     void mainBtnHandler() throws IOException {
-        if (btnMain.getStyleClass().contains("selected")) { System.out.println("Do nothing"); }
+        if (btnMain.getStyleClass().contains("selected")) { logger.warning("Do nothing"); }
         else {
             recentlyAdded = new ArrayList<>();
             recommended = new ArrayList<>();
             int column = 1;
             int row = 1;
-            ResultSet rst, rst2;
+            ResultSet rst;
+            ResultSet rst2;
 
             try {
                 DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
@@ -131,7 +152,7 @@ public class OwnerHandler implements Initializable {
                     fxmlLoader.setLocation(getClass().getResource("card.fxml"));
                     HBox cardBox = fxmlLoader.load();
 
-                    cardHandler = fxmlLoader.getController();
+                    CardHandler cardHandler = fxmlLoader.getController();
                     cardHandler.setDate(value);
                     cardLayout.getChildren().add(cardBox);
                 }
@@ -140,7 +161,7 @@ public class OwnerHandler implements Initializable {
                     FXMLLoader fxmlLoader = new FXMLLoader();
                     fxmlLoader.setLocation(getClass().getResource("house.fxml"));
                     VBox houseBox = fxmlLoader.load();
-                    houseHandler houseHandler = fxmlLoader.getController();
+                    HouseHandler houseHandler = fxmlLoader.getController();
                     houseHandler.setDate(house);
 
                     if (column == 6) {
@@ -170,7 +191,7 @@ public class OwnerHandler implements Initializable {
 
     @FXML
     void addHouseBtnHandler() throws IOException {
-        if (btnAddHouse.getStyleClass().contains("selected")) { System.out.println("Do nothing"); }
+        if (btnAddHouse.getStyleClass().contains("selected")) { logger.warning("Do nothing"); }
         else {
             FXMLLoader fxmlLoader = new FXMLLoader();
             fxmlLoader.setLocation(getClass().getResource("addHouse.fxml"));
@@ -194,7 +215,7 @@ public class OwnerHandler implements Initializable {
     @FXML
     void addResidenceBtnHandler() throws IOException {
         userClickedAddResidencesBtn = true;
-        if (btnAddResidence.getStyleClass().contains("selected")) { System.out.println("Do nothing"); }
+        if (btnAddResidence.getStyleClass().contains("selected")) { logger.warning("Do nothing"); }
         else {
             FXMLLoader fxmlLoader = new FXMLLoader();
             fxmlLoader.setLocation(getClass().getResource("addResidence.fxml"));
@@ -219,7 +240,7 @@ public class OwnerHandler implements Initializable {
     @FXML
     void residencesBtnHandler() {
         userClickedResidencesBtn = true;
-        if (btnResidences.getStyleClass().contains("selected")) { System.out.println("Do nothing"); }
+        if (btnResidences.getStyleClass().contains("selected")) { logger.warning("Do nothing"); }
         else {
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader();
@@ -257,5 +278,13 @@ public class OwnerHandler implements Initializable {
             newStage.show();
 
         } catch (IOException e) { e.printStackTrace(); }
+    }
+
+    public boolean isUserClickedAddResidencesBtn() {
+        return userClickedAddResidencesBtn;
+    }
+
+    public boolean isUserClickedResidencesBtn() {
+        return userClickedResidencesBtn;
     }
 }

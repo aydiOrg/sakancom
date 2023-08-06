@@ -1,8 +1,5 @@
 package com.example.sakankom;
 
-import com.example.sakankom.dataStructures.Apartment;
-import com.example.sakankom.dataStructures.Neigbour;
-import com.example.sakankom.dataStructures.Tenant;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXScrollPane;
 import javafx.beans.binding.Bindings;
@@ -41,7 +38,8 @@ public class CurrentHousesHandler implements Initializable {
     ArrayList<Apartment> apartments;
     ArrayList<Neigbour> neigbours;
     Tenant tenant;
-    public boolean detailsPressed , reservePressed;
+    private boolean detailsPressed;
+    private boolean reservePressed;
     HouseDetailsHandler houseDetailsHandler;
     Apartment myApartment;
 
@@ -54,10 +52,14 @@ public class CurrentHousesHandler implements Initializable {
         return mainPane;
     }
     VBox card ;
-    Label l1, l2;
-    HBox cont , cont2;
-    Label l3,l4;
-    Label l5; MFXButton reserveBtn;
+    Label l1;
+    Label l2;
+    HBox cont;
+    HBox cont2;
+    Label l3;
+    Label l4;
+    Label l5;
+    MFXButton reserveBtn;
     MFXButton detailsBtn;
 
     private void generateGUI (){
@@ -170,7 +172,8 @@ public class CurrentHousesHandler implements Initializable {
         apartments = new ArrayList<>();
         neigbours = new ArrayList<>();
         //retrieve the data from database
-        ResultSet rst,rst2;
+        ResultSet rst ;
+        ResultSet rst2;
         try{
 
             DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
@@ -293,5 +296,11 @@ public class CurrentHousesHandler implements Initializable {
     };
 
 
+    public boolean isDetailsPressed() {
+        return detailsPressed;
+    }
 
+    public boolean isReservePressed() {
+        return reservePressed;
+    }
 }

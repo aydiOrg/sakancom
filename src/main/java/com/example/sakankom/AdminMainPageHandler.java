@@ -1,9 +1,5 @@
 package com.example.sakankom;
 
-import com.example.sakankom.dataStructures.AdminReservation;
-import com.example.sakankom.dataStructures.Admin;
-import com.example.sakankom.dataStructures.Apartment;
-import com.example.sakankom.dataStructures.User;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXScrollPane;
 import javafx.beans.binding.Bindings;
@@ -27,6 +23,7 @@ import java.net.URL;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import java.util.logging.Logger;
 
 public class AdminMainPageHandler implements Initializable {
         private static final String SAKANKOM = "sakankom";
@@ -78,6 +75,7 @@ public class AdminMainPageHandler implements Initializable {
         public boolean isUserClickedRejectButton() {
                 return userClickedRejectButton;
         }
+        private static final Logger logger = Logger.getLogger(AdminMainPageHandler.class.getName());
 
         User user;
         private ArrayList<Apartment> apartments ;
@@ -149,8 +147,6 @@ public class AdminMainPageHandler implements Initializable {
                                 apt.setIsReserved(rst.getString("isreserved"));
                                 apartments.add(apt);
                         }
-                        System.out.println(apartments.size()+"");
-
 
                         con.close();
                 }
@@ -162,7 +158,7 @@ public class AdminMainPageHandler implements Initializable {
 
                 FXMLLoader loader2 = new FXMLLoader(getClass().getResource("Admin-Reservations.fxml"));
 
-                try { loader2.load(); } catch (IOException e) { throw new RuntimeException(e); }
+                try { loader2.load(); } catch (IOException e) { e.printStackTrace(); }
 
                 adminReservationsHandler = loader2.getController();
                 page2 = adminReservationsHandler.getMainPane();
@@ -192,13 +188,18 @@ public class AdminMainPageHandler implements Initializable {
                 //Declaring elements --------------------------------------------------------------------
                 container.setMaxWidth(920);
                 VBox card ;
-                Label l1, l2;
-                HBox cont , cont2;
-                Label l3,l4;
-                Label l5; MFXButton reserveBtn , detailsBtn;
+                Label l1;
+                Label l2;
+                HBox cont ;
+                HBox cont2;
+                Label l3;
+                Label l4;
+                Label l5;
+                MFXButton reserveBtn ;
+                MFXButton detailsBtn;
 
                 //prepare strings and data.
-                String name;
+                String strName;
                 String owner;
                 String type;
                 String address;
@@ -209,7 +210,7 @@ public class AdminMainPageHandler implements Initializable {
 
                         if(apartments.get(i).getIsValid().equals("1") && apartments.get(i).getIsAccepted().equals("0") && apartments.get(i).getIsReserved().equalsIgnoreCase("0")){
                                 //data
-                                name = apartments.get(i).getAptName();
+                                strName = apartments.get(i).getAptName();
                                 owner = apartments.get(i).getOwnerName();
                                 type = (apartments.get(i).getCapacity() > 1) ? "shared" : "solo";
                                 address = apartments.get(i).getAddress();
@@ -222,7 +223,7 @@ public class AdminMainPageHandler implements Initializable {
                                 card.getStylesheets().add(TENANTHOUSES);
                                 card.getStyleClass().add("vbox");
 
-                                l1 = new Label(name);
+                                l1 = new Label(strName);
                                 l2 = new Label("By " + owner);
                                 l3 = new Label("Type: " + type + " room   ,");
                                 l4 = new Label("   Address: " + address);
@@ -354,13 +355,14 @@ public class AdminMainPageHandler implements Initializable {
                 bigPane.getChildren().add(page2);
                 isReservationsPressed = true;
                 userClickedReservationsButton = true;
-                if (reservationsBtn.getStyleClass().contains("selected")) System.out.println("Do nothing");
+                if (reservationsBtn.getStyleClass().contains("selected")) logger.warning("Do nothing");
 
                 else generateGUI();
 
         }
         public void fetchData(){
-                ResultSet rst,rst2;
+                ResultSet rst;
+                ResultSet rst2;
                 try{
 
                         DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());

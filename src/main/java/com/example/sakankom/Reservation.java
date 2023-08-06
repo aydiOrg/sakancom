@@ -1,10 +1,8 @@
-package com.example.sakankom.dataStructures;
-
-import java.util.Date;
+package com.example.sakankom;
 
 public class Reservation {
-    private int house_id;
-    private int tenant_id;
+    private int houseId;
+    private int tenantId;
     private int price;
     private String payyingDate;
     private String reservationDate;
@@ -13,12 +11,12 @@ public class Reservation {
     //setters
 
 
-    public void setHouse_id(int house_id) {
-        this.house_id = house_id;
+    public void setHouseId(int houseId) {
+        this.houseId = houseId;
     }
 
-    public void setTenant_id(int tenant_id) {
-        this.tenant_id = tenant_id;
+    public void setTenantId(int tenantId) {
+        this.tenantId = tenantId;
     }
 
     public void setPrice(int price) {
@@ -40,12 +38,12 @@ public class Reservation {
     //getters
 
 
-    public int getHouse_id() {
-        return house_id;
+    public int getHouseId() {
+        return houseId;
     }
 
-    public int getTenant_id() {
-        return tenant_id;
+    public int getTenantId() {
+        return tenantId;
     }
 
     public int getPrice() {

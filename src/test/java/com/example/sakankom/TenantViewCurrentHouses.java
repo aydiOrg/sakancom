@@ -1,9 +1,5 @@
 package com.example.sakankom;
 
-import com.example.sakankom.dataStructures.Apartment;
-import com.example.sakankom.dataStructures.Neigbour;
-import com.example.sakankom.dataStructures.Tenant;
-import com.example.sakankom.dataStructures.User;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 
@@ -22,14 +18,14 @@ public class TenantViewCurrentHouses {
     public TenantViewCurrentHouses (User user, Tenant tenant){
         this.user = user;
         this.tenant = tenant;
-        apartments = new ArrayList<Apartment>();
-        neigbours = new ArrayList<Neigbour>();
+        apartments = new ArrayList<>();
+        neigbours = new ArrayList<>();
     }
 
     @Given("the tenant is logged in to the system")
     public void theTenantIsLoggedInToTheSystem() {
         // Write code here that turns the phrase above into concrete actions
-        MainPageHandler mainPageHandler = Wrapper.signInHandler.mainPageHandler;
+        MainPageHandler mainPageHandler = Wrapper.signInHandler.getMainPageHandler();
         user = mainPageHandler.getUser();
         if(!user.getUserType().equalsIgnoreCase("tenant")){
             assertTrue(true);
@@ -43,25 +39,25 @@ public class TenantViewCurrentHouses {
     @Given("the tenant presses on apartments")
     public void theTenantPressesOnApartments() {
         // Write code here that turns the phrase above into concrete actions
-        MainPageHandler mainPageHandler = Wrapper.signInHandler.mainPageHandler;
+        MainPageHandler mainPageHandler = Wrapper.signInHandler.getMainPageHandler();
         user = mainPageHandler.getUser();
         if(!user.getUserType().equalsIgnoreCase("tenant")){
             assertTrue(true);
         }
         else
-            assertTrue(mainPageHandler.isApartementsPressed);
+            assertTrue(mainPageHandler.isApartementsPressed());
     }
 
     @Then("all available apartments should be displayed")
     public void allAvailableApartmentsShouldBeDisplayed() {
-        MainPageHandler mainPageHandler = Wrapper.signInHandler.mainPageHandler;
+        MainPageHandler mainPageHandler = Wrapper.signInHandler.getMainPageHandler();
         user = mainPageHandler.getUser();
         if(!user.getUserType().equalsIgnoreCase("tenant")){
             assertTrue(true);
         }
         else {
-            ArrayList<Apartment> realApartments = Wrapper.signInHandler.mainPageHandler.currentHousesHandler.apartments;
-            neigbours = Wrapper.signInHandler.mainPageHandler.currentHousesHandler.neigbours;
+            ArrayList<Apartment> realApartments = Wrapper.signInHandler.getMainPageHandler().getCurrentHousesHandler().apartments;
+            neigbours = Wrapper.signInHandler.getMainPageHandler().getCurrentHousesHandler().neigbours;
             // Write code here that turns the phrase above into concrete actions
             ResultSet rst;
             try {
@@ -113,72 +109,72 @@ public class TenantViewCurrentHouses {
             }
 
 
-//            for (int i = 0; i < apartments.size(); i++) {
-//                if (apartments.get(i).getHouseId() == realApartments.get(i).getHouseId() && apartments.get(i).getOwnerId() == realApartments.get(i).getOwnerId() && apartments.get(i).getResidenceId() == realApartments.get(i).getResidenceId()) {
-//                    dataMatches = true;
-//                }
-//                if (apartments.get(i).getIsReserved().equals("0")) {
-//                    boolean flag = false;
-//                    for (Neigbour neigbour : neigbours) {
-//                        if (neigbour.getTenantID() == tenant.getTenantID() && neigbour.getHouseID() == apartments.get(i).getHouseId()) {
-//                            flag = true;
-//                            break;
-//                        }
-//                    }
-//                    if (flag)
-//                        continue;
-//                    counter++;
-//                }
-//            }
+            for (int i = 0; i < apartments.size(); i++) {
+                if (apartments.get(i).getHouseId() == realApartments.get(i).getHouseId() && apartments.get(i).getOwnerId() == realApartments.get(i).getOwnerId() && apartments.get(i).getResidenceId() == realApartments.get(i).getResidenceId()) {
+                    dataMatches = true;
+                }
+                if (apartments.get(i).getIsReserved().equals("0")) {
+                    boolean flag = false;
+                    for (Neigbour neigbour : neigbours) {
+                        if (neigbour.getTenantID() == tenant.getTenantID() && neigbour.getHouseID() == apartments.get(i).getHouseId()) {
+                            flag = true;
+                            break;
+                        }
+                    }
+                    if (flag)
+                        continue;
+                    counter++;
+                }
+            }
 
-            if (Wrapper.signInHandler.mainPageHandler.currentHousesHandler.container.getChildren().size() == counter) {
+            if (Wrapper.signInHandler.getMainPageHandler().getCurrentHousesHandler().container.getChildren().size() == counter) {
                 dataGenerated = true;
             }
             System.out.println(sizeMatches + " " + dataMatches + " " + dataGenerated);
 
-            //assertTrue(sizeMatches && dataMatches && dataGenerated);
-            assertTrue(true);
+            assertTrue(sizeMatches && dataMatches && dataGenerated);
+            //assertTrue(true);
         }
     }
 
     //Second Scenario ----------------------------
     @Given("the tenant who is logged in to the system presses on apartments")
     public void theTenantWhoIsLoggedInToTheSystemPressesOnApartments() {
-        MainPageHandler mainPageHandler = Wrapper.signInHandler.mainPageHandler;
+        MainPageHandler mainPageHandler = Wrapper.signInHandler.getMainPageHandler();
         user = mainPageHandler.getUser();
         if(!user.getUserType().equalsIgnoreCase("tenant")){
             assertTrue(true);
         }
         else {
             tenant = mainPageHandler.getTenant();
-            assertTrue(user.getFlag() && user.getUserType().equalsIgnoreCase("tenant") && mainPageHandler.isApartementsPressed);
+            assertTrue(user.getFlag() && user.getUserType().equalsIgnoreCase("tenant") && mainPageHandler.isApartementsPressed());
         }
     }
     @Given("the tenant presses on details of a specific house")
     public void theTenantPressesOnDetailsOfASpecificHouse() {
-        MainPageHandler mainPageHandler = Wrapper.signInHandler.mainPageHandler;
+        MainPageHandler mainPageHandler = Wrapper.signInHandler.getMainPageHandler();
         user = mainPageHandler.getUser();
         if(!user.getUserType().equalsIgnoreCase("tenant")){
             assertTrue(true);
         }
         else {
             // Write code here that turns the phrase above into concrete actions
-            CurrentHousesHandler currentHousesHandler = Wrapper.signInHandler.mainPageHandler.currentHousesHandler;
-            assertTrue(currentHousesHandler.detailsPressed);
+            CurrentHousesHandler currentHousesHandler = Wrapper.signInHandler.getMainPageHandler().getCurrentHousesHandler();
+            assertTrue(currentHousesHandler.isDetailsPressed());
         }
     }
     @Then("the details of the house are shown")
     public void theDetailsOfTheHouseAreShown() {
         // Write code here that turns the phrase above into concrete actions
-        MainPageHandler mainPageHandler = Wrapper.signInHandler.mainPageHandler;
+        MainPageHandler mainPageHandler = Wrapper.signInHandler.getMainPageHandler();
         user = mainPageHandler.getUser();
         if(!user.getUserType().equalsIgnoreCase("tenant")){
             assertTrue(true);
         }
         else {
-            Apartment apartment = Wrapper.signInHandler.mainPageHandler.currentHousesHandler.houseDetailsHandler.apartment;
-            HouseDetailsHandler houseDetailsHandler = Wrapper.signInHandler.mainPageHandler.currentHousesHandler.houseDetailsHandler;
-            neigbours = Wrapper.signInHandler.mainPageHandler.currentHousesHandler.neigbours;
+            Apartment apartment = Wrapper.signInHandler.getMainPageHandler().getCurrentHousesHandler().houseDetailsHandler.getApartment();
+            HouseDetailsHandler houseDetailsHandler = Wrapper.signInHandler.getMainPageHandler().getCurrentHousesHandler().houseDetailsHandler;
+            neigbours = Wrapper.signInHandler.getMainPageHandler().getCurrentHousesHandler().neigbours;
             ResultSet rst, rst2;
             try {
 
@@ -237,14 +233,15 @@ public class TenantViewCurrentHouses {
             boolean apartmentExists = false;
             boolean neigboursExist = false;
 
-            for (int i = 0; i < apartments.size(); i++) {
-                if (apartments.get(i).getHouseId() == apartment.getHouseId() && apartments.get(i).getResidenceId() == apartment.getResidenceId() && apartments.get(i).getOwnerId() == apartment.getOwnerId()) {
+            for (Apartment value : apartments) {
+                if (value.getHouseId() == apartment.getHouseId() && value.getResidenceId() == apartment.getResidenceId() && value.getOwnerId() == apartment.getOwnerId()) {
                     apartmentExists = true;
+                    break;
                 }
             }
             int counter = 0;
-            for (int i = 0; i < neigbours.size(); i++) {
-                if (neigbours.get(i).getHouseID() == apartment.getHouseId() && neigbours.get(i).getTenantID() != tenant.getTenantID()) {
+            for (Neigbour neigbour : neigbours) {
+                if (neigbour.getHouseID() == apartment.getHouseId() && neigbour.getTenantID() != tenant.getTenantID()) {
                     counter++;
                 }
             }
@@ -262,39 +259,39 @@ public class TenantViewCurrentHouses {
     @Given("the tenant who is logged in presses on apartments")
     public void theTenantWhoIsLoggedInPressesOnApartments() {
         // Write code here that turns the phrase above into concrete actions
-        MainPageHandler mainPageHandler = Wrapper.signInHandler.mainPageHandler;
+        MainPageHandler mainPageHandler = Wrapper.signInHandler.getMainPageHandler();
         user = mainPageHandler.getUser();
         if(!user.getUserType().equalsIgnoreCase("tenant")){
             assertTrue(true);
         }
         else {
             tenant = mainPageHandler.getTenant();
-            assertTrue(user.getFlag() && user.getUserType().equalsIgnoreCase("tenant") && mainPageHandler.isApartementsPressed);
+            assertTrue(user.getFlag() && user.getUserType().equalsIgnoreCase("tenant") && mainPageHandler.isApartementsPressed());
         }
     }
     @Given("the tenant presses on the reserve button of any house")
     public void theTenantPressesOnTheReserveButtonOfAnyHouse() {
         // Write code here that turns the phrase above into concrete actions
-        MainPageHandler mainPageHandler = Wrapper.signInHandler.mainPageHandler;
+        MainPageHandler mainPageHandler = Wrapper.signInHandler.getMainPageHandler();
         user = mainPageHandler.getUser();
         if(!user.getUserType().equalsIgnoreCase("tenant")){
             assertTrue(true);
         }
         else {
-            CurrentHousesHandler currentHousesHandler = Wrapper.signInHandler.mainPageHandler.currentHousesHandler;
-            assertTrue(currentHousesHandler.reservePressed);
+            CurrentHousesHandler currentHousesHandler = Wrapper.signInHandler.getMainPageHandler().getCurrentHousesHandler();
+            assertTrue(currentHousesHandler.isReservePressed());
         }
     }
     @Then("a reservation is created")
     public void aReservationIsCreated() {
         // Write code here that turns the phrase above into concrete actions
-        MainPageHandler mainPageHandler = Wrapper.signInHandler.mainPageHandler;
+        MainPageHandler mainPageHandler = Wrapper.signInHandler.getMainPageHandler();
         user = mainPageHandler.getUser();
         if(!user.getUserType().equalsIgnoreCase("tenant")){
             assertTrue(true);
         }
         else {
-            CurrentHousesHandler currentHousesHandler = Wrapper.signInHandler.mainPageHandler.currentHousesHandler;
+            CurrentHousesHandler currentHousesHandler = Wrapper.signInHandler.getMainPageHandler().getCurrentHousesHandler();
             Apartment myApartment = currentHousesHandler.myApartment;
             boolean reservationExists = false;
 

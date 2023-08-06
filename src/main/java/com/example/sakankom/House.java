@@ -1,4 +1,4 @@
-package com.example.sakankom.OwnerFiles;
+package com.example.sakankom;
 
 public class House {
     public House(String name, String imageSrc, int price, String res, int floor) { this.name = name; this.imageSrc = imageSrc; this.price = price; this.res = res; this.floor = floor; }
@@ -7,7 +7,7 @@ public class House {
     public House() {}
 
     private String name;
-    public String houseID;
+    private String houseID;
     public String getID(){
         return name.split(" ")[1];
     }
@@ -47,4 +47,7 @@ public class House {
     }
 
 
+    public String getHouseID() {
+        return houseID;
+    }
 }

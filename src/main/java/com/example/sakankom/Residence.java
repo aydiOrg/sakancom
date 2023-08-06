@@ -1,4 +1,4 @@
-package com.example.sakankom.OwnerFiles;
+package com.example.sakankom;
 
 public class Residence {
     private final String residenceID;

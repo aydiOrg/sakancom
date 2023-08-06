@@ -1,8 +1,5 @@
 package com.example.sakankom;
 
-import com.example.sakankom.dataStructures.AdminReservation;
-import com.example.sakankom.dataStructures.Apartment;
-import com.example.sakankom.dataStructures.User;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import junit.framework.TestCase;
@@ -19,24 +16,24 @@ public class AdminReservationsManagement {
 
     public AdminReservationsManagement(User user){
         this.user = user;
-        adminReservations = new ArrayList<AdminReservation>();
+        adminReservations = new ArrayList<>();
     }
 
     @Given("the user who is admin is logged in to the system")
     public void theUserWhoIsAdminIsLoggedInToTheSystem() {
         // Write code here that turns the phrase above into concrete actions
-        AdminMainPageHandler adminMainPageHandler = Wrapper.signInHandler.adminMainPageHandler;
+        AdminMainPageHandler adminMainPageHandler = Wrapper.signInHandler.getAdminMainPageHandler();
         user = adminMainPageHandler.getUser();
         if(!user.getUserType().equalsIgnoreCase("admin")){
             TestCase.assertTrue(true);
         }
         else
-        assertTrue(user.getFlag() && user.getUserType().equalsIgnoreCase("admin"));
+            assertTrue(user.getFlag() && user.getUserType().equalsIgnoreCase("admin"));
     }
 
     @Given("the user presses on the reservations button in the sidebar")
     public void theUserPressesOnTheReservationsButtonInTheSidebar() {
-        AdminMainPageHandler adminMainPageHandler = Wrapper.signInHandler.adminMainPageHandler;
+        AdminMainPageHandler adminMainPageHandler = Wrapper.signInHandler.getAdminMainPageHandler();
         user = adminMainPageHandler.getUser();
         if(!user.getUserType().equalsIgnoreCase("admin")){
             TestCase.assertTrue(true);
@@ -49,7 +46,7 @@ public class AdminReservationsManagement {
 
     @Then("all of the current available reservations should be displayed")
     public void allOfTheCurrentAvailableReservationsShouldBeDisplayed() {
-        AdminMainPageHandler adminMainPageHandler = Wrapper.signInHandler.adminMainPageHandler;
+        AdminMainPageHandler adminMainPageHandler = Wrapper.signInHandler.getAdminMainPageHandler();
         user = adminMainPageHandler.getUser();
         if (!user.getUserType().equalsIgnoreCase("admin")) {
             TestCase.assertTrue(true);
@@ -80,11 +77,11 @@ public class AdminReservationsManagement {
 
                 rst = st.executeQuery("select * from owner");
                 while (rst.next()) {
-                    for (int i = 0; i < adminReservations.size(); i++) {
-                        if (adminReservations.get(i).getOwnerId() == rst.getInt("owner_id")) {
-                            adminReservations.get(i).setOwnerName(rst.getString("fname") + " " + rst.getString("lname"));
-                            adminReservations.get(i).setOwnerPhone(rst.getString("phone_number"));
-                            adminReservations.get(i).setOwnerEmail(rst.getString("email"));
+                    for (AdminReservation adminReservation : adminReservations) {
+                        if (adminReservation.getOwnerId() == rst.getInt("owner_id")) {
+                            adminReservation.setOwnerName(rst.getString("fname") + " " + rst.getString("lname"));
+                            adminReservation.setOwnerPhone(rst.getString("phone_number"));
+                            adminReservation.setOwnerEmail(rst.getString("email"));
                         }
                     }
                 }
@@ -92,11 +89,11 @@ public class AdminReservationsManagement {
 
                 rst = st.executeQuery("select * from tenant");
                 while (rst.next()) {
-                    for (int i = 0; i < adminReservations.size(); i++) {
-                        if (adminReservations.get(i).getTenantId() == rst.getInt("tenant_id")) {
-                            adminReservations.get(i).setTenantName(rst.getString("fname") + " " + rst.getString("lname"));
-                            adminReservations.get(i).setTenantPhone(rst.getString("phone_number"));
-                            adminReservations.get(i).setTenantEmail(rst.getString("email"));
+                    for (AdminReservation adminReservation : adminReservations) {
+                        if (adminReservation.getTenantId() == rst.getInt("tenant_id")) {
+                            adminReservation.setTenantName(rst.getString("fname") + " " + rst.getString("lname"));
+                            adminReservation.setTenantPhone(rst.getString("phone_number"));
+                            adminReservation.setTenantEmail(rst.getString("email"));
                         }
                     }
                 }
@@ -111,10 +108,10 @@ public class AdminReservationsManagement {
             ArrayList<AdminReservation> adminReservations1 = adminMainPageHandler.getAdminReservations();
 
             boolean dataValid = true;
-            for (int i = 0; i < adminReservations.size(); i++) {
-                for (int k = 0; k < adminReservations1.size(); k++) {
-                    if (adminReservations.get(i).getHouseId() == adminReservations1.get(k).getHouseId()) {
-                        if (adminReservations.get(i).getTenantId() != adminReservations1.get(k).getTenantId() || adminReservations.get(i).getOwnerId() != adminReservations1.get(k).getOwnerId() || adminReservations.get(i).getResidenceID() != adminReservations1.get(k).getResidenceID()) {
+            for (AdminReservation adminReservation : adminReservations) {
+                for (AdminReservation reservation : adminReservations1) {
+                    if (adminReservation.getHouseId() == reservation.getHouseId()) {
+                        if (adminReservation.getTenantId() != reservation.getTenantId() || adminReservation.getOwnerId() != reservation.getOwnerId() || adminReservation.getResidenceID() != reservation.getResidenceID()) {
                             dataValid = false;
                             break;
                         }

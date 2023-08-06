@@ -1,15 +1,11 @@
 package com.example.sakankom;
 
-import com.example.sakankom.dataStructures.Furniture;
-import com.example.sakankom.dataStructures.Tenant;
-import com.example.sakankom.dataStructures.User;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 
 import java.sql.*;
 import java.util.ArrayList;
 
-import static junit.framework.TestCase.assertFalse;
 import static junit.framework.TestCase.assertTrue;
 
 
@@ -20,12 +16,12 @@ public class FurnitureSteps {
     public FurnitureSteps (User user, Tenant tenant){
         this.user = user;
         this.tenant = tenant;
-        furnitures = new ArrayList<Furniture>();
+        furnitures = new ArrayList<>();
     }
     @Given("the user who is tenant is logged in to the system")
     public void theUserWhoIsTenantIsLoggedInToTheSystem() {
         // Write code here that turns the phrase above into concrete actions
-        MainPageHandler mainPageHandler = Wrapper.signInHandler.mainPageHandler;
+        MainPageHandler mainPageHandler = Wrapper.signInHandler.getMainPageHandler();
         user = mainPageHandler.getUser();
         if(!user.getUserType().equalsIgnoreCase("tenant")){
             assertTrue(true);
@@ -36,24 +32,24 @@ public class FurnitureSteps {
     @Given("the tenant presses on the furniture button")
     public void theTenantPressesOnTheFurnitureButton() {
         // Write code here that turns the phrase above into concrete actions
-        MainPageHandler mainPageHandler = Wrapper.signInHandler.mainPageHandler;
+        MainPageHandler mainPageHandler = Wrapper.signInHandler.getMainPageHandler();
         user = mainPageHandler.getUser();
         if(!user.getUserType().equalsIgnoreCase("tenant")){
             assertTrue(true);
         }
         else
-            assertTrue(Wrapper.signInHandler.mainPageHandler.isFurniturePressed);
+            assertTrue(Wrapper.signInHandler.getMainPageHandler().isFurniturePressed());
     }
     @Then("all furniture that are published should be shown")
     public void allFurnitureThatArePublishedShouldBeShown() {
         // Write code here that turns the phrase above into concrete actions
-        MainPageHandler mainPageHandler = Wrapper.signInHandler.mainPageHandler;
+        MainPageHandler mainPageHandler = Wrapper.signInHandler.getMainPageHandler();
         user = mainPageHandler.getUser();
         if(!user.getUserType().equalsIgnoreCase("tenant")){
             assertTrue(true);
         }
         else {
-            ArrayList<Furniture> realFurnitures = Wrapper.signInHandler.mainPageHandler.furnitureHandler.getFurnitures();
+            ArrayList<Furniture> realFurnitures = Wrapper.signInHandler.getMainPageHandler().getFurnitureHandler().getFurnitures();
 
             ResultSet rst;
             try {
@@ -81,21 +77,17 @@ public class FurnitureSteps {
                 e.printStackTrace();
             }
 
-            boolean sizeMatches = false;
-
-            if (furnitures.size() == realFurnitures.size()) {
-                sizeMatches = true;
-            }
+            boolean sizeMatches = furnitures.size() == realFurnitures.size();
 
             boolean dataMathces = true;
-            for (int i = 0; i < furnitures.size(); i++) {
-                for (int j = 0; j < realFurnitures.size(); j++) {
-                    if (furnitures.get(i).getFurnitureId() == realFurnitures.get(j).getFurnitureId()) {
-                        if (!(furnitures.get(i).getOwnerName().equalsIgnoreCase(realFurnitures.get(j).getOwnerName()) && furnitures.get(i).getIsSold().equalsIgnoreCase(realFurnitures.get(j).getIsSold()))) {
+            for (Furniture furniture : furnitures) {
+                for (Furniture realFurniture : realFurnitures) {
+                    if (furniture.getFurnitureId() == realFurniture.getFurnitureId()) {
+                        if (!(furniture.getOwnerName().equalsIgnoreCase(realFurniture.getOwnerName()) && furniture.getIsSold().equalsIgnoreCase(realFurniture.getIsSold()))) {
                             dataMathces = false;
-                            System.out.println(furnitures.get(i).getFurnitureId() + "  " + realFurnitures.get(j).getFurnitureId());
-                            System.out.println(furnitures.get(i).getOwnerName() + "  " + realFurnitures.get(j).getOwnerName());
-                            System.out.println(furnitures.get(i).getIsSold() + "  " + realFurnitures.get(j).getIsSold());
+                            System.out.println(furniture.getFurnitureId() + "  " + realFurniture.getFurnitureId());
+                            System.out.println(furniture.getOwnerName() + "  " + realFurniture.getOwnerName());
+                            System.out.println(furniture.getIsSold() + "  " + realFurniture.getIsSold());
                         }
                         break;
                     }
@@ -113,35 +105,35 @@ public class FurnitureSteps {
     @Given("the user who is tenant is logged in to the system and presses on furniture buttons")
     public void theUserWhoIsTenantIsLoggedInToTheSystemAndPressesOnFurnitureButtons() {
         // Write code here that turns the phrase above into concrete actions
-        MainPageHandler mainPageHandler = Wrapper.signInHandler.mainPageHandler;
+        MainPageHandler mainPageHandler = Wrapper.signInHandler.getMainPageHandler();
         user = mainPageHandler.getUser();
         if(!user.getUserType().equalsIgnoreCase("tenant")){
             assertTrue(true);
         }
         else
-            assertTrue(user.getFlag() && user.getUserType().equalsIgnoreCase("tenant") && Wrapper.signInHandler.mainPageHandler.isFurniturePressed);
+            assertTrue(user.getFlag() && user.getUserType().equalsIgnoreCase("tenant") && Wrapper.signInHandler.getMainPageHandler().isFurniturePressed());
     }
     @Given("the user presses on buy button")
     public void theUserPressesOnBuyButton() {
         // Write code here that turns the phrase above into concrete actions
-        MainPageHandler mainPageHandler = Wrapper.signInHandler.mainPageHandler;
+        MainPageHandler mainPageHandler = Wrapper.signInHandler.getMainPageHandler();
         user = mainPageHandler.getUser();
         if(!user.getUserType().equalsIgnoreCase("tenant")){
             assertTrue(true);
         }
         else
-            assertTrue( Wrapper.signInHandler.mainPageHandler.furnitureHandler.buyPressed);
+            assertTrue( Wrapper.signInHandler.getMainPageHandler().getFurnitureHandler().isBuyPressed());
     }
     @Then("the piece of furniture that he chose should be sold to him")
     public void thePieceOfFurnitureThatHeChoseShouldBeSoldToHim() {
         // Write code here that turns the phrase above into concrete actions
-        MainPageHandler mainPageHandler = Wrapper.signInHandler.mainPageHandler;
+        MainPageHandler mainPageHandler = Wrapper.signInHandler.getMainPageHandler();
         user = mainPageHandler.getUser();
         if(!user.getUserType().equalsIgnoreCase("tenant")){
             assertTrue(true);
         }
         else {
-            String soldFId = Wrapper.signInHandler.mainPageHandler.furnitureHandler.soldFID;
+            String soldFId = Wrapper.signInHandler.getMainPageHandler().getFurnitureHandler().soldFID;
 
             boolean pieceSold = false;
             ResultSet rst;
@@ -173,7 +165,7 @@ public class FurnitureSteps {
     @Given("the tenant navigates to the furniture page")
     public void theTenantNavigatesToTheFurniturePage() {
         // Write code here that turns the phrase above into concrete actions
-        MainPageHandler mainPageHandler = Wrapper.signInHandler.mainPageHandler;
+        MainPageHandler mainPageHandler = Wrapper.signInHandler.getMainPageHandler();
         user = mainPageHandler.getUser();
         if(!user.getUserType().equalsIgnoreCase("tenant")){
             assertTrue(true);
@@ -184,51 +176,51 @@ public class FurnitureSteps {
     @Given("presses on add new")
     public void pressesOnAddNew() {
         // Write code here that turns the phrase above into concrete actions
-        MainPageHandler mainPageHandler = Wrapper.signInHandler.mainPageHandler;
+        MainPageHandler mainPageHandler = Wrapper.signInHandler.getMainPageHandler();
         user = mainPageHandler.getUser();
         if(!user.getUserType().equalsIgnoreCase("tenant")){
             assertTrue(true);
         }
         else
-            assertTrue(Wrapper.signInHandler.mainPageHandler.furnitureHandler.addPressed);
+            assertTrue(Wrapper.signInHandler.getMainPageHandler().getFurnitureHandler().isAddPressed());
     }
     @Given("the tenant fills all the required fields")
     public void theTenantFillsAllTheRequiredFields() {
         // Write code here that turns the phrase above into concrete actions
-        MainPageHandler mainPageHandler = Wrapper.signInHandler.mainPageHandler;
+        MainPageHandler mainPageHandler = Wrapper.signInHandler.getMainPageHandler();
         user = mainPageHandler.getUser();
         if(!user.getUserType().equalsIgnoreCase("tenant")){
             assertTrue(true);
         }
         else {
-            NewFurnitureHandler newFurnitureHandler = Wrapper.signInHandler.mainPageHandler.furnitureHandler.newFurnitureHandler;
+            NewFurnitureHandler newFurnitureHandler = Wrapper.signInHandler.getMainPageHandler().getFurnitureHandler().newFurnitureHandler;
             assertTrue(!newFurnitureHandler.getUname().getText().isEmpty() && !newFurnitureHandler.getUprice().getText().isEmpty() && !newFurnitureHandler.getUdescription().getText().isEmpty());
         }
     }
     @Given("presses on sell")
     public void pressesOnSell() {
         // Write code here that turns the phrase above into concrete actions
-        MainPageHandler mainPageHandler = Wrapper.signInHandler.mainPageHandler;
+        MainPageHandler mainPageHandler = Wrapper.signInHandler.getMainPageHandler();
         user = mainPageHandler.getUser();
         if(!user.getUserType().equalsIgnoreCase("tenant")){
             assertTrue(true);
         }
         else {
-            NewFurnitureHandler newFurnitureHandler = Wrapper.signInHandler.mainPageHandler.furnitureHandler.newFurnitureHandler;
-            assertTrue(newFurnitureHandler.savePressed);
+            NewFurnitureHandler newFurnitureHandler = Wrapper.signInHandler.getMainPageHandler().getFurnitureHandler().newFurnitureHandler;
+            assertTrue(newFurnitureHandler.isSavePressed());
         }
     }
     @Then("the furniture piece should be added to the system")
     public void theFurniturePieceShouldBeAddedToTheSystem() {
         // Write code here that turns the phrase above into concrete actions
-        MainPageHandler mainPageHandler = Wrapper.signInHandler.mainPageHandler;
+        MainPageHandler mainPageHandler = Wrapper.signInHandler.getMainPageHandler();
         user = mainPageHandler.getUser();
         if(!user.getUserType().equalsIgnoreCase("tenant")){
             assertTrue(true);
         }
         else {
             boolean checker = false;
-            NewFurnitureHandler newFurnitureHandler = Wrapper.signInHandler.mainPageHandler.furnitureHandler.newFurnitureHandler;
+            NewFurnitureHandler newFurnitureHandler = Wrapper.signInHandler.getMainPageHandler().getFurnitureHandler().newFurnitureHandler;
             ResultSet rst;
             try {
                 DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
@@ -253,7 +245,7 @@ public class FurnitureSteps {
     @Given("a tenant navigates to the furniture page")
     public void aTenantNavigatesToTheFurniturePage() {
         // Write code here that turns the phrase above into concrete actions
-        MainPageHandler mainPageHandler = Wrapper.signInHandler.mainPageHandler;
+        MainPageHandler mainPageHandler = Wrapper.signInHandler.getMainPageHandler();
         user = mainPageHandler.getUser();
         if(!user.getUserType().equalsIgnoreCase("tenant")){
             assertTrue(true);
@@ -264,48 +256,48 @@ public class FurnitureSteps {
     @Given("the tenant presses on add new")
     public void theTenantPressesOnAddNew() {
         // Write code here that turns the phrase above into concrete actions
-        MainPageHandler mainPageHandler = Wrapper.signInHandler.mainPageHandler;
+        MainPageHandler mainPageHandler = Wrapper.signInHandler.getMainPageHandler();
         user = mainPageHandler.getUser();
         if(!user.getUserType().equalsIgnoreCase("tenant")){
             assertTrue(true);
         }
         else
-            assertTrue(Wrapper.signInHandler.mainPageHandler.furnitureHandler.addPressed);
+            assertTrue(Wrapper.signInHandler.getMainPageHandler().getFurnitureHandler().isAddPressed());
     }
     @Given("the tenant does not fill all the required fields")
     public void theTenantDoesNotFillAllTheRequiredFields() {
         // Write code here that turns the phrase above into concrete actions
-        MainPageHandler mainPageHandler = Wrapper.signInHandler.mainPageHandler;
+        MainPageHandler mainPageHandler = Wrapper.signInHandler.getMainPageHandler();
         user = mainPageHandler.getUser();
         if(!user.getUserType().equalsIgnoreCase("tenant")){
             assertTrue(true);
         }
         else
-            assertTrue(Wrapper.signInHandler.mainPageHandler.furnitureHandler.newFurnitureHandler.valuesInvalid);
+            assertTrue(Wrapper.signInHandler.getMainPageHandler().getFurnitureHandler().newFurnitureHandler.isValuesInvalid());
     }
     @Given("the tenant presses on sell")
     public void theTenantPressesOnSell() {
         // Write code here that turns the phrase above into concrete actions
-        MainPageHandler mainPageHandler = Wrapper.signInHandler.mainPageHandler;
+        MainPageHandler mainPageHandler = Wrapper.signInHandler.getMainPageHandler();
         user = mainPageHandler.getUser();
         if(!user.getUserType().equalsIgnoreCase("tenant")){
             assertTrue(true);
         }
         else {
-            NewFurnitureHandler newFurnitureHandler = Wrapper.signInHandler.mainPageHandler.furnitureHandler.newFurnitureHandler;
-            assertTrue(newFurnitureHandler.savePressed);
+            NewFurnitureHandler newFurnitureHandler = Wrapper.signInHandler.getMainPageHandler().getFurnitureHandler().newFurnitureHandler;
+            assertTrue(newFurnitureHandler.isSavePressed());
         }
     }
     @Then("an Alert is shown")
     public void anAlertIsShown() {
         // Write code here that turns the phrase above into concrete actions
-        MainPageHandler mainPageHandler = Wrapper.signInHandler.mainPageHandler;
+        MainPageHandler mainPageHandler = Wrapper.signInHandler.getMainPageHandler();
         user = mainPageHandler.getUser();
         if(!user.getUserType().equalsIgnoreCase("tenant")){
             assertTrue(true);
         }
         else
-            assertTrue(Wrapper.signInHandler.mainPageHandler.furnitureHandler.newFurnitureHandler.valuesInvalid);
+            assertTrue(Wrapper.signInHandler.getMainPageHandler().getFurnitureHandler().newFurnitureHandler.isValuesInvalid());
     }
 
 

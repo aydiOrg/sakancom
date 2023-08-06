@@ -1,6 +1,5 @@
 package com.example.sakankom;
 
-import com.example.sakankom.OwnerFiles.House;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -11,7 +10,7 @@ import java.net.URL;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
-public class houseHandler implements Initializable {
+public class HouseHandler implements Initializable {
     @FXML
     private ImageView houseImage;
 

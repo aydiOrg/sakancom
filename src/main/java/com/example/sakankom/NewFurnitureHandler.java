@@ -1,7 +1,5 @@
 package com.example.sakankom;
 
-import com.example.sakankom.dataStructures.Furniture;
-import com.example.sakankom.dataStructures.Tenant;
 import io.github.palexdev.materialfx.controls.MFXTextField;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -29,8 +27,8 @@ public class NewFurnitureHandler implements Initializable {
         Tenant tenant;
         ArrayList<Furniture> furnitures;
     FurnitureHandler furnitureHandler;
-        public boolean savePressed;
-        public boolean valuesInvalid;
+        private boolean savePressed;
+        private boolean valuesInvalid;
         int insertedId;
         public void setFurnitures(ArrayList<Furniture> furnitures){
             this.furnitures = furnitures;
@@ -112,4 +110,12 @@ public class NewFurnitureHandler implements Initializable {
         public MFXTextField getUprice() {
             return uprice;
         }
+
+    public boolean isSavePressed() {
+        return savePressed;
+    }
+
+    public boolean isValuesInvalid() {
+        return valuesInvalid;
+    }
 }

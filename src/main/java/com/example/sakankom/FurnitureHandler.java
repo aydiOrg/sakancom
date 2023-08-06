@@ -1,7 +1,5 @@
 package com.example.sakankom;
 
-import com.example.sakankom.dataStructures.Furniture;
-import com.example.sakankom.dataStructures.Tenant;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXScrollPane;
 import javafx.beans.binding.Bindings;
@@ -35,8 +33,8 @@ public class FurnitureHandler implements Initializable {
         private MFXScrollPane mainPane;
         NewFurnitureHandler newFurnitureHandler;
         ArrayList<Furniture> furnitures;
-        public boolean buyPressed;
-        public boolean addPressed;
+        private boolean buyPressed;
+        private boolean addPressed;
         String soldFID;
 
     public ArrayList<Furniture> getFurnitures() {
@@ -98,7 +96,10 @@ public class FurnitureHandler implements Initializable {
              String description;
              String price;
             VBox card;
-            Label l1,l2,l3,l4;
+            Label l1;
+            Label l2;
+            Label l3;
+            Label l4;
             MFXButton btn;
              for (Furniture furniture : furnitures) {
                  if (furniture.getIsValid().equalsIgnoreCase("1") && furniture.getIsSold().equalsIgnoreCase("0")) {
@@ -200,4 +201,11 @@ public class FurnitureHandler implements Initializable {
         }
 
 
+    public boolean isBuyPressed() {
+        return buyPressed;
+    }
+
+    public boolean isAddPressed() {
+        return addPressed;
+    }
 }

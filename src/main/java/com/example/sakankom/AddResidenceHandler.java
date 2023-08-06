@@ -61,7 +61,7 @@ public class AddResidenceHandler {
             alert.setContentText("Add Residence Successfully :)");
 
             alert.showAndWait();
-        } catch (SQLException e) { throw new RuntimeException(e); }
+        } catch (SQLException e) { e.printStackTrace(); }
     }
 
 }

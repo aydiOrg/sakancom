@@ -8,9 +8,6 @@ module com.example.sakankom {
     requires com.oracle.database.jdbc;
 
     exports com.example.sakankom;
-    exports com.example.sakankom.dataStructures;
-    exports com.example.sakankom.OwnerFiles;
-    opens com.example.sakankom.dataStructures to javafx.fxml;
     opens com.example.sakankom to javafx.fxml;
 
 }

@@ -1,5 +1,4 @@
 package com.example.sakankom;
-import com.example.sakankom.OwnerFiles.Residence;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;

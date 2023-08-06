@@ -1,6 +1,5 @@
 package com.example.sakankom;
 
-import com.example.sakankom.OwnerFiles.House;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;

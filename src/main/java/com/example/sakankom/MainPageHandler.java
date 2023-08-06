@@ -1,9 +1,5 @@
 package com.example.sakankom;
 
-import com.example.sakankom.dataStructures.Apartment;
-import com.example.sakankom.dataStructures.Reservation;
-import com.example.sakankom.dataStructures.Tenant;
-import com.example.sakankom.dataStructures.User;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXScrollPane;
 import io.github.palexdev.materialfx.controls.MFXTextField;
@@ -42,8 +38,18 @@ public class MainPageHandler implements Initializable {
         User user;
         ArrayList<Apartment> apartments;
         ArrayList<Reservation> reservations;
-        public CurrentHousesHandler currentHousesHandler;
-        public FurnitureHandler furnitureHandler;
+
+        public CurrentHousesHandler getCurrentHousesHandler() {
+                return currentHousesHandler;
+        }
+
+        private CurrentHousesHandler currentHousesHandler;
+
+        public FurnitureHandler getFurnitureHandler() {
+                return furnitureHandler;
+        }
+
+        private FurnitureHandler furnitureHandler;
         Tenant tenant;
         @FXML
         private MFXTextField uBdate;
@@ -92,10 +98,21 @@ public class MainPageHandler implements Initializable {
         MFXScrollPane page2;
 
         Button[] buttons = new Button[5];
-        public boolean isEditPressed , isSavePressed;
-        public boolean isApartementsPressed;
-        public boolean isFurniturePressed;
-        public boolean logoutPressed , loggedOut;
+
+        public boolean isEditPressed() {
+                return isEditPressed;
+        }
+
+        public boolean isSavePressed() {
+                return isSavePressed;
+        }
+
+        private boolean isEditPressed ;
+        private boolean isSavePressed;
+        private boolean isApartementsPressed;
+        private boolean isFurniturePressed;
+        private boolean logoutPressed;
+        private boolean loggedOut;
         @Override
         public void initialize(URL url, ResourceBundle resourceBundle) {
                 loggedOut = false;
@@ -110,7 +127,7 @@ public class MainPageHandler implements Initializable {
                 //loading my pages
                 FXMLLoader loader1 = new FXMLLoader(getClass().getResource("Current-Houses.fxml"));
 
-                try { Parent root1 = loader1.load(); } catch (IOException e) { throw new RuntimeException(e); }
+                try { loader1.load(); } catch (IOException e) { e.printStackTrace(); }
 
                 currentHousesHandler = loader1.getController();
                 page3 = currentHousesHandler.getMainPane();
@@ -118,7 +135,7 @@ public class MainPageHandler implements Initializable {
 
                 FXMLLoader loader2 = new FXMLLoader(getClass().getResource("Furniture.fxml"));
 
-                try{ Parent root2 = loader2.load(); } catch (IOException e) { e.printStackTrace(); }
+                try{ loader2.load(); } catch (IOException e) { e.printStackTrace(); }
 
                 furnitureHandler = loader2.getController();
                 page2 = furnitureHandler.getMainPane();
@@ -232,8 +249,8 @@ public class MainPageHandler implements Initializable {
 
                         while (rst.next()) {
                                 reservation = new Reservation();
-                                reservation.setHouse_id(rst.getInt("house_id"));
-                                reservation.setTenant_id(rst.getInt("tenant_id"));
+                                reservation.setHouseId(rst.getInt("house_id"));
+                                reservation.setTenantId(rst.getInt("tenant_id"));
                                 reservation.setReservationDate(rst.getString("reservation_date"));
                                 reservation.setPrice(rst.getInt("price"));
                                 reservation.setIsValid(rst.getString("isvalid"));
@@ -244,7 +261,6 @@ public class MainPageHandler implements Initializable {
                                 cal.setTime(rst.getDate("payying_date"));
                                 cal.add(Calendar.DAY_OF_MONTH,30);
                                 String dateafter = sdf.format(cal.getTime());
-                                System.out.println(dateafter);
                                 // done editing
 
                                 reservation.setPayyingDate(dateafter);
@@ -263,7 +279,7 @@ public class MainPageHandler implements Initializable {
 
                 for (Reservation reservation : reservations) {
                         for (Apartment apartment : apartments) {
-                                if (apartment.getHouseId() == reservation.getHouse_id()) {
+                                if (apartment.getHouseId() == reservation.getHouseId()) {
                                         name = apartment.getAptName();
                                         address = apartment.getAddress();
                                         owner = apartment.getOwnerName();
@@ -276,8 +292,18 @@ public class MainPageHandler implements Initializable {
 
                         //filling the reservations
                         VBox card;
-                        Label l1, l2, l3, l4, l5, l6;
-                        HBox h1, h2, h3, h4, h5, h6;
+                        Label l1;
+                        Label l2;
+                        Label l3;
+                        Label l4;
+                        Label l5;
+                        Label l6;
+                        HBox h1;
+                        HBox h2;
+                        HBox h3;
+                        HBox h4;
+                        HBox h5;
+                        HBox h6;
 
                         //generating elements
                         card = new VBox();
@@ -450,6 +476,22 @@ public class MainPageHandler implements Initializable {
 
         public ArrayList<Reservation> getReservations() {
                 return reservations;
+        }
+
+        public boolean isApartementsPressed() {
+                return isApartementsPressed;
+        }
+
+        public boolean isFurniturePressed() {
+                return isFurniturePressed;
+        }
+
+        public boolean isLogoutPressed() {
+                return logoutPressed;
+        }
+
+        public boolean isLoggedOut() {
+                return loggedOut;
         }
 }
 

@@ -1,8 +1,5 @@
 package com.example.sakankom;
 
-import com.example.sakankom.OwnerFiles.House;
-import com.example.sakankom.OwnerFiles.Owner;
-import com.example.sakankom.dataStructures.User;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 
@@ -10,7 +7,6 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 
 import static junit.framework.TestCase.assertTrue;
 
@@ -26,13 +22,13 @@ public class OwnerHousesFeatureSteps {
 
     @Given("user is logged in and the user is a owner")
     public void userIsLoggedInAndTheUserIsAOwner() {
-        OwnerHandler ownerHandler = Wrapper.signInHandler.ownerHandler;
+        OwnerHandler ownerHandler = Wrapper.signInHandler.getOwnerHandler();
         user = ownerHandler.getUser();
         if(!user.getUserType().equalsIgnoreCase("owner")){
             assertTrue(true);
         }
         else
-        assertTrue(user.getFlag() && user.getUserType().equalsIgnoreCase("owner"));
+            assertTrue(user.getFlag() && user.getUserType().equalsIgnoreCase("owner"));
     }
 
     @Then("his houses should be shown")
@@ -41,7 +37,7 @@ public class OwnerHousesFeatureSteps {
             assertTrue(true);
         }
         else{
-            OwnerHandler ownerHandler = Wrapper.signInHandler.ownerHandler;
+            OwnerHandler ownerHandler = Wrapper.signInHandler.getOwnerHandler();
             owner = ownerHandler.getOwner();
 
             List<House> recentlyAddedFromDataBase = new ArrayList<>();
@@ -83,17 +79,17 @@ public class OwnerHousesFeatureSteps {
 
             boolean firstTest = true;
 
-            Collections.reverse(ownerHandler.recommended);
+            Collections.reverse(ownerHandler.getRecommended());
             for (int i = 0 ; i < recommendedFromDataBase.size() ; i++){
-                if(!recommendedFromDataBase.get(i).getName().equalsIgnoreCase(ownerHandler.recommended.get(i).getName())) firstTest = false;
-                if(!recommendedFromDataBase.get(i).getID().equalsIgnoreCase(ownerHandler.recommended.get(i).getID())) firstTest = false;
-                if(!recommendedFromDataBase.get(i).getRes().equalsIgnoreCase(ownerHandler.recommended.get(i).getRes())) firstTest = false;
+                if(!recommendedFromDataBase.get(i).getName().equalsIgnoreCase(ownerHandler.getRecommended().get(i).getName())) firstTest = false;
+                if(!recommendedFromDataBase.get(i).getID().equalsIgnoreCase(ownerHandler.getRecommended().get(i).getID())) firstTest = false;
+                if(!recommendedFromDataBase.get(i).getRes().equalsIgnoreCase(ownerHandler.getRecommended().get(i).getRes())) firstTest = false;
             }
             Collections.reverse(recommendedFromDataBase);
             for (int i = 0 ; i < recentlyAddedFromDataBase.size() ; i++){
-                if(!recentlyAddedFromDataBase.get(i).getName().equalsIgnoreCase(ownerHandler.recentlyAdded.get(i).getName())) firstTest = false;
-                if(!recentlyAddedFromDataBase.get(i).getID().equalsIgnoreCase(ownerHandler.recentlyAdded.get(i).getID())) firstTest = false;
-                if(!recentlyAddedFromDataBase.get(i).getRes().equalsIgnoreCase(ownerHandler.recentlyAdded.get(i).getRes())) firstTest = false;
+                if(!recentlyAddedFromDataBase.get(i).getName().equalsIgnoreCase(ownerHandler.getRecentlyAdded().get(i).getName())) firstTest = false;
+                if(!recentlyAddedFromDataBase.get(i).getID().equalsIgnoreCase(ownerHandler.getRecentlyAdded().get(i).getID())) firstTest = false;
+                if(!recentlyAddedFromDataBase.get(i).getRes().equalsIgnoreCase(ownerHandler.getRecentlyAdded().get(i).getRes())) firstTest = false;
             }
             assertTrue(firstTest);
         }
@@ -104,13 +100,13 @@ public class OwnerHousesFeatureSteps {
 
     @Given("user clicked addHouse button and inserts into fields valid data and clicked add")
     public void userClickedAddHouseButtonAndInsertsIntoFieldsValidDataAndClickedAdd() {
-        OwnerHandler ownerHandler = Wrapper.signInHandler.ownerHandler;
+        OwnerHandler ownerHandler = Wrapper.signInHandler.getOwnerHandler();
         user = ownerHandler.getUser();
         if(!user.getUserType().equalsIgnoreCase("owner")){
             assertTrue(true);
         }
         else {
-            AddHouseHandler addHouseHandler = Wrapper.signInHandler.ownerHandler.addHouseHandler;
+            AddHouseHandler addHouseHandler = Wrapper.signInHandler.getOwnerHandler().getAddHouseHandler();
             assertTrue(addHouseHandler.isClicked());
         }
     }
@@ -121,7 +117,7 @@ public class OwnerHousesFeatureSteps {
             assertTrue(true);
         }
         else {
-            AddHouseHandler addHouseHandler = Wrapper.signInHandler.ownerHandler.addHouseHandler;
+            AddHouseHandler addHouseHandler = Wrapper.signInHandler.getOwnerHandler().getAddHouseHandler();
 
             ResultSet rst;
 
@@ -129,7 +125,6 @@ public class OwnerHousesFeatureSteps {
                 DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
                 Connection con = DriverManager.getConnection("jdbc:oracle:thin:@//localhost:1521/xepdb1", "sakankom", "12345678");
                 Statement st = con.createStatement();
-                Statement st1 = con.createStatement();
 
                 House addedHouse = new House(
                         "House " + addHouseHandler.getHouseID(),
@@ -142,7 +137,7 @@ public class OwnerHousesFeatureSteps {
                 rst = st.executeQuery("SELECT * FROM house WHERE isvalid='1' and house_id='" + addedHouse.getID() + "'");
                 rst.next();
 
-                String house_id = null;
+                String house_id;
                 house_id = rst.getString("house_id");
                 System.out.println(house_id);
                 boolean exists = house_id != null;

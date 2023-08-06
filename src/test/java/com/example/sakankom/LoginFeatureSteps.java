@@ -1,6 +1,5 @@
 package com.example.sakankom;
 
-import com.example.sakankom.dataStructures.User;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.BeforeAll;
 import io.cucumber.java.en.Given;
@@ -58,7 +57,7 @@ public class LoginFeatureSteps {
 
     @Then("the user should log in to the system")
     public void theUserShouldLogInToTheSystem() {
-        assertTrue(Wrapper.signInHandler.isUserLoggedIn);
+        assertTrue(Wrapper.signInHandler.isUserLoggedIn());
     }
     @Then("the user type is determined")
     public void theUserTypeIsDetermined() {
@@ -102,18 +101,18 @@ public class LoginFeatureSteps {
     }
     @Then("show a message indicating that the entered data is false")
     public void showAMessageIndicatingThatTheEnteredDataIsFalse() {
-        if(Wrapper.signInHandler.alertShown) assertTrue(true);
-        else assertTrue(Wrapper.signInHandler.loginPageClosed);
+        if(Wrapper.signInHandler.isAlertShown()) assertTrue(true);
+        else assertTrue(Wrapper.signInHandler.isLoginPageClosed());
     }
 
     //3rd Scenario
     @Given("the user presses on logout")
     public void theUserPressesOnLogout() {
-        assertTrue(Wrapper.signInHandler.mainPageHandler.logoutPressed || Wrapper.signInHandler.adminMainPageHandler. isLogoutBtnPressed());
+        assertTrue(Wrapper.signInHandler.getMainPageHandler().isLogoutPressed() || Wrapper.signInHandler.getAdminMainPageHandler(). isLogoutBtnPressed());
     }
     @Then("the user should be logged out of the system")
     public void theUserShouldBeLoggedOutOfTheSystem() {
-        assertTrue(Wrapper.signInHandler.mainPageHandler.loggedOut || Wrapper.signInHandler.adminMainPageHandler. isLogoutBtnPressed());
+        assertTrue(Wrapper.signInHandler.getMainPageHandler().isLoggedOut() || Wrapper.signInHandler.getAdminMainPageHandler(). isLogoutBtnPressed());
     }
 
 }

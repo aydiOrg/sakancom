@@ -1,4 +1,4 @@
-package com.example.sakankom.OwnerFiles;
+package com.example.sakankom;
 
 public class Owner {
     private int ownerId;
@@ -11,5 +11,7 @@ public class Owner {
         this.ownerId = ownerId;
     }
 
-    public Owner(){ }
+    public Owner(){
+        //default constructor
+    }
 }

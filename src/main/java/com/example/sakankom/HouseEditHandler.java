@@ -2,15 +2,12 @@ package com.example.sakankom;
 
 import io.github.palexdev.materialfx.controls.MFXTextField;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 
-import java.net.URL;
 import java.sql.*;
-import java.util.ResourceBundle;
 
 public class HouseEditHandler   {
-    public boolean isClicked = false;
+    private boolean isClicked = false;
     @FXML
     private MFXTextField balaconyNumber;
 
@@ -137,7 +134,7 @@ public class HouseEditHandler   {
             isReservedValue = rst1.getString("isReserved");
 
             houseID.setEditable(false);
-        } catch (SQLException e) { throw new RuntimeException(e); }
+        } catch (SQLException e) { e.printStackTrace(); }
     }
 
     @FXML
@@ -160,6 +157,10 @@ public class HouseEditHandler   {
             alert.setContentText("Update House Successfully :)");
 
             alert.showAndWait();
-        } catch (SQLException e) { throw new RuntimeException(e); }
+        } catch (SQLException e) { e.printStackTrace(); }
+    }
+
+    public boolean isClicked() {
+        return isClicked;
     }
 }
