@@ -30,13 +30,13 @@ public class User {
         this.username = username;
         this.password = password;
         this.userType = userType;
-        this.flag = false;
+        this.flag = flag;
     }
     public User(String username, String password, String userType, boolean flag, String fullName) {
         this.username = username;
         this.password = password;
         this.userType = userType;
-        this.flag = false;
+        this.flag = flag;
         this.fullName = fullName;
     }
 

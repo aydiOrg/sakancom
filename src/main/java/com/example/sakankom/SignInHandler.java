@@ -86,19 +86,18 @@ public class SignInHandler implements Initializable {
 
             //bringing tenants
             while (rst.next()) {
-                System.out.println(rst.getString(USERNAME1));
                 users.add(new User(rst.getString(USERNAME1), rst.getString("pass"), "tenant",false));
             }
             rst2 = st.executeQuery("select username, pass, fname, lname from owner ");
             //bringing owners
             while (rst2.next()) {
-                System.out.println(rst2.getString(USERNAME1));
+
                 users.add(new User( rst2.getString(USERNAME1),  rst2.getString("pass"),  "owner",  false,  rst2.getString("fname") + " " + rst2.getString("lname")));
             }
             rst3 = st.executeQuery("select username, pass from admin ");
             //bringing admins
             while (rst3.next()) {
-                System.out.println(rst3.getString(USERNAME1));
+
                 users.add(new User(rst3.getString(USERNAME1), rst3.getString("pass"), "admin",false));
             }
             con.close();
@@ -133,7 +132,7 @@ public class SignInHandler implements Initializable {
                         mainPageHandler.setTenantData(user);
                         mainPageHandler.manageReservations();
                     }
-                } catch (IOException e) { throw new RuntimeException(e); }
+                } catch (IOException e) { e.printStackTrace(); }
 
                 try {
                     FXMLLoader loader2 = new FXMLLoader(getClass().getResource("Owner.fxml"));
@@ -146,7 +145,7 @@ public class SignInHandler implements Initializable {
                         newStage.setScene(scene);
                         newStage.show();
                     }
-                } catch (IOException e) { throw new RuntimeException(e); }
+                } catch (IOException e) { e.printStackTrace(); }
 
                 try {
                     FXMLLoader loader4 = new FXMLLoader(getClass().getResource("Admin-MainPage.fxml"));
@@ -159,7 +158,7 @@ public class SignInHandler implements Initializable {
                         newStage.setScene(scene);
                         newStage.show();
                     }
-                } catch (IOException e) { throw new RuntimeException(e); }
+                } catch (IOException e) { e.printStackTrace(); }
 
                 isUserLoggedIn = true;
                 //closing the current stage
