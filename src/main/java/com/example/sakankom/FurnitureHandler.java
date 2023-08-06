@@ -58,7 +58,7 @@ public class FurnitureHandler implements Initializable {
             try {
                 getData();
             } catch (SQLException e) {
-                throw new RuntimeException(e);
+                e.printStackTrace();
             }
             generateGUI();
 
