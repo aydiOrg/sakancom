@@ -363,11 +363,13 @@ public class AdminMainPageHandler implements Initializable {
         public void fetchData(){
                 ResultSet rst;
                 ResultSet rst2;
+                Statement st = null;
+                Connection con = null;
                 try{
 
                         DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
-                        Connection con = DriverManager.getConnection(JDBX, SAKANKOM, PASSWORD);
-                        Statement st = con.createStatement();
+                        con = DriverManager.getConnection(JDBX, SAKANKOM, PASSWORD);
+                        st = con.createStatement();
                         rst = st.executeQuery("select * from house,owner,residence where house.residence_id = residence.residence_id and residence.owner_id = owner.owner_id and house.isvalid = '1' and house.isaccepted = '0'");
 
                         Apartment apt;
@@ -438,9 +440,21 @@ public class AdminMainPageHandler implements Initializable {
                         }
 
 
-                        con.close();
+
                 }
                 catch (SQLException e){ e.printStackTrace(); }
+                finally {
+                        try {
+                                st.close();
+                                con.close();
+                        } catch (SQLException e) {
+                                e.printStackTrace();
+                        }
+
+                }
+
+
+
 
                 adminReservationsHandler.setUser(user);
                 adminReservationsHandler.setAdminReservations(adminReservations);
