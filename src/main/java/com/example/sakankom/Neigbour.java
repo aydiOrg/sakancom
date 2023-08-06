@@ -1,4 +1,4 @@
-package com.example.sakankom.dataStructures;
+package com.example.sakankom;
 
 public class Neigbour {
     private int tenantID;

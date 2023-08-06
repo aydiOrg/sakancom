@@ -1,6 +1,4 @@
 package com.example.sakankom;
-import com.example.sakankom.dataStructures.Apartment;
-import com.example.sakankom.dataStructures.Neigbour;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;

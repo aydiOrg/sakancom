@@ -1,8 +1,5 @@
 package com.example.sakankom;
 
-import com.example.sakankom.dataStructures.Apartment;
-import com.example.sakankom.dataStructures.Neigbour;
-import com.example.sakankom.dataStructures.Tenant;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXScrollPane;
 import javafx.beans.binding.Bindings;

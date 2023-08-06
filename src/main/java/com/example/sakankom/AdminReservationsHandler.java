@@ -1,7 +1,5 @@
 package com.example.sakankom;
 
-import com.example.sakankom.dataStructures.AdminReservation;
-import com.example.sakankom.dataStructures.User;
 import io.github.palexdev.materialfx.controls.MFXScrollPane;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.DoubleProperty;

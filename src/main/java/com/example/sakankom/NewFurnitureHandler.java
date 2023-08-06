@@ -1,7 +1,5 @@
 package com.example.sakankom;
 
-import com.example.sakankom.dataStructures.Furniture;
-import com.example.sakankom.dataStructures.Tenant;
 import io.github.palexdev.materialfx.controls.MFXTextField;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;

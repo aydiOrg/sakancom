@@ -1,4 +1,4 @@
-package com.example.sakankom.dataStructures;
+package com.example.sakankom;
 
 public class AdminReservation {
     private int residenceID;

@@ -1,6 +1,5 @@
 package com.example.sakankom;
 
-import com.example.sakankom.dataStructures.User;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -66,7 +65,7 @@ public class OwnerHandler implements Initializable {
     private ResidencesHandler residencesHandler;
     private AddHouseHandler addHouseHandler;
     private AddResidenceHandler addResidenceHandler;
-    private static final Logger logger = Logger.getLogger(AdminMainPageHandler.class.getName());
+    private static final Logger logger = Logger.getLogger(OwnerHandler.class.getName());
 
     @FXML
     private HBox cardLayout;
@@ -162,7 +161,7 @@ public class OwnerHandler implements Initializable {
                     FXMLLoader fxmlLoader = new FXMLLoader();
                     fxmlLoader.setLocation(getClass().getResource("house.fxml"));
                     VBox houseBox = fxmlLoader.load();
-                    houseHandler houseHandler = fxmlLoader.getController();
+                    HouseHandler houseHandler = fxmlLoader.getController();
                     houseHandler.setDate(house);
 
                     if (column == 6) {

@@ -1,9 +1,5 @@
 package com.example.sakankom;
 
-import com.example.sakankom.dataStructures.Apartment;
-import com.example.sakankom.dataStructures.Reservation;
-import com.example.sakankom.dataStructures.Tenant;
-import com.example.sakankom.dataStructures.User;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXScrollPane;
 import io.github.palexdev.materialfx.controls.MFXTextField;
@@ -253,8 +249,8 @@ public class MainPageHandler implements Initializable {
 
                         while (rst.next()) {
                                 reservation = new Reservation();
-                                reservation.setHouse_id(rst.getInt("house_id"));
-                                reservation.setTenant_id(rst.getInt("tenant_id"));
+                                reservation.setHouseId(rst.getInt("house_id"));
+                                reservation.setTenantId(rst.getInt("tenant_id"));
                                 reservation.setReservationDate(rst.getString("reservation_date"));
                                 reservation.setPrice(rst.getInt("price"));
                                 reservation.setIsValid(rst.getString("isvalid"));
@@ -283,7 +279,7 @@ public class MainPageHandler implements Initializable {
 
                 for (Reservation reservation : reservations) {
                         for (Apartment apartment : apartments) {
-                                if (apartment.getHouseId() == reservation.getHouse_id()) {
+                                if (apartment.getHouseId() == reservation.getHouseId()) {
                                         name = apartment.getAptName();
                                         address = apartment.getAddress();
                                         owner = apartment.getOwnerName();

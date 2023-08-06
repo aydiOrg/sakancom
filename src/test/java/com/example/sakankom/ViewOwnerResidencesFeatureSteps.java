@@ -1,6 +1,5 @@
 package com.example.sakankom;
 
-import com.example.sakankom.dataStructures.User;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 
@@ -21,13 +20,13 @@ public class ViewOwnerResidencesFeatureSteps {
 
     @Given("user clicked residences button")
     public void user_clicked_residences_button() {
-        OwnerHandler ownerHandler = Wrapper.signInHandler.ownerHandler;
+        OwnerHandler ownerHandler = Wrapper.signInHandler.getOwnerHandler();
         user = ownerHandler.getUser();
         if(!user.getUserType().equalsIgnoreCase("owner")){
             assertTrue(true);
         }
         else{
-            assertTrue(Wrapper.signInHandler.ownerHandler.isUserClickedResidencesBtn());
+            assertTrue(Wrapper.signInHandler.getOwnerHandler().isUserClickedResidencesBtn());
 
         }
     }
@@ -39,7 +38,7 @@ public class ViewOwnerResidencesFeatureSteps {
             assertTrue(true);
         }
         else {
-            OwnerHandler ownerHandler = Wrapper.signInHandler.ownerHandler;
+            OwnerHandler ownerHandler = Wrapper.signInHandler.getOwnerHandler();
             owner = ownerHandler.getOwner();
 
             List<Residence> residencesFromDataBase = new ArrayList<>();
@@ -66,7 +65,7 @@ public class ViewOwnerResidencesFeatureSteps {
                 throw new RuntimeException(e);
             }
 
-            ResidencesHandler residencesHandler = Wrapper.signInHandler.ownerHandler.getResidencesHandler();
+            ResidencesHandler residencesHandler = Wrapper.signInHandler.getOwnerHandler().getResidencesHandler();
             List<Residence> residences = new ArrayList<>(residencesHandler.getResidences());
 
             boolean equals = true;
@@ -84,38 +83,38 @@ public class ViewOwnerResidencesFeatureSteps {
 
     @Given("user in the residences pane")
     public void user_in_the_residences_pane() {
-        OwnerHandler ownerHandler = Wrapper.signInHandler.ownerHandler;
+        OwnerHandler ownerHandler = Wrapper.signInHandler.getOwnerHandler();
         user = ownerHandler.getUser();
         if(!user.getUserType().equalsIgnoreCase("owner")){
             assertTrue(true);
         }
         else {
-            assertTrue(Wrapper.signInHandler.ownerHandler.isUserClickedResidencesBtn());
+            assertTrue(Wrapper.signInHandler.getOwnerHandler().isUserClickedResidencesBtn());
         }
     }
 
     @Given("user clicked show houses button of one residence")
     public void user_clicked_show_houses_button_of_one_residence() {
-        OwnerHandler ownerHandler = Wrapper.signInHandler.ownerHandler;
+        OwnerHandler ownerHandler = Wrapper.signInHandler.getOwnerHandler();
         user = ownerHandler.getUser();
         if(!user.getUserType().equalsIgnoreCase("owner")){
             assertTrue(true);
         }
         else
-            assertTrue(Wrapper.signInHandler.ownerHandler.getResidencesHandler().isUserClickedShowHouses());
+            assertTrue(Wrapper.signInHandler.getOwnerHandler().getResidencesHandler().isUserClickedShowHouses());
     }
 
     @Then("all available floors in this residence should be shown with the houses inside it")
     public void all_available_floors_in_this_residence_should_be_shown_with_the_houses_inside_it() {
-        OwnerHandler ownerHandler = Wrapper.signInHandler.ownerHandler;
+        OwnerHandler ownerHandler = Wrapper.signInHandler.getOwnerHandler();
         user = ownerHandler.getUser();
         if(!user.getUserType().equalsIgnoreCase("owner")){
             assertTrue(true);
         }
         else{
         Map<Integer, ArrayList<House>> housesByFloorFromDataBase = new HashMap<>();
-        String residenceID = Wrapper.signInHandler.ownerHandler.getResidencesHandler().getResidenceID();
-        Map<Integer, ArrayList<House>> housesByFloor = Wrapper.signInHandler.ownerHandler.getResidencesHandler().getHousesByFloor();
+        String residenceID = Wrapper.signInHandler.getOwnerHandler().getResidencesHandler().getResidenceID();
+        Map<Integer, ArrayList<House>> housesByFloor = Wrapper.signInHandler.getOwnerHandler().getResidencesHandler().getHousesByFloor();
 
         ResultSet rst;
         try{
@@ -162,13 +161,13 @@ public class ViewOwnerResidencesFeatureSteps {
     //below tested done
     @Given("user in the houses of the residence pane")
     public void user_in_the_houses_of_the_residence_pane() {
-        OwnerHandler ownerHandler = Wrapper.signInHandler.ownerHandler;
+        OwnerHandler ownerHandler = Wrapper.signInHandler.getOwnerHandler();
         user = ownerHandler.getUser();
         if(!user.getUserType().equalsIgnoreCase("owner")){
             assertTrue(true);
         }
         else
-            assertTrue(Wrapper.signInHandler.ownerHandler.getResidencesHandler().isUserClickedShowHouses());
+            assertTrue(Wrapper.signInHandler.getOwnerHandler().getResidencesHandler().isUserClickedShowHouses());
     }
 
     @Given("user clicked show more button of one house")
@@ -177,7 +176,7 @@ public class ViewOwnerResidencesFeatureSteps {
             assertTrue(true);
         }
         else
-            assertTrue(Wrapper.signInHandler.ownerHandler.getResidencesHandler().isUserCLickedShowMore());
+            assertTrue(Wrapper.signInHandler.getOwnerHandler().getResidencesHandler().isUserCLickedShowMore());
     }
 
     @Then("All information about this house should be shown")
@@ -186,9 +185,9 @@ public class ViewOwnerResidencesFeatureSteps {
             assertTrue(true);
         }
         else {
-            HouseEditHandler houseEditHandler = Wrapper.signInHandler.ownerHandler.getResidencesHandler().getHouseEditHandler();
+            HouseEditHandler houseEditHandler = Wrapper.signInHandler.getOwnerHandler().getResidencesHandler().getHouseEditHandler();
             boolean equals = false;
-            String houseID = Wrapper.signInHandler.ownerHandler.getResidencesHandler().getHouseIDForShowMoreTest();
+            String houseID = Wrapper.signInHandler.getOwnerHandler().getResidencesHandler().getHouseIDForShowMoreTest();
 
             ResultSet rst;
             try {
@@ -226,13 +225,13 @@ public class ViewOwnerResidencesFeatureSteps {
 
     @Given("user in the house information pane and he updated some values of this house")
     public void user_in_the_house_information_pane_and_he_updated_some_values_of_this_house() {
-        OwnerHandler ownerHandler = Wrapper.signInHandler.ownerHandler;
+        OwnerHandler ownerHandler = Wrapper.signInHandler.getOwnerHandler();
         user = ownerHandler.getUser();
         if(!user.getUserType().equalsIgnoreCase("owner")){
             assertTrue(true);
         }
         else
-            assertTrue(Wrapper.signInHandler.ownerHandler.getResidencesHandler().isUserCLickedShowMore());
+            assertTrue(Wrapper.signInHandler.getOwnerHandler().getResidencesHandler().isUserCLickedShowMore());
     }
 
     @Given("user clicked update button of the update house pane")
@@ -241,7 +240,7 @@ public class ViewOwnerResidencesFeatureSteps {
             assertTrue(true);
         }
         else
-            assertTrue(Wrapper.signInHandler.ownerHandler.getResidencesHandler().getHouseEditHandler().isClicked());
+            assertTrue(Wrapper.signInHandler.getOwnerHandler().getResidencesHandler().getHouseEditHandler().isClicked());
     }
 
     @Then("The information of this house should be updated according to the data that the user puts")
@@ -251,7 +250,7 @@ public class ViewOwnerResidencesFeatureSteps {
             assertTrue(true);
         }
         else {
-            HouseEditHandler houseEditHandler = Wrapper.signInHandler.ownerHandler.getResidencesHandler().getHouseEditHandler();
+            HouseEditHandler houseEditHandler = Wrapper.signInHandler.getOwnerHandler().getResidencesHandler().getHouseEditHandler();
             ResultSet rst;
 
             try {

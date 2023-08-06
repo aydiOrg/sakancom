@@ -1,12 +1,11 @@
 package com.example.sakankom;
 
-import com.example.sakankom.dataStructures.Tenant;
-import com.example.sakankom.dataStructures.User;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 
 import java.sql.*;
 
+import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertTrue;
 
 public class TenantDataFeatureSteps {
@@ -22,7 +21,7 @@ public class TenantDataFeatureSteps {
     @Given("user is logged in and the user is a tenant")
     public void userIsLoggedInAndTheUserIsATenant() {
         // Write code here that turns the phrase above into concrete actions
-        MainPageHandler mainPageHandler = Wrapper.signInHandler.mainPageHandler;
+        MainPageHandler mainPageHandler = Wrapper.signInHandler.getMainPageHandler();
         user = mainPageHandler.getUser();
         if(!user.getUserType().equalsIgnoreCase("tenant")){
             assertTrue(true);
@@ -32,7 +31,7 @@ public class TenantDataFeatureSteps {
     }
     @Then("his personal data should be shown")
     public void hisPersonalDataShouldBeShown() {
-        MainPageHandler mainPageHandler = Wrapper.signInHandler.mainPageHandler;
+        MainPageHandler mainPageHandler = Wrapper.signInHandler.getMainPageHandler();
         user = mainPageHandler.getUser();
         if(!user.getUserType().equalsIgnoreCase("tenant")){
             assertTrue(true);
@@ -69,18 +68,12 @@ public class TenantDataFeatureSteps {
                 e.printStackTrace();
             }
             //check if the data matches
-            boolean dataMatches = false;
-            if (tenant.getPassword().equalsIgnoreCase(realTenant.getPassword()) && tenant.getJob().equalsIgnoreCase(realTenant.getJob()) && tenant.getbDate().equalsIgnoreCase(realTenant.getbDate()) && tenant.getTenantID() == realTenant.getTenantID() && tenant.getpNumber().equalsIgnoreCase(realTenant.getpNumber()) && tenant.getEmail().equalsIgnoreCase(realTenant.getEmail()) && tenant.getUsername().equalsIgnoreCase(realTenant.getUsername())) {
-                dataMatches = true;
-            }
+            boolean dataMatches = tenant.getPassword().equalsIgnoreCase(realTenant.getPassword()) && tenant.getJob().equalsIgnoreCase(realTenant.getJob()) && tenant.getbDate().equalsIgnoreCase(realTenant.getbDate()) && tenant.getTenantID() == realTenant.getTenantID() && tenant.getpNumber().equalsIgnoreCase(realTenant.getpNumber()) && tenant.getEmail().equalsIgnoreCase(realTenant.getEmail()) && tenant.getUsername().equalsIgnoreCase(realTenant.getUsername());
 
-            boolean fieldsMatch = false;
-            if (mainPageHandler.getuEmail().getText().equalsIgnoreCase(realTenant.getEmail()) && mainPageHandler.getuGender().getText().equalsIgnoreCase(realTenant.getGender()) && mainPageHandler.getuJob().getText().equalsIgnoreCase(realTenant.getJob()) && mainPageHandler.getuBdate().getText().equalsIgnoreCase(realTenant.getbDate().substring(0, 10)) && mainPageHandler.getuUsername().getText().equalsIgnoreCase(realTenant.getUsername()) && mainPageHandler.getuPhone().getText().equalsIgnoreCase(realTenant.getpNumber())) {
-                fieldsMatch = true;
-            }
+            boolean fieldsMatch = mainPageHandler.getuEmail().getText().equalsIgnoreCase(realTenant.getEmail()) && mainPageHandler.getuGender().getText().equalsIgnoreCase(realTenant.getGender()) && mainPageHandler.getuJob().getText().equalsIgnoreCase(realTenant.getJob()) && mainPageHandler.getuBdate().getText().equalsIgnoreCase(realTenant.getbDate().substring(0, 10)) && mainPageHandler.getuUsername().getText().equalsIgnoreCase(realTenant.getUsername()) && mainPageHandler.getuPhone().getText().equalsIgnoreCase(realTenant.getpNumber());
 
-            //assertTrue(doesTenantExist && dataMatches && fieldsMatch);
-            assertTrue(true);
+            assertTrue(doesTenantExist && dataMatches && fieldsMatch);
+            //assertTrue(true);
         }
     }
 
@@ -88,21 +81,21 @@ public class TenantDataFeatureSteps {
     //The second scenario
     @Given("the user who is tenant in the profile and presses edit")
     public void theUserWhoIsTenantInTheProfileAndPressesEdit() {
-        MainPageHandler mainPageHandler = Wrapper.signInHandler.mainPageHandler;
+        MainPageHandler mainPageHandler = Wrapper.signInHandler.getMainPageHandler();
         user = mainPageHandler.getUser();
         if(!user.getUserType().equalsIgnoreCase("tenant")){ assertTrue(true); }
         else assertTrue(user.getFlag() && user.getUserType().equalsIgnoreCase("tenant") && mainPageHandler.isEditPressed());
     }
     @Given("user presses save after editing the data")
     public void userPressesSaveAfterEditingTheData() {
-        MainPageHandler mainPageHandler = Wrapper.signInHandler.mainPageHandler;
+        MainPageHandler mainPageHandler = Wrapper.signInHandler.getMainPageHandler();
         user = mainPageHandler.getUser();
         if(!user.getUserType().equalsIgnoreCase("tenant")){ assertTrue(true); }
         else assertTrue(mainPageHandler.isSavePressed());
     }
     @Then("his data should be updated")
     public void hisDataShouldBeUpdated() {
-        MainPageHandler mainPageHandler = Wrapper.signInHandler.mainPageHandler;
+        MainPageHandler mainPageHandler = Wrapper.signInHandler.getMainPageHandler();
         user = mainPageHandler.getUser();
         if(!user.getUserType().equalsIgnoreCase("tenant")){
             assertTrue(true);
@@ -116,7 +109,6 @@ public class TenantDataFeatureSteps {
             try {
                 DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
                 Connection con = DriverManager.getConnection("jdbc:oracle:thin:@//localhost:1521/xepdb1", "sakankom", "12345678");
-                //jdbc:oracle:thin:@//localhost:1521/xepdb1
                 Statement st = con.createStatement();
                 rst = st.executeQuery("select * from tenant where username = '" + user.getUsername() + "'");
 
@@ -137,10 +129,7 @@ public class TenantDataFeatureSteps {
                 e.printStackTrace();
             }
 
-            boolean fieldsMatch = false;
-            if (mainPageHandler.getuEmail().getText().equalsIgnoreCase(realTenant.getEmail()) && mainPageHandler.getuGender().getText().equalsIgnoreCase(realTenant.getGender()) && mainPageHandler.getuJob().getText().equalsIgnoreCase(realTenant.getJob()) && mainPageHandler.getuBdate().getText().equalsIgnoreCase(realTenant.getbDate().substring(0, 10)) && mainPageHandler.getuUsername().getText().equalsIgnoreCase(realTenant.getUsername()) && mainPageHandler.getuPhone().getText().equalsIgnoreCase(realTenant.getpNumber())) {
-                fieldsMatch = true;
-            }
+            boolean fieldsMatch = mainPageHandler.getuEmail().getText().equalsIgnoreCase(realTenant.getEmail()) && mainPageHandler.getuGender().getText().equalsIgnoreCase(realTenant.getGender()) && mainPageHandler.getuJob().getText().equalsIgnoreCase(realTenant.getJob()) && mainPageHandler.getuBdate().getText().equalsIgnoreCase(realTenant.getbDate().substring(0, 10)) && mainPageHandler.getuUsername().getText().equalsIgnoreCase(realTenant.getUsername()) && mainPageHandler.getuPhone().getText().equalsIgnoreCase(realTenant.getpNumber());
 
             assertTrue(fieldsMatch);
         }
@@ -149,7 +138,7 @@ public class TenantDataFeatureSteps {
     @Given("the tenant has reservations")
     public void theTenantHasReservations() {
         // Write code here that turns the phrase above into concrete actions
-        MainPageHandler mainPageHandler = Wrapper.signInHandler.mainPageHandler;
+        MainPageHandler mainPageHandler = Wrapper.signInHandler.getMainPageHandler();
         user = mainPageHandler.getUser();
         if(!user.getUserType().equalsIgnoreCase("tenant")){
             assertTrue(true);
@@ -160,14 +149,13 @@ public class TenantDataFeatureSteps {
     @Then("all of them should be displayed")
     public void allOfThemShouldBeDisplayed() {
         // Write code here that turns the phrase above into concrete actions
-        int counter = 0;
-        MainPageHandler mainPageHandler = Wrapper.signInHandler.mainPageHandler;
+        MainPageHandler mainPageHandler = Wrapper.signInHandler.getMainPageHandler();
         user = mainPageHandler.getUser();
         if(!user.getUserType().equalsIgnoreCase("tenant")){
             assertTrue(true);
         }
         else
-            assertTrue(mainPageHandler.container.getChildren().size() == mainPageHandler.getReservations().size());
+            assertEquals(mainPageHandler.container.getChildren().size(), mainPageHandler.getReservations().size());
     }
 
 

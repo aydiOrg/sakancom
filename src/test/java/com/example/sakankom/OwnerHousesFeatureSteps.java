@@ -1,6 +1,5 @@
 package com.example.sakankom;
 
-import com.example.sakankom.dataStructures.User;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 
@@ -23,7 +22,7 @@ public class OwnerHousesFeatureSteps {
 
     @Given("user is logged in and the user is a owner")
     public void userIsLoggedInAndTheUserIsAOwner() {
-        OwnerHandler ownerHandler = Wrapper.signInHandler.ownerHandler;
+        OwnerHandler ownerHandler = Wrapper.signInHandler.getOwnerHandler();
         user = ownerHandler.getUser();
         if(!user.getUserType().equalsIgnoreCase("owner")){
             assertTrue(true);
@@ -38,7 +37,7 @@ public class OwnerHousesFeatureSteps {
             assertTrue(true);
         }
         else{
-            OwnerHandler ownerHandler = Wrapper.signInHandler.ownerHandler;
+            OwnerHandler ownerHandler = Wrapper.signInHandler.getOwnerHandler();
             owner = ownerHandler.getOwner();
 
             List<House> recentlyAddedFromDataBase = new ArrayList<>();
@@ -101,13 +100,13 @@ public class OwnerHousesFeatureSteps {
 
     @Given("user clicked addHouse button and inserts into fields valid data and clicked add")
     public void userClickedAddHouseButtonAndInsertsIntoFieldsValidDataAndClickedAdd() {
-        OwnerHandler ownerHandler = Wrapper.signInHandler.ownerHandler;
+        OwnerHandler ownerHandler = Wrapper.signInHandler.getOwnerHandler();
         user = ownerHandler.getUser();
         if(!user.getUserType().equalsIgnoreCase("owner")){
             assertTrue(true);
         }
         else {
-            AddHouseHandler addHouseHandler = Wrapper.signInHandler.ownerHandler.getAddHouseHandler();
+            AddHouseHandler addHouseHandler = Wrapper.signInHandler.getOwnerHandler().getAddHouseHandler();
             assertTrue(addHouseHandler.isClicked());
         }
     }
@@ -118,7 +117,7 @@ public class OwnerHousesFeatureSteps {
             assertTrue(true);
         }
         else {
-            AddHouseHandler addHouseHandler = Wrapper.signInHandler.ownerHandler.getAddHouseHandler();
+            AddHouseHandler addHouseHandler = Wrapper.signInHandler.getOwnerHandler().getAddHouseHandler();
 
             ResultSet rst;
 

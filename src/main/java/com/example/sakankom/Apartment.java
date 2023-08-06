@@ -1,4 +1,4 @@
-package com.example.sakankom.dataStructures;
+package com.example.sakankom;
 
 public class Apartment implements Comparable<Apartment>{
     private int houseId;

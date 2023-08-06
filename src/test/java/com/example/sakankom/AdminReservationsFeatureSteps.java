@@ -1,8 +1,5 @@
 package com.example.sakankom;
 
-import com.example.sakankom.dataStructures.Admin;
-import com.example.sakankom.dataStructures.Apartment;
-import com.example.sakankom.dataStructures.User;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 
@@ -18,7 +15,7 @@ public class AdminReservationsFeatureSteps {
     User user;
     Admin admin;
     List<Apartment> apartmentList;
-    AdminMainPageHandler adminMainPageHandler = Wrapper.signInHandler.adminMainPageHandler;
+    AdminMainPageHandler adminMainPageHandler = Wrapper.signInHandler.getAdminMainPageHandler();
 
     public AdminReservationsFeatureSteps(User user, Admin admin){
         this.user = user;

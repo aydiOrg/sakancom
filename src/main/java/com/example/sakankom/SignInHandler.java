@@ -1,6 +1,5 @@
 package com.example.sakankom;
 
-import com.example.sakankom.dataStructures.User;
 import io.github.palexdev.materialfx.controls.MFXTextField;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -29,11 +28,32 @@ public class SignInHandler implements Initializable {
     Stage currentStage = new Stage();
     ArrayList<User> users ;
     ArrayList<User> values;
-    public MainPageHandler mainPageHandler;
-    public OwnerHandler ownerHandler;
-    public AdminMainPageHandler adminMainPageHandler;
-    public boolean isUserLoggedIn , alertShown;
-    public boolean loginPageClosed = false;
+
+    public MainPageHandler getMainPageHandler() {
+        return mainPageHandler;
+    }
+
+    private MainPageHandler mainPageHandler;
+
+    public OwnerHandler getOwnerHandler() {
+        return ownerHandler;
+    }
+
+    private OwnerHandler ownerHandler;
+
+    public AdminMainPageHandler getAdminMainPageHandler() {
+        return adminMainPageHandler;
+    }
+
+    private AdminMainPageHandler adminMainPageHandler;
+
+    public boolean isUserLoggedIn() {
+        return isUserLoggedIn;
+    }
+
+    private boolean isUserLoggedIn;
+    private boolean alertShown;
+    private boolean loginPageClosed = false;
 
 
 
@@ -51,7 +71,9 @@ public class SignInHandler implements Initializable {
         alertShown = false;
         values = new ArrayList<>();
         users = new ArrayList<>();
-        ResultSet rst, rst2, rst3;
+        ResultSet rst;
+        ResultSet rst2;
+        ResultSet rst3;
         try {
             DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
             Connection con = DriverManager.getConnection("jdbc:oracle:thin:@//localhost:1521/xepdb1", "sakankom", "12345678");
@@ -156,4 +178,11 @@ public class SignInHandler implements Initializable {
 
     public void setCloseLoginPage(boolean b) { loginPageClosed = b; }
 
+    public boolean isAlertShown() {
+        return alertShown;
+    }
+
+    public boolean isLoginPageClosed() {
+        return loginPageClosed;
+    }
 }
