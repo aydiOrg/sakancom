@@ -114,6 +114,7 @@ public class SignInHandler implements Initializable {
 
         }catch (SQLException e){ e.printStackTrace(); }
         finally {
+            assert st != null;
             st.close();
         }
     }

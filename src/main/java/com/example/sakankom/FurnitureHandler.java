@@ -90,6 +90,7 @@ public class FurnitureHandler implements Initializable {
              }
              catch (SQLException e) { e.printStackTrace(); }
              finally {
+                 assert st != null;
                  st.close();
              }
          }
