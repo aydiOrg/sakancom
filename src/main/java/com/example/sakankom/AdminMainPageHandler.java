@@ -360,7 +360,7 @@ public class AdminMainPageHandler implements Initializable {
                 else generateGUI();
 
         }
-        public void fetchData(){
+        public void fetchData() throws SQLException {
                 ResultSet rst;
                 ResultSet rst2;
                 Statement st = null;
@@ -444,13 +444,8 @@ public class AdminMainPageHandler implements Initializable {
                 }
                 catch (SQLException e){ e.printStackTrace(); }
                 finally {
-                        try {
-                                st.close();
-                                con.close();
-                        } catch (SQLException e) {
-                                e.printStackTrace();
-                        }
-
+                        st.close();
+                        con.close();
                 }
 
 
@@ -479,7 +474,11 @@ public class AdminMainPageHandler implements Initializable {
 
                 } catch (SQLException e) {e.printStackTrace();}
 
-                fetchData();
+                try {
+                        fetchData();
+                } catch (SQLException e) {
+                        e.printStackTrace();
+                }
 
         }
 
