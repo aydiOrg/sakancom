@@ -15,7 +15,13 @@ import java.net.URL;
 import java.sql.*;
 import java.util.*;
 
-public class ResidencesHandler implements Initializable {
+public class ResidencesHandler{
+    private static final String SAKANKOM = "sakankom";
+    private static final String JDBX = "jdbc:oracle:thin:@//localhost:1521/xepdb1";
+    private static final String PASS = "12345678";
+    private static final String RESIDENCE_ID = "residence_id";
+    private static final String FLOORNUMBER = "floor_number";
+
     public HouseEditHandler getHouseEditHandler() {
         return houseEditHandler;
     }
@@ -45,10 +51,6 @@ public class ResidencesHandler implements Initializable {
     private boolean userCLickedShowMore = false;
     private String residenceID;
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-
-    }
 
     public void display(){
         residences = new ArrayList<>();
@@ -59,7 +61,7 @@ public class ResidencesHandler implements Initializable {
 
         try {
             DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
-            Connection con = DriverManager.getConnection("jdbc:oracle:thin:@//localhost:1521/xepdb1", "sakankom", "12345678");
+            Connection con = DriverManager.getConnection(JDBX, SAKANKOM, PASS);
             Statement st = con.createStatement();
             Statement st2 = con.createStatement();
 
@@ -68,7 +70,7 @@ public class ResidencesHandler implements Initializable {
             while (rst.next()) {
                 rst2 = st2.executeQuery("SELECT fname, lname FROM owner WHERE owner_id='" + rst.getString("owner_id") + "'");
                 rst2.next();
-                residences.add(new Residence(rst.getString("residence_id"), rst.getString("location"), rst.getString("residence_name"), rst2.getString("fname") + " " + rst2.getString("lname")));
+                residences.add(new Residence(rst.getString(RESIDENCE_ID), rst.getString("location"), rst.getString("residence_name"), rst2.getString("fname") + " " + rst2.getString("lname")));
             }
             Collections.reverse(residences);
             for (Residence residence : residences) {
@@ -93,12 +95,12 @@ public class ResidencesHandler implements Initializable {
                                     ResultSet resultSet;
                                     try {
                                         DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
-                                        Connection con1 = DriverManager.getConnection("jdbc:oracle:thin:@//localhost:1521/xepdb1", "sakankom", "12345678");
+                                        Connection con1 = DriverManager.getConnection(JDBX, SAKANKOM, PASS);
                                         Statement st3 = con1.createStatement();
 
                                         resultSet = st3.executeQuery("SELECT * FROM house WHERE isvalid='1' and residence_id='" + residence.getResidenceID() + "'");
                                         while(resultSet.next()){
-                                            int floor = resultSet.getInt("floor_number");
+                                            int floor = resultSet.getInt(FLOORNUMBER);
 
                                             if (!housesByFloor.containsKey(floor)) { housesByFloor.put(floor, new ArrayList<>()); }
 
@@ -133,16 +135,16 @@ public class ResidencesHandler implements Initializable {
 
         try{
             DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
-            Connection con = DriverManager.getConnection("jdbc:oracle:thin:@//localhost:1521/xepdb1", "sakankom", "12345678");
+            Connection con = DriverManager.getConnection(JDBX, SAKANKOM, PASS);
             Statement st = con.createStatement();
             Statement st2 = con.createStatement();
 
             rst = st.executeQuery("SELECT residence_id FROM residence WHERE residence_name='" + residenceName + "' and isvalid='1'");
             rst.next();
-            rst2 = st2.executeQuery("SELECT * FROM house WHERE residence_id='" + rst.getString("residence_id") + "' and isvalid='1'");
+            rst2 = st2.executeQuery("SELECT * FROM house WHERE residence_id='" + rst.getString(RESIDENCE_ID) + "' and isvalid='1'");
 
             while (rst2.next()){
-                houses.add(new House("House " + rst2.getString("house_id"), "/photos/" + rst2.getString("image"), rst2.getInt("price"), residenceName, rst2.getInt("floor_number")));
+                houses.add(new House("House " + rst2.getString("house_id"), "/photos/" + rst2.getString("image"), rst2.getInt("price"), residenceName, rst2.getInt(FLOORNUMBER)));
                  totalTenants += rst2.getInt("reserved_capacity");
             }
         } catch (SQLException e) { throw new RuntimeException(e); }
@@ -156,15 +158,15 @@ public class ResidencesHandler implements Initializable {
             int row = 1;
             try{
                 DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
-                Connection con = DriverManager.getConnection("jdbc:oracle:thin:@//localhost:1521/xepdb1", "sakankom", "12345678");
+                Connection con = DriverManager.getConnection(JDBX, SAKANKOM, PASS);
                 Statement st = con.createStatement();
                 Statement st2 = con.createStatement();
 
                 rst3 = st2.executeQuery("SELECT residence_id FROM residence WHERE isvalid='1' and residence_name='" + residenceName + "'");
                 rst3.next();
-                rst4 = st.executeQuery("SELECT floor_number FROM house WHERE isvalid='1' and residence_id='" + rst3.getString("residence_id") + "'");
+                rst4 = st.executeQuery("SELECT floor_number FROM house WHERE isvalid='1' and residence_id='" + rst3.getString(RESIDENCE_ID) + "'");
 
-                while (rst4.next()) { uniqueFloors.add(rst4.getInt("floor_number")); }
+                while (rst4.next()) { uniqueFloors.add(rst4.getInt(FLOORNUMBER)); }
 
                 Integer[] floorsArray = uniqueFloors.toArray(new Integer[0]);
                 Arrays.sort(floorsArray);

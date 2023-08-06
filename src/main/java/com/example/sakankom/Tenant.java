@@ -17,7 +17,7 @@ public class Tenant {
 
 
     public Tenant() {
-
+    //useless
     }
 
     //setters ---------------------------------------------------------

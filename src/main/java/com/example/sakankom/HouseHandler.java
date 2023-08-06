@@ -10,7 +10,7 @@ import java.net.URL;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
-public class HouseHandler implements Initializable {
+public class HouseHandler {
     @FXML
     private ImageView houseImage;
 
@@ -19,8 +19,8 @@ public class HouseHandler implements Initializable {
 
     @FXML
     private Label houseRes;
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) { }
+
+
 
     public void setDate(House house){
         Image image = new Image(Objects.requireNonNull(getClass().getResourceAsStream(house.getImageSrc())));
