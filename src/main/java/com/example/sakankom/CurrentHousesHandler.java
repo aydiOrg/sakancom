@@ -183,12 +183,11 @@ public class CurrentHousesHandler implements Initializable {
     public void getData() throws SQLException {
         ResultSet rst ;
         ResultSet rst2;
-        Connection con = null;
         Statement st = null;
-        try{
+        try(Connection con = DriverManager.getConnection("jdbc:oracle:thin:@//localhost:1521/xepdb1", "sakankom", "12345678")){
 
             DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
-            con = DriverManager.getConnection("jdbc:oracle:thin:@//localhost:1521/xepdb1", "sakankom", "12345678");
+
             st = con.createStatement();
             rst = st.executeQuery("select * from house,owner,residence where house.residence_id = residence.residence_id and residence.owner_id = owner.owner_id and house.isvalid = '1' and house.isaccepted = '1'");
 
@@ -239,7 +238,6 @@ public class CurrentHousesHandler implements Initializable {
         finally {
             assert st != null;
             st.close();
-            con.close();
         }
     }
     EventHandler<ActionEvent> handler = event -> {
