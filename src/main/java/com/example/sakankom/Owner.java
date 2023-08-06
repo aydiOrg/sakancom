@@ -1,4 +1,4 @@
-package com.example.sakankom.OwnerFiles;
+package com.example.sakankom;
 
 public class Owner {
     private int ownerId;

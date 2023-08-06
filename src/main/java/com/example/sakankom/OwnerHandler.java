@@ -1,7 +1,5 @@
 package com.example.sakankom;
 
-import com.example.sakankom.OwnerFiles.House;
-import com.example.sakankom.OwnerFiles.Owner;
 import com.example.sakankom.dataStructures.User;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import javafx.fxml.FXML;
@@ -126,7 +124,8 @@ public class OwnerHandler implements Initializable {
             recommended = new ArrayList<>();
             int column = 1;
             int row = 1;
-            ResultSet rst, rst2;
+            ResultSet rst;
+            ResultSet rst2;
 
             try {
                 DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());

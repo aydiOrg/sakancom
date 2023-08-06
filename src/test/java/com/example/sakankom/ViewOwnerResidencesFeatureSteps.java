@@ -1,8 +1,5 @@
 package com.example.sakankom;
 
-import com.example.sakankom.OwnerFiles.House;
-import com.example.sakankom.OwnerFiles.Owner;
-import com.example.sakankom.OwnerFiles.Residence;
 import com.example.sakankom.dataStructures.User;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -70,7 +67,7 @@ public class ViewOwnerResidencesFeatureSteps {
             }
 
             ResidencesHandler residencesHandler = Wrapper.signInHandler.ownerHandler.getResidencesHandler();
-            List<Residence> residences = new ArrayList<>(residencesHandler.residences);
+            List<Residence> residences = new ArrayList<>(residencesHandler.getResidences());
 
             boolean equals = true;
             Collections.reverse(residences);
@@ -189,9 +186,9 @@ public class ViewOwnerResidencesFeatureSteps {
             assertTrue(true);
         }
         else {
-            HouseEditHandler houseEditHandler = Wrapper.signInHandler.ownerHandler.getResidencesHandler().houseEditHandler;
+            HouseEditHandler houseEditHandler = Wrapper.signInHandler.ownerHandler.getResidencesHandler().getHouseEditHandler();
             boolean equals = false;
-            String houseID = Wrapper.signInHandler.ownerHandler.getResidencesHandler().houseIDForShowMoreTest;
+            String houseID = Wrapper.signInHandler.ownerHandler.getResidencesHandler().getHouseIDForShowMoreTest();
 
             ResultSet rst;
             try {
@@ -244,7 +241,7 @@ public class ViewOwnerResidencesFeatureSteps {
             assertTrue(true);
         }
         else
-            assertTrue(Wrapper.signInHandler.ownerHandler.getResidencesHandler().houseEditHandler.isClicked());
+            assertTrue(Wrapper.signInHandler.ownerHandler.getResidencesHandler().getHouseEditHandler().isClicked());
     }
 
     @Then("The information of this house should be updated according to the data that the user puts")
@@ -254,7 +251,7 @@ public class ViewOwnerResidencesFeatureSteps {
             assertTrue(true);
         }
         else {
-            HouseEditHandler houseEditHandler = Wrapper.signInHandler.ownerHandler.getResidencesHandler().houseEditHandler;
+            HouseEditHandler houseEditHandler = Wrapper.signInHandler.ownerHandler.getResidencesHandler().getHouseEditHandler();
             ResultSet rst;
 
             try {

@@ -1,8 +1,5 @@
 package com.example.sakankom;
 
-import com.example.sakankom.OwnerFiles.House;
-import com.example.sakankom.OwnerFiles.Owner;
-import com.example.sakankom.OwnerFiles.Residence;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXScrollPane;
 import javafx.fxml.FXML;
@@ -19,11 +16,20 @@ import java.sql.*;
 import java.util.*;
 
 public class ResidencesHandler implements Initializable {
-    public HouseEditHandler houseEditHandler;
-    public String houseIDForShowMoreTest;
+    public HouseEditHandler getHouseEditHandler() {
+        return houseEditHandler;
+    }
+
+    private HouseEditHandler houseEditHandler;
+    private String houseIDForShowMoreTest;
     @FXML
     private GridPane residenceContainer;
-    public List<Residence> residences;
+
+    public List<Residence> getResidences() {
+        return residences;
+    }
+
+    private List<Residence> residences;
     public Map<Integer, ArrayList<House>> housesByFloor;
     @FXML
     private Label mainLabel;
@@ -222,5 +228,9 @@ public class ResidencesHandler implements Initializable {
     public void setData(Owner owner){
         this.owner_id = owner.getOwnerId();
         this.display();
+    }
+
+    public String getHouseIDForShowMoreTest() {
+        return houseIDForShowMoreTest;
     }
 }
