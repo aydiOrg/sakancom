@@ -50,16 +50,26 @@ public class FurnitureHandler implements Initializable {
 
     @Override
         public void initialize(URL url, ResourceBundle resourceBundle) {
-        addPressed = false;
-        soldFID = "";
-        buyPressed = false;
-        tenant = new Tenant();
-             furnitures = new ArrayList<>();
+            addPressed = false;
+            soldFID = "";
+            buyPressed = false;
+            tenant = new Tenant();
+            furnitures = new ArrayList<>();
+            try {
+                getData();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            generateGUI();
+
+         }
+         public void getData() throws SQLException {
              ResultSet rst;
-             try {
+             Statement st = null;
+             try (Connection con = DriverManager.getConnection("jdbc:oracle:thin:@//localhost:1521/xepdb1", "sakankom", "12345678")){
                  DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
-                 Connection con = DriverManager.getConnection("jdbc:oracle:thin:@//localhost:1521/xepdb1", "sakankom", "12345678");
-                 Statement st = con.createStatement();
+
+                 st = con.createStatement();
                  rst = st.executeQuery("select * from tenant, furniture where furniture.tenant_id = tenant.tenant_id");
 
                  Furniture furniture;
@@ -76,12 +86,12 @@ public class FurnitureHandler implements Initializable {
                      furniture.setIsSold(rst.getString("issold"));
                      furnitures.add(furniture);
                  }
-                 con.close();
+
              }
              catch (SQLException e) { e.printStackTrace(); }
-
-             generateGUI();
-
+             finally {
+                 st.close();
+             }
          }
          public void generateGUI (){
 

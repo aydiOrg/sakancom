@@ -73,14 +73,24 @@ public class SignInHandler implements Initializable {
         alertShown = false;
         values = new ArrayList<>();
         users = new ArrayList<>();
+        try {
+            getData();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+
+    }
+    public void getData() throws SQLException {
+        Statement st= null;
         ResultSet rst;
         ResultSet rst2;
         ResultSet rst3;
-        try {
+        try(Connection con = DriverManager.getConnection("jdbc:oracle:thin:@//localhost:1521/xepdb1", "sakankom", "12345678")) {
             DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
-            Connection con = DriverManager.getConnection("jdbc:oracle:thin:@//localhost:1521/xepdb1", "sakankom", "12345678");
+
             //jdbc:oracle:thin:@//localhost:1521/xepdb1
-            Statement st = con.createStatement();
+            st = con.createStatement();
             rst = st.executeQuery("select username, pass from tenant ");
 
 
@@ -100,11 +110,12 @@ public class SignInHandler implements Initializable {
 
                 users.add(new User(rst3.getString(USERNAME1), rst3.getString("pass"), "admin",false));
             }
-            con.close();
+
 
         }catch (SQLException e){ e.printStackTrace(); }
-
-
+        finally {
+            st.close();
+        }
     }
     @FXML
     void validator() {

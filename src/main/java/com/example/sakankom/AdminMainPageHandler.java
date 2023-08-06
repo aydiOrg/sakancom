@@ -364,11 +364,10 @@ public class AdminMainPageHandler implements Initializable {
                 ResultSet rst;
                 ResultSet rst2;
                 Statement st = null;
-                Connection con = null;
-                try{
+                try(Connection con = DriverManager.getConnection(JDBX, SAKANKOM, PASSWORD)){
 
                         DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
-                        con = DriverManager.getConnection(JDBX, SAKANKOM, PASSWORD);
+
                         st = con.createStatement();
                         rst = st.executeQuery("select * from house,owner,residence where house.residence_id = residence.residence_id and residence.owner_id = owner.owner_id and house.isvalid = '1' and house.isaccepted = '0'");
 
@@ -445,7 +444,6 @@ public class AdminMainPageHandler implements Initializable {
                 catch (SQLException e){ e.printStackTrace(); }
                 finally {
                         st.close();
-                        con.close();
                 }
 
 
