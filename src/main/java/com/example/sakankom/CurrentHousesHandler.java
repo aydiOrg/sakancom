@@ -237,6 +237,7 @@ public class CurrentHousesHandler implements Initializable {
         }
         catch (SQLException e){ e.printStackTrace(); }
         finally {
+            assert st != null;
             st.close();
             con.close();
         }
