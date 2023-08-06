@@ -5,6 +5,7 @@ import io.cucumber.java.BeforeAll;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,16 +15,59 @@ import static junit.framework.TestCase.assertTrue;
 public class LoginFeatureSteps {
     private User user;
     boolean userValid , userTypeDetermined;
-
+    static ArrayList<Apartment> apartments ;
     public LoginFeatureSteps(User user) {
         super();
         this.user = user;
         userValid = false;
         userTypeDetermined = false;
 
+
     }
     @BeforeAll
     public static void before_or_after_all(){
+        apartments = new ArrayList<Apartment>();
+        ResultSet rst;
+        try {
+
+            DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
+            Connection con = DriverManager.getConnection("jdbc:oracle:thin:@//localhost:1521/xepdb1", "sakankom", "12345678");
+            //jdbc:oracle:thin:@//localhost:1521/xepdb1
+            Statement st = con.createStatement();
+            rst = st.executeQuery("select * from house,owner,residence where house.residence_id = residence.residence_id and residence.owner_id = owner.owner_id and house.isvalid = '1' and house.isaccepted = '1'");
+
+            Apartment apt;
+            while (rst.next()) {
+                apt = new Apartment();
+                apt.setOwnerEmail(rst.getString("email"));
+                apt.setOwnerPhone(rst.getString("phone_number"));
+                apt.setAddress(rst.getString("location"));
+                apt.setOwnerName(rst.getString("fname") + " " + rst.getString("lname"));
+                apt.setAptName(rst.getString("residence_name"));
+                apt.setHouseId(rst.getInt("house_id"));
+                apt.setResidenceId(rst.getInt("residence_id"));
+                apt.setOwnerId(rst.getInt("owner_id"));
+                apt.setBathsN(rst.getInt("bathrooms_number"));
+                apt.setBedsN(rst.getInt("bedrooms_number"));
+                apt.setServices(rst.getString("services"));
+                apt.setPrice(rst.getDouble("price"));
+                apt.setFloor(rst.getInt("floor_number"));
+                apt.setAptNumber(rst.getInt("flat_number"));
+                apt.setCapacity(rst.getInt("capacity"));
+                apt.setResCapacity(rst.getInt("reserved_capacity"));
+                apt.setGender(rst.getString("genders"));
+                apt.setBalcony(rst.getString("balcony"));
+                apt.setIsValid(rst.getString("isvalid"));
+                apt.setIsAccepted(rst.getString("isaccepted"));
+                apt.setIsReserved(rst.getString("isreserved"));
+                apartments.add(apt);
+            }
+
+            con.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
         String[] ff = {"222","11"};
         Wrapper.main(ff);
     }
