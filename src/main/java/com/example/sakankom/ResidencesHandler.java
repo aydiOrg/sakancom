@@ -147,7 +147,7 @@ public class ResidencesHandler{
                 houses.add(new House("House " + rst2.getString("house_id"), "/photos/" + rst2.getString("image"), rst2.getInt("price"), residenceName, rst2.getInt(FLOORNUMBER)));
                  totalTenants += rst2.getInt("reserved_capacity");
             }
-        } catch (SQLException e) { throw new RuntimeException(e); }
+        } catch (SQLException e) { e.printStackTrace(); }
 
         mainLabel.setText("All houses of " + residenceName + " . " + houses.size() + " Houses with " + totalTenants + " person reserved.");
 
@@ -156,7 +156,7 @@ public class ResidencesHandler{
             ResultSet rst4;
             Set<Integer> uniqueFloors = new HashSet<>();
             int row = 1;
-            try{
+
                 DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
                 Connection con = DriverManager.getConnection(JDBX, SAKANKOM, PASS);
                 Statement st = con.createStatement();
@@ -213,9 +213,12 @@ public class ResidencesHandler{
 
                     con.close();
                 }
-            } catch (SQLException e) { throw new RuntimeException(e); }
 
-        } catch (IOException e) { throw new RuntimeException(e); }
+
+        } catch (SQLException e) { throw new RuntimeException(e); }
+        catch (IOException e){
+            e.printStackTrace();
+        }
     }
 
     public void showMore(String houseID) {
