@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.logging.Logger;
 
 public class OwnerHandler implements Initializable {
 
@@ -65,6 +66,8 @@ public class OwnerHandler implements Initializable {
     private ResidencesHandler residencesHandler;
     private AddHouseHandler addHouseHandler;
     private AddResidenceHandler addResidenceHandler;
+    private static final Logger logger = Logger.getLogger(AdminMainPageHandler.class.getName());
+
     @FXML
     private HBox cardLayout;
     private List<House> recentlyAdded;
@@ -103,7 +106,7 @@ public class OwnerHandler implements Initializable {
             con.close();
         } catch (SQLException e) { e.printStackTrace(); }
 
-        try { mainBtnHandler(); }  catch (IOException e) { throw new RuntimeException(e); }
+        try { mainBtnHandler(); }  catch (IOException e) { e.printStackTrace(); }
 
 
     }
@@ -118,7 +121,7 @@ public class OwnerHandler implements Initializable {
 
     @FXML
     void mainBtnHandler() throws IOException {
-        if (btnMain.getStyleClass().contains("selected")) { System.out.println("Do nothing"); }
+        if (btnMain.getStyleClass().contains("selected")) { logger.warning("Do nothing"); }
         else {
             recentlyAdded = new ArrayList<>();
             recommended = new ArrayList<>();
@@ -189,7 +192,7 @@ public class OwnerHandler implements Initializable {
 
     @FXML
     void addHouseBtnHandler() throws IOException {
-        if (btnAddHouse.getStyleClass().contains("selected")) { System.out.println("Do nothing"); }
+        if (btnAddHouse.getStyleClass().contains("selected")) { logger.warning("Do nothing"); }
         else {
             FXMLLoader fxmlLoader = new FXMLLoader();
             fxmlLoader.setLocation(getClass().getResource("addHouse.fxml"));
@@ -213,7 +216,7 @@ public class OwnerHandler implements Initializable {
     @FXML
     void addResidenceBtnHandler() throws IOException {
         userClickedAddResidencesBtn = true;
-        if (btnAddResidence.getStyleClass().contains("selected")) { System.out.println("Do nothing"); }
+        if (btnAddResidence.getStyleClass().contains("selected")) { logger.warning("Do nothing"); }
         else {
             FXMLLoader fxmlLoader = new FXMLLoader();
             fxmlLoader.setLocation(getClass().getResource("addResidence.fxml"));
@@ -238,7 +241,7 @@ public class OwnerHandler implements Initializable {
     @FXML
     void residencesBtnHandler() {
         userClickedResidencesBtn = true;
-        if (btnResidences.getStyleClass().contains("selected")) { System.out.println("Do nothing"); }
+        if (btnResidences.getStyleClass().contains("selected")) { logger.warning("Do nothing"); }
         else {
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader();

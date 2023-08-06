@@ -30,15 +30,20 @@ public class ResidencesHandler implements Initializable {
     }
 
     private List<Residence> residences;
-    public Map<Integer, ArrayList<House>> housesByFloor;
+
+    public Map<Integer, ArrayList<House>> getHousesByFloor() {
+        return housesByFloor;
+    }
+
+    private Map<Integer, ArrayList<House>> housesByFloor;
     @FXML
     private Label mainLabel;
     @FXML
     private VBox show;
-    private int owner_id;
-    public boolean userClickedShowHouses = false;
-    public boolean userCLickedShowMore = false;
-    public String residenceID;
+    private int ownerId;
+    private boolean userClickedShowHouses = false;
+    private boolean userCLickedShowMore = false;
+    private String residenceID;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -49,7 +54,8 @@ public class ResidencesHandler implements Initializable {
         residences = new ArrayList<>();
         int column = 1;
         int row = 1;
-        ResultSet rst, rst2;
+        ResultSet rst;
+        ResultSet rst2;
 
         try {
             DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
@@ -57,7 +63,7 @@ public class ResidencesHandler implements Initializable {
             Statement st = con.createStatement();
             Statement st2 = con.createStatement();
 
-            rst = st.executeQuery("select owner_id, residence_id, residence_name, location from residence where isValid='1' and owner_id='" + owner_id + "'");
+            rst = st.executeQuery("select owner_id, residence_id, residence_name, location from residence where isValid='1' and owner_id='" + ownerId + "'");
 
             while (rst.next()) {
                 rst2 = st2.executeQuery("SELECT fname, lname FROM owner WHERE owner_id='" + rst.getString("owner_id") + "'");
@@ -122,7 +128,8 @@ public class ResidencesHandler implements Initializable {
         residenceContainer.getChildren().clear();
         List<House> houses = new ArrayList<>();
         int totalTenants = 0;
-        ResultSet rst, rst2;
+        ResultSet rst;
+        ResultSet rst2;
 
         try{
             DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
@@ -143,7 +150,8 @@ public class ResidencesHandler implements Initializable {
         mainLabel.setText("All houses of " + residenceName + " . " + houses.size() + " Houses with " + totalTenants + " person reserved.");
 
         try{
-            ResultSet rst3, rst4;
+            ResultSet rst3;
+            ResultSet rst4;
             Set<Integer> uniqueFloors = new HashSet<>();
             int row = 1;
             try{
@@ -158,10 +166,10 @@ public class ResidencesHandler implements Initializable {
 
                 while (rst4.next()) { uniqueFloors.add(rst4.getInt("floor_number")); }
 
-                Integer[] FloorsArray = uniqueFloors.toArray(new Integer[0]);
-                Arrays.sort(FloorsArray);
+                Integer[] floorsArray = uniqueFloors.toArray(new Integer[0]);
+                Arrays.sort(floorsArray);
 
-                for (Integer integer : FloorsArray) {
+                for (Integer integer : floorsArray) {
                     List<House> floorHouses = new ArrayList<>();
                     for (House housee : houses) {
                         if (housee.getFloor() == integer) { floorHouses.add(housee); }
@@ -170,8 +178,8 @@ public class ResidencesHandler implements Initializable {
                     FXMLLoader fxmlLoader1 = new FXMLLoader();
                     fxmlLoader1.setLocation(getClass().getResource("showHouses.fxml"));
                     VBox floor = fxmlLoader1.load();
-                    ShowHousesHandler Handler2 = fxmlLoader1.getController();
-                    Handler2.setDate(floorHouses);
+                    ShowHousesHandler handler2 = fxmlLoader1.getController();
+                    handler2.setDate(floorHouses);
 
                     residenceContainer.add(floor, 0, row++);
                     GridPane.setMargin(floor, new Insets(10));
@@ -226,11 +234,23 @@ public class ResidencesHandler implements Initializable {
     }
 
     public void setData(Owner owner){
-        this.owner_id = owner.getOwnerId();
+        this.ownerId = owner.getOwnerId();
         this.display();
     }
 
     public String getHouseIDForShowMoreTest() {
         return houseIDForShowMoreTest;
+    }
+
+    public boolean isUserClickedShowHouses() {
+        return userClickedShowHouses;
+    }
+
+    public boolean isUserCLickedShowMore() {
+        return userCLickedShowMore;
+    }
+
+    public String getResidenceID() {
+        return residenceID;
     }
 }

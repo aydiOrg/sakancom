@@ -84,6 +84,6 @@ public class AddHouseHandler {
             alert.setContentText("Add House Successfully :)");
 
             alert.showAndWait();
-        } catch (SQLException e) { throw new RuntimeException(e); }
+        } catch (SQLException e) { e.printStackTrace(); }
     }
 }

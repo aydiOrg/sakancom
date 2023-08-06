@@ -102,7 +102,7 @@ public class ViewOwnerResidencesFeatureSteps {
             assertTrue(true);
         }
         else
-            assertTrue(Wrapper.signInHandler.ownerHandler.getResidencesHandler().userClickedShowHouses);
+            assertTrue(Wrapper.signInHandler.ownerHandler.getResidencesHandler().isUserClickedShowHouses());
     }
 
     @Then("all available floors in this residence should be shown with the houses inside it")
@@ -114,8 +114,8 @@ public class ViewOwnerResidencesFeatureSteps {
         }
         else{
         Map<Integer, ArrayList<House>> housesByFloorFromDataBase = new HashMap<>();
-        String residenceID = Wrapper.signInHandler.ownerHandler.getResidencesHandler().residenceID;
-        Map<Integer, ArrayList<House>> housesByFloor = Wrapper.signInHandler.ownerHandler.getResidencesHandler().housesByFloor;
+        String residenceID = Wrapper.signInHandler.ownerHandler.getResidencesHandler().getResidenceID();
+        Map<Integer, ArrayList<House>> housesByFloor = Wrapper.signInHandler.ownerHandler.getResidencesHandler().getHousesByFloor();
 
         ResultSet rst;
         try{
@@ -168,7 +168,7 @@ public class ViewOwnerResidencesFeatureSteps {
             assertTrue(true);
         }
         else
-            assertTrue(Wrapper.signInHandler.ownerHandler.getResidencesHandler().userClickedShowHouses);
+            assertTrue(Wrapper.signInHandler.ownerHandler.getResidencesHandler().isUserClickedShowHouses());
     }
 
     @Given("user clicked show more button of one house")
@@ -177,7 +177,7 @@ public class ViewOwnerResidencesFeatureSteps {
             assertTrue(true);
         }
         else
-            assertTrue(Wrapper.signInHandler.ownerHandler.getResidencesHandler().userCLickedShowMore);
+            assertTrue(Wrapper.signInHandler.ownerHandler.getResidencesHandler().isUserCLickedShowMore());
     }
 
     @Then("All information about this house should be shown")
@@ -232,7 +232,7 @@ public class ViewOwnerResidencesFeatureSteps {
             assertTrue(true);
         }
         else
-            assertTrue(Wrapper.signInHandler.ownerHandler.getResidencesHandler().userCLickedShowMore);
+            assertTrue(Wrapper.signInHandler.ownerHandler.getResidencesHandler().isUserCLickedShowMore());
     }
 
     @Given("user clicked update button of the update house pane")

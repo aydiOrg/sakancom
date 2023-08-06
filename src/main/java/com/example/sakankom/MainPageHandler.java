@@ -131,7 +131,7 @@ public class MainPageHandler implements Initializable {
                 //loading my pages
                 FXMLLoader loader1 = new FXMLLoader(getClass().getResource("Current-Houses.fxml"));
 
-                try { loader1.load(); } catch (IOException e) { throw new RuntimeException(e); }
+                try { loader1.load(); } catch (IOException e) { e.printStackTrace(); }
 
                 currentHousesHandler = loader1.getController();
                 page3 = currentHousesHandler.getMainPane();
@@ -265,7 +265,6 @@ public class MainPageHandler implements Initializable {
                                 cal.setTime(rst.getDate("payying_date"));
                                 cal.add(Calendar.DAY_OF_MONTH,30);
                                 String dateafter = sdf.format(cal.getTime());
-                                System.out.println(dateafter);
                                 // done editing
 
                                 reservation.setPayyingDate(dateafter);

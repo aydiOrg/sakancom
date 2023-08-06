@@ -134,7 +134,7 @@ public class HouseEditHandler   {
             isReservedValue = rst1.getString("isReserved");
 
             houseID.setEditable(false);
-        } catch (SQLException e) { throw new RuntimeException(e); }
+        } catch (SQLException e) { e.printStackTrace(); }
     }
 
     @FXML
@@ -157,7 +157,7 @@ public class HouseEditHandler   {
             alert.setContentText("Update House Successfully :)");
 
             alert.showAndWait();
-        } catch (SQLException e) { throw new RuntimeException(e); }
+        } catch (SQLException e) { e.printStackTrace(); }
     }
 
     public boolean isClicked() {
