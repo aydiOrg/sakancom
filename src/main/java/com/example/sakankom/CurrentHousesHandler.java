@@ -172,13 +172,24 @@ public class CurrentHousesHandler implements Initializable {
         apartments = new ArrayList<>();
         neigbours = new ArrayList<>();
         //retrieve the data from database
+        try {
+            getData();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+
+    }
+    public void getData() throws SQLException {
         ResultSet rst ;
         ResultSet rst2;
+        Connection con = null;
+        Statement st = null;
         try{
 
             DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
-            Connection con = DriverManager.getConnection("jdbc:oracle:thin:@//localhost:1521/xepdb1", "sakankom", "12345678");
-            Statement st = con.createStatement();
+            con = DriverManager.getConnection("jdbc:oracle:thin:@//localhost:1521/xepdb1", "sakankom", "12345678");
+            st = con.createStatement();
             rst = st.executeQuery("select * from house,owner,residence where house.residence_id = residence.residence_id and residence.owner_id = owner.owner_id and house.isvalid = '1' and house.isaccepted = '1'");
 
             Apartment apt;
@@ -222,13 +233,13 @@ public class CurrentHousesHandler implements Initializable {
                 neigbours.add(neigbour);
             }
 
-            con.close();
+
         }
         catch (SQLException e){ e.printStackTrace(); }
-
-
-
-
+        finally {
+            st.close();
+            con.close();
+        }
     }
     EventHandler<ActionEvent> handler = event -> {
         MFXButton btn = (MFXButton) event.getSource();
