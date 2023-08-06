@@ -6,7 +6,7 @@ import javafx.scene.control.Label;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class ResidenceHandler implements Initializable {
+public class ResidenceHandler {
     @FXML
     private ResidencesHandler residencesHandler;
 
@@ -19,8 +19,7 @@ public class ResidenceHandler implements Initializable {
     @FXML
     private Label residenceName;
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) { }
+
 
     public void setDate(Residence residence){
         locationField.setText(residence.getLocation());

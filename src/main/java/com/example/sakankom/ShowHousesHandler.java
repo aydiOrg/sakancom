@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 
-public class ShowHousesHandler implements Initializable {
+public class ShowHousesHandler  {
 
     @FXML
     private GridPane floorContainer;
@@ -42,6 +42,4 @@ public class ShowHousesHandler implements Initializable {
         }
     }
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {}
 }
