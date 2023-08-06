@@ -108,7 +108,7 @@ public class ResidencesHandler{
                                             housesByFloor.get(floor).add(house);
                                         }
                                         con1.close();
-                                } catch (SQLException e) { throw new RuntimeException(e); }
+                                } catch (SQLException e) { e.printStackTrace(); }
                                 });
                             }
                         }
@@ -215,7 +215,7 @@ public class ResidencesHandler{
                 }
 
 
-        } catch (SQLException e) { throw new RuntimeException(e); }
+        } catch (SQLException e) { e.printStackTrace(); }
         catch (IOException e){
             e.printStackTrace();
         }
