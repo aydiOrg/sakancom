@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class SignInHandler implements Initializable {
-    private static final String USERNAME = "username";
+    private static final String USERNAME1 = "username";
 
     @FXML
     public MFXTextField password;
@@ -86,20 +86,20 @@ public class SignInHandler implements Initializable {
 
             //bringing tenants
             while (rst.next()) {
-                System.out.println(rst.getString(USERNAME));
-                users.add(new User(rst.getString(USERNAME), rst.getString("pass"), "tenant",false));
+                System.out.println(rst.getString(USERNAME1));
+                users.add(new User(rst.getString(USERNAME1), rst.getString("pass"), "tenant",false));
             }
             rst2 = st.executeQuery("select username, pass, fname, lname from owner ");
             //bringing owners
             while (rst2.next()) {
-                System.out.println(rst2.getString(USERNAME));
-                users.add(new User( rst2.getString(USERNAME),  rst2.getString("pass"),  "owner",  false,  rst2.getString("fname") + " " + rst2.getString("lname")));
+                System.out.println(rst2.getString(USERNAME1));
+                users.add(new User( rst2.getString(USERNAME1),  rst2.getString("pass"),  "owner",  false,  rst2.getString("fname") + " " + rst2.getString("lname")));
             }
             rst3 = st.executeQuery("select username, pass from admin ");
             //bringing admins
             while (rst3.next()) {
-                System.out.println(rst3.getString(USERNAME));
-                users.add(new User(rst3.getString(USERNAME), rst3.getString("pass"), "admin",false));
+                System.out.println(rst3.getString(USERNAME1));
+                users.add(new User(rst3.getString(USERNAME1), rst3.getString("pass"), "admin",false));
             }
             con.close();
 
