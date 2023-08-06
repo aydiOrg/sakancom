@@ -30,7 +30,7 @@ public class ViewOwnerResidencesFeatureSteps {
             assertTrue(true);
         }
         else{
-            assertTrue(Wrapper.signInHandler.ownerHandler.userClickedResidencesBtn);
+            assertTrue(Wrapper.signInHandler.ownerHandler.isUserClickedResidencesBtn());
 
         }
     }
@@ -69,7 +69,7 @@ public class ViewOwnerResidencesFeatureSteps {
                 throw new RuntimeException(e);
             }
 
-            ResidencesHandler residencesHandler = Wrapper.signInHandler.ownerHandler.residencesHandler;
+            ResidencesHandler residencesHandler = Wrapper.signInHandler.ownerHandler.getResidencesHandler();
             List<Residence> residences = new ArrayList<>(residencesHandler.residences);
 
             boolean equals = true;
@@ -93,7 +93,7 @@ public class ViewOwnerResidencesFeatureSteps {
             assertTrue(true);
         }
         else {
-            assertTrue(Wrapper.signInHandler.ownerHandler.userClickedResidencesBtn);
+            assertTrue(Wrapper.signInHandler.ownerHandler.isUserClickedResidencesBtn());
         }
     }
 
@@ -105,7 +105,7 @@ public class ViewOwnerResidencesFeatureSteps {
             assertTrue(true);
         }
         else
-            assertTrue(Wrapper.signInHandler.ownerHandler.residencesHandler.userClickedShowHouses);
+            assertTrue(Wrapper.signInHandler.ownerHandler.getResidencesHandler().userClickedShowHouses);
     }
 
     @Then("all available floors in this residence should be shown with the houses inside it")
@@ -117,8 +117,8 @@ public class ViewOwnerResidencesFeatureSteps {
         }
         else{
         Map<Integer, ArrayList<House>> housesByFloorFromDataBase = new HashMap<>();
-        String residenceID = Wrapper.signInHandler.ownerHandler.residencesHandler.residenceID;
-        Map<Integer, ArrayList<House>> housesByFloor = Wrapper.signInHandler.ownerHandler.residencesHandler.housesByFloor;
+        String residenceID = Wrapper.signInHandler.ownerHandler.getResidencesHandler().residenceID;
+        Map<Integer, ArrayList<House>> housesByFloor = Wrapper.signInHandler.ownerHandler.getResidencesHandler().housesByFloor;
 
         ResultSet rst;
         try{
@@ -143,11 +143,11 @@ public class ViewOwnerResidencesFeatureSteps {
 
             boolean isEqual = true;
             for(int key : housesByFloorFromDataBase.keySet()){
-                housesByFloorFromDataBase.get(key).sort(Comparator.comparingInt(p -> Integer.parseInt(p.houseID)));
-                housesByFloor.get(key).sort(Comparator.comparingInt(p -> Integer.parseInt(p.houseID)));
+                housesByFloorFromDataBase.get(key).sort(Comparator.comparingInt(p -> Integer.parseInt(p.getHouseID())));
+                housesByFloor.get(key).sort(Comparator.comparingInt(p -> Integer.parseInt(p.getHouseID())));
 
                 for (int i = 0 ; i < housesByFloorFromDataBase.get(key).size() ; i++){
-                    if( !housesByFloorFromDataBase.get(key).get(i).houseID.equalsIgnoreCase(housesByFloor.get(key).get(i).houseID)){
+                    if( !housesByFloorFromDataBase.get(key).get(i).getHouseID().equalsIgnoreCase(housesByFloor.get(key).get(i).getHouseID())){
                         isEqual = false;
                         break;
                     }
@@ -171,7 +171,7 @@ public class ViewOwnerResidencesFeatureSteps {
             assertTrue(true);
         }
         else
-            assertTrue(Wrapper.signInHandler.ownerHandler.residencesHandler.userClickedShowHouses);
+            assertTrue(Wrapper.signInHandler.ownerHandler.getResidencesHandler().userClickedShowHouses);
     }
 
     @Given("user clicked show more button of one house")
@@ -180,7 +180,7 @@ public class ViewOwnerResidencesFeatureSteps {
             assertTrue(true);
         }
         else
-            assertTrue(Wrapper.signInHandler.ownerHandler.residencesHandler.userCLickedShowMore);
+            assertTrue(Wrapper.signInHandler.ownerHandler.getResidencesHandler().userCLickedShowMore);
     }
 
     @Then("All information about this house should be shown")
@@ -189,9 +189,9 @@ public class ViewOwnerResidencesFeatureSteps {
             assertTrue(true);
         }
         else {
-            HouseEditHandler houseEditHandler = Wrapper.signInHandler.ownerHandler.residencesHandler.houseEditHandler;
+            HouseEditHandler houseEditHandler = Wrapper.signInHandler.ownerHandler.getResidencesHandler().houseEditHandler;
             boolean equals = false;
-            String houseID = Wrapper.signInHandler.ownerHandler.residencesHandler.houseIDForShowMoreTest;
+            String houseID = Wrapper.signInHandler.ownerHandler.getResidencesHandler().houseIDForShowMoreTest;
 
             ResultSet rst;
             try {
@@ -235,7 +235,7 @@ public class ViewOwnerResidencesFeatureSteps {
             assertTrue(true);
         }
         else
-            assertTrue(Wrapper.signInHandler.ownerHandler.residencesHandler.userCLickedShowMore);
+            assertTrue(Wrapper.signInHandler.ownerHandler.getResidencesHandler().userCLickedShowMore);
     }
 
     @Given("user clicked update button of the update house pane")
@@ -244,7 +244,7 @@ public class ViewOwnerResidencesFeatureSteps {
             assertTrue(true);
         }
         else
-            assertTrue(Wrapper.signInHandler.ownerHandler.residencesHandler.houseEditHandler.isClicked());
+            assertTrue(Wrapper.signInHandler.ownerHandler.getResidencesHandler().houseEditHandler.isClicked());
     }
 
     @Then("The information of this house should be updated according to the data that the user puts")
@@ -254,7 +254,7 @@ public class ViewOwnerResidencesFeatureSteps {
             assertTrue(true);
         }
         else {
-            HouseEditHandler houseEditHandler = Wrapper.signInHandler.ownerHandler.residencesHandler.houseEditHandler;
+            HouseEditHandler houseEditHandler = Wrapper.signInHandler.ownerHandler.getResidencesHandler().houseEditHandler;
             ResultSet rst;
 
             try {

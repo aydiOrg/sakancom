@@ -31,8 +31,8 @@ public class OwnerHandler implements Initializable {
     private AnchorPane mainPane;
     @FXML
     private MFXButton btnAddHouse;
-    public boolean userClickedAddResidencesBtn = false;
-    public boolean userClickedResidencesBtn = false;
+    private boolean userClickedAddResidencesBtn = false;
+    private boolean userClickedResidencesBtn = false;
     @FXML
     private Label ownerName;
 
@@ -43,14 +43,34 @@ public class OwnerHandler implements Initializable {
     private MFXButton btnResidences;
     @FXML
     private MFXButton btnMain;
-    public ResidencesHandler residencesHandler;
-    public AddHouseHandler addHouseHandler;
-    public AddResidenceHandler addResidenceHandler;
-    public CardHandler cardHandler;
+
+    public ResidencesHandler getResidencesHandler() {
+        return residencesHandler;
+    }
+
+    public AddHouseHandler getAddHouseHandler() {
+        return addHouseHandler;
+    }
+
+    public AddResidenceHandler getAddResidenceHandler() {
+        return addResidenceHandler;
+    }
+
+    public List<House> getRecentlyAdded() {
+        return recentlyAdded;
+    }
+
+    public List<House> getRecommended() {
+        return recommended;
+    }
+
+    private ResidencesHandler residencesHandler;
+    private AddHouseHandler addHouseHandler;
+    private AddResidenceHandler addResidenceHandler;
     @FXML
     private HBox cardLayout;
-    public List<House> recentlyAdded;
-    public List<House> recommended;
+    private List<House> recentlyAdded;
+    private List<House> recommended;
 
     private VBox mainBox;
 
@@ -131,7 +151,7 @@ public class OwnerHandler implements Initializable {
                     fxmlLoader.setLocation(getClass().getResource("card.fxml"));
                     HBox cardBox = fxmlLoader.load();
 
-                    cardHandler = fxmlLoader.getController();
+                    CardHandler cardHandler = fxmlLoader.getController();
                     cardHandler.setDate(value);
                     cardLayout.getChildren().add(cardBox);
                 }
@@ -257,5 +277,13 @@ public class OwnerHandler implements Initializable {
             newStage.show();
 
         } catch (IOException e) { e.printStackTrace(); }
+    }
+
+    public boolean isUserClickedAddResidencesBtn() {
+        return userClickedAddResidencesBtn;
+    }
+
+    public boolean isUserClickedResidencesBtn() {
+        return userClickedResidencesBtn;
     }
 }

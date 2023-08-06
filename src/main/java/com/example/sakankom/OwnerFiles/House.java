@@ -7,7 +7,7 @@ public class House {
     public House() {}
 
     private String name;
-    public String houseID;
+    private String houseID;
     public String getID(){
         return name.split(" ")[1];
     }
@@ -47,4 +47,7 @@ public class House {
     }
 
 
+    public String getHouseID() {
+        return houseID;
+    }
 }

@@ -29,7 +29,7 @@ public class AddResidenceFeatureSteps {
             assertTrue(true);
         }
         else
-        assertTrue(ownerHandler.userClickedAddResidencesBtn);
+            assertTrue(ownerHandler.isUserClickedAddResidencesBtn());
     }
 
     @Given("user filled all fields with valid residence information and clicked add")
@@ -38,7 +38,7 @@ public class AddResidenceFeatureSteps {
             assertTrue(true);
         }
         else {
-            AddResidenceHandler addResidenceHandler = Wrapper.signInHandler.ownerHandler.addResidenceHandler;
+            AddResidenceHandler addResidenceHandler = Wrapper.signInHandler.ownerHandler.getAddResidenceHandler();
             assertTrue(addResidenceHandler.isClicked());
         }
     }
@@ -49,7 +49,7 @@ public class AddResidenceFeatureSteps {
             assertTrue(true);
         }
         else {
-            AddResidenceHandler addResidenceHandler = Wrapper.signInHandler.ownerHandler.addResidenceHandler;
+            AddResidenceHandler addResidenceHandler = Wrapper.signInHandler.ownerHandler.getAddResidenceHandler();
 
             Residence residence = new Residence(
                     addResidenceHandler.getResidenceID(),
