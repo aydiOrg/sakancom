@@ -19,7 +19,7 @@ public class CardHandler  {
     @FXML
     private ImageView houseImage;
     private final String [] colors = {":#b9e5ff", ":#bdb2fe", ":#fb9aa8", ":#ff5056"};
-    Random random = new Random();
+    //Random random = new Random();
 
     public void setDate(House house){
         Image image = new Image(Objects.requireNonNull(getClass().getResourceAsStream(house.getImageSrc())));
@@ -27,7 +27,7 @@ public class CardHandler  {
 
         houseName.setText(house.getName());
         houseRes.setText(house.getRes());
-        box.setStyle("-fx-background-color" + colors[random.nextInt()*colors.length] + "; -fx-background-radius: 15; -fx-effect: dropShadow(three-pass-box, rgba(0, 0, 0, 0.1), 10, 0, 0, 10)");
+        box.setStyle("-fx-background-color" + colors[(int) (Math.random()*colors.length)] + "; -fx-background-radius: 15; -fx-effect: dropShadow(three-pass-box, rgba(0, 0, 0, 0.1), 10, 0, 0, 10)");
     }
 
 }

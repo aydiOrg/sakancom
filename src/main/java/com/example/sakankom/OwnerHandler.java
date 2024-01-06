@@ -1,6 +1,7 @@
 package com.example.sakankom;
 
 import io.github.palexdev.materialfx.controls.MFXButton;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -108,7 +109,7 @@ public class OwnerHandler implements Initializable {
             con.close();
         } catch (SQLException e) { e.printStackTrace(); }
 
-        try { mainBtnHandler(); }  catch (IOException e) { e.printStackTrace(); }
+        try { mainBtnHandler(new ActionEvent()); }  catch (IOException e) { e.printStackTrace(); }
 
 
     }
@@ -122,7 +123,7 @@ public class OwnerHandler implements Initializable {
     }
 
     @FXML
-    void mainBtnHandler() throws IOException {
+    void mainBtnHandler(ActionEvent event) throws IOException {
         if (btnMain.getStyleClass().contains(SELECTED)) { logger.warning(DONOTHING); }
         else {
             recentlyAdded = new ArrayList<>();
